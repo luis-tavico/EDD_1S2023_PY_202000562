@@ -178,13 +178,13 @@ func (list *DoubleList) GraphList() string {
 			if tmp != nil {
 				conn += "rank=same {N" + strconv.Itoa(cntr) + "->"
 				for tmp.Next != nil {
-					nodes += "NN" + strconv.Itoa(cntr) + strconv.Itoa(counter) + "[label=\"" + tmp.Details + "\"];\n"
-					conn += "NN" + strconv.Itoa(cntr) + strconv.Itoa(counter) + "->"
+					nodes += "N" + strconv.Itoa(cntr) + "N" + strconv.Itoa(counter) + "[label=\"" + tmp.Details + "\"];\n"
+					conn += "N" + strconv.Itoa(cntr) + "N" + strconv.Itoa(counter) + "->"
 					tmp = tmp.Next
 					counter++
 				}
-				nodes += "NN" + strconv.Itoa(cntr) + strconv.Itoa(counter) + "[label=\"" + tmp.Details + "\"];\n"
-				conn += "NN" + strconv.Itoa(cntr) + strconv.Itoa(counter) + "}\n"
+				nodes += "N" + strconv.Itoa(cntr) + "N" + strconv.Itoa(counter) + "[label=\"" + tmp.Details + "\"];\n"
+				conn += "N" + strconv.Itoa(cntr) + "N" + strconv.Itoa(counter) + "}\n"
 			}
 			temp = temp.Next
 			cntr++
@@ -196,13 +196,13 @@ func (list *DoubleList) GraphList() string {
 		if tmp != nil {
 			conn += "rank=same {N" + strconv.Itoa(cntr) + "->"
 			for tmp.Next != nil {
-				nodes += "NN" + strconv.Itoa(cntr) + strconv.Itoa(counter) + "[label=\"" + tmp.Details + "\"];\n"
-				conn += "NN" + strconv.Itoa(cntr) + strconv.Itoa(counter) + "->"
+				nodes += "N" + strconv.Itoa(cntr) + "N" + strconv.Itoa(counter) + "[label=\"" + tmp.Details + "\"];\n"
+				conn += "N" + strconv.Itoa(cntr) + "N" + strconv.Itoa(counter) + "->"
 				tmp = tmp.Next
 				counter++
 			}
-			nodes += "NN" + strconv.Itoa(cntr) + strconv.Itoa(counter) + "[label=\"" + tmp.Details + "\"];\n"
-			conn += "NN" + strconv.Itoa(cntr) + strconv.Itoa(counter) + "}\n"
+			nodes += "N" + strconv.Itoa(cntr) + "N" + strconv.Itoa(counter) + "[label=\"" + tmp.Details + "\"];\n"
+			conn += "N" + strconv.Itoa(cntr) + "N" + strconv.Itoa(counter) + "}\n"
 		}
 		//******
 
@@ -212,66 +212,3 @@ func (list *DoubleList) GraphList() string {
 		return "digraph G {\nnode [shape=plaintext]\n\"Sin alumnos aceptados\"\n}"
 	}
 }
-
-/*
-func (list *DoubleList) GraphList() string {
-	temp := list.Head
-	content := "digraph G {\nnode[shape=rectangle, style=filled, color=lightsalmon];\nrankdir=LR;\n"
-	nodes := ""
-	conn := ""
-	counter := 0
-	for temp.Next != nil {
-		nodes += "N" + strconv.Itoa(counter) + "[label=\"Carnet:" + strconv.Itoa(temp.Student.GetLicense()) + "\nNombre: " + temp.Student.GetFullName() + "\"];\n"
-		conn += "N" + strconv.Itoa(counter) + "->"
-		temp = temp.Next
-		counter++
-	}
-	nodes += "N" + strconv.Itoa(counter) + "[label=\"Carnet:" + strconv.Itoa(temp.Student.GetLicense()) + "\nNombre: " + temp.Student.GetFullName() + "\"];\n"
-	conn += "N" + strconv.Itoa(counter) + "\n"
-	temp = list.Tail
-	for temp.Previous != nil {
-		conn += "N" + strconv.Itoa(counter) + "->"
-		temp = temp.Previous
-		counter--
-	}
-	conn += "N" + strconv.Itoa(counter)
-	content += nodes + conn + "\n"
-	//--------------------------------------
-	temp = list.Head
-	cntr := 0
-	nodes = ""
-	conn = ""
-	for temp.Next != nil {
-		stckActions := temp.Student.GetActionsStudent()
-		tmp := stckActions.Head
-		counter = 0
-		conn += "rank=same {N" + strconv.Itoa(cntr) + "->"
-		for tmp.Next != nil {
-			nodes += "N" + strconv.Itoa(cntr) + strconv.Itoa(counter) + "[label=\"" + tmp.Details + "\"];\n"
-			conn += "N" + strconv.Itoa(cntr) + strconv.Itoa(counter) + "->"
-			tmp = tmp.Next
-			counter++
-		}
-		nodes += "N" + strconv.Itoa(cntr) + strconv.Itoa(counter) + "[label=\"" + tmp.Details + "\"];\n"
-		conn += "N" + strconv.Itoa(cntr) + strconv.Itoa(counter) + "}\n"
-
-		temp = temp.Next
-		cntr++
-	}
-	stckActions := temp.Student.GetActionsStudent()
-	tmp := stckActions.Head
-	counter = 0
-	conn += "rank=same {N" + strconv.Itoa(cntr) + "->"
-	for tmp.Next != nil {
-		nodes += "N" + strconv.Itoa(cntr) + strconv.Itoa(counter) + "[label=\"" + tmp.Details + "\"];\n"
-		conn += "N" + strconv.Itoa(cntr) + strconv.Itoa(counter) + "->"
-		tmp = tmp.Next
-		counter++
-	}
-	nodes += "N" + strconv.Itoa(cntr) + strconv.Itoa(counter) + "[label=\"" + tmp.Details + "\"];\n"
-	conn += "N" + strconv.Itoa(cntr) + strconv.Itoa(counter) + "}\n"
-
-	content += nodes + conn
-	return content + "\n}"
-}
-*/
