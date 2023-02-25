@@ -3,10 +3,11 @@ package Model
 import "module/Stacks"
 
 type Student struct {
-	FullName string        `json:"nombre"`
-	License  int           `json:"carnet"`
-	Password string        `json:"password"`
-	Stack    *Stacks.Stack `json:"-"`
+	FullName   string        `json:"nombre"`
+	License    int           `json:"carnet"`
+	Password   string        `json:"password"`
+	RootFolder string        `json:"Carpeta_Raiz"`
+	Stack      *Stacks.Stack `json:"-"`
 }
 
 // Methods GET

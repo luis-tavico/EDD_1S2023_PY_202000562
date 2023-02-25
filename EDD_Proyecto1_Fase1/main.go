@@ -19,6 +19,27 @@ import (
 	"time"
 )
 
+type Json struct {
+	Students []*Model.Student `json:"alumnos"`
+}
+
+func createFilejson(list *Lists.DoubleList) {
+	temp := list.Head
+	if temp != nil {
+		students := []*Model.Student{}
+		for temp != nil {
+			students = append(students, temp.Student)
+			temp = temp.Next
+		}
+		newJson := Json{students}
+		file, err := json.MarshalIndent(newJson, "", "\t")
+		if err != nil {
+			fmt.Println("¡Error! No se pudo completar la accion")
+		}
+		_ = ioutil.WriteFile("alumnos.json", file, 0644)
+	}
+}
+
 func readFilecsv(filePath string) [][]string {
 	f, err := os.Open(filePath)
 	if err == nil {
@@ -34,23 +55,6 @@ func readFilecsv(filePath string) [][]string {
 		fmt.Println(filePath)
 	}
 	return nil
-}
-
-func createFilejson(list *Lists.DoubleList) {
-	DoubleListValues := list.GetValues()
-	temp := DoubleListValues.Head
-	if temp != nil {
-		for temp != nil {
-			file, err := json.MarshalIndent(temp.Student, "", "\t")
-			if err != nil {
-				fmt.Println("¡Error! No se pudo completar la accion")
-			}
-			_ = ioutil.WriteFile("test.json", file, 0644)
-			temp = temp.Next
-		}
-	} else {
-		fmt.Println("¡Sistema Vacio!")
-	}
 }
 
 func WriteDotFile(code string, fileName string, path string) {
@@ -236,7 +240,7 @@ func main() {
 						reponseQueue := queue.SearchInQueue(license)
 						if responseList == nil && reponseQueue == nil {
 							stack := &Stacks.Stack{}
-							newStudent := &Model.Student{FullName: name + " " + lastname, License: license, Password: password, Stack: stack}
+							newStudent := &Model.Student{FullName: name + " " + lastname, License: license, Password: password, RootFolder: "/", Stack: stack}
 							queue.Enqueue(newStudent)
 							GenerateReports(stackActionsAdmin, queue, list)
 						} else {
@@ -265,7 +269,7 @@ func main() {
 									reponseQueue := queue.SearchInQueue(license)
 									if responseList == nil && reponseQueue == nil {
 										stack := &Stacks.Stack{}
-										newStudent := &Model.Student{FullName: fullName, License: license, Password: password, Stack: stack}
+										newStudent := &Model.Student{FullName: fullName, License: license, Password: password, RootFolder: "/", Stack: stack}
 										queue.Enqueue(newStudent)
 									} else {
 										message := fmt.Sprintf("¡Estudiante %d ya ha sido registrado anteriormente!", license)
