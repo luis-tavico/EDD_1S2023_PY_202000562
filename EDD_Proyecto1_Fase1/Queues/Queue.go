@@ -56,6 +56,20 @@ func (queue *Queue) GetFirstIn() *Model.Student {
 	}
 }
 
+func (queue *Queue) SearchInQueue(license int) *Model.Student {
+	temp := queue.Head
+	if temp != nil {
+		for temp != nil {
+			if temp.Student.GetLicense() == license {
+				return temp.Student
+			} else {
+				temp = temp.Next
+			}
+		}
+	}
+	return nil
+}
+
 func (queue *Queue) GetValues() *Queue {
 	return queue
 }

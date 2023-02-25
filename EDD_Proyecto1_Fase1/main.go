@@ -1,6 +1,9 @@
 package main
 
+//C:/Users/Luis T/Desktop/prueba.csv
+
 import (
+	"bufio"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
@@ -28,6 +31,7 @@ func readFilecsv(filePath string) [][]string {
 		return records
 	} else {
 		fmt.Println("¡Error! El sistema no pudo encontrar el archivo")
+		fmt.Println(filePath)
 	}
 	return nil
 }
@@ -45,7 +49,7 @@ func createFilejson(list *Lists.DoubleList) {
 			temp = temp.Next
 		}
 	} else {
-		fmt.Println("¡Sistema Vacio!!!")
+		fmt.Println("¡Sistema Vacio!")
 	}
 }
 
@@ -111,7 +115,7 @@ func main() {
 	optionMainMenu := 1
 
 	stack := &Stacks.Stack{}
-	admin := Model.Administrator{User: "1", Pass: "1", Stack: stack}
+	admin := Model.Administrator{User: "admin", Pass: "admin", Stack: stack}
 	stackActionsAdmin := admin.GetActionsAdmin()
 	list := &Lists.DoubleList{}
 	queue := &Queues.Queue{}
@@ -178,7 +182,7 @@ func main() {
 									list.InsertEnd(studentAccepted)
 									sizeQueue = queue.GetSizeQueue()
 									currentTime := time.Now()
-									message := fmt.Sprintf("Se acepto al estudiante %s el %s a la(s) %d:%d:%d", studentAccepted.GetFullName(), currentTime.Format("02-01-2006"), currentTime.Hour(), currentTime.Minute(), currentTime.Second())
+									message := fmt.Sprintf("Se acepto al estudiante %s el %s a la(s) %d:%d:%d", student.GetFullName(), currentTime.Format("02-01-2006"), currentTime.Hour(), currentTime.Minute(), currentTime.Second())
 									stackActionsAdmin.Push(message)
 									fmt.Println("¡Estudiante Aceptado Exitosamente!")
 								case 2:
@@ -189,12 +193,13 @@ func main() {
 									stackActionsAdmin.Push(message)
 									fmt.Println("¡Estudiante Rechazado Exitosamente!")
 								case 3:
+									GenerateReports(stackActionsAdmin, queue, list)
 								default:
 									fmt.Println("¡Ingrese una opcion valida!")
 								}
 							}
 						} else {
-							fmt.Println("¡Vacio!")
+							fmt.Println("¡Sistema Vacio!")
 						}
 
 					case 2:
@@ -207,7 +212,7 @@ func main() {
 								temp = temp.Next
 							}
 						} else {
-							fmt.Println("¡Sistema Vacio!!!")
+							fmt.Println("¡Sistema Vacio!")
 						}
 
 					case 3:
@@ -227,18 +232,25 @@ func main() {
 						fmt.Println("Ingresar una Contraseña: ")
 						fmt.Scanln(&password)
 
-						stack := &Stacks.Stack{}
-						newStudent := &Model.Student{FullName: name + " " + lastname, License: license, Password: password, Stack: stack}
-						queue.Enqueue(newStudent)
+						responseList := list.SearchInList(license)
+						reponseQueue := queue.SearchInQueue(license)
+						if responseList == nil && reponseQueue == nil {
+							stack := &Stacks.Stack{}
+							newStudent := &Model.Student{FullName: name + " " + lastname, License: license, Password: password, Stack: stack}
+							queue.Enqueue(newStudent)
+							GenerateReports(stackActionsAdmin, queue, list)
+						} else {
+							message := fmt.Sprintf("¡Estudiante %d ya ha sido registrado anteriormente!", license)
+							fmt.Println(message)
+						}
+
 					case 4:
 						fmt.Println("Ingrese la ruta del archivo: ")
-						//scanner := bufio.NewScanner(os.Stdin)
-						//scanner.Scan()
-						//path := scanner.Text()
-						//"C:/Users/Luis T/Desktop/prueba.csv"
+						scanner := bufio.NewScanner(os.Stdin)
+						scanner.Scan()
+						path := scanner.Text()
 
-						records := readFilecsv("C:/Users/Luis T/Desktop/prueba.csv")
-						//records := readFilecsv(path)
+						records := readFilecsv(path)
 
 						for index, row := range records {
 							if index != 0 {
@@ -249,9 +261,16 @@ func main() {
 									//fullName := strings.Split(row[1], " ")
 									//name := fullName[0]
 									//lastname := fullName[1]
-									stack := &Stacks.Stack{}
-									newStudent := &Model.Student{FullName: fullName, License: license, Password: password, Stack: stack}
-									queue.Enqueue(newStudent)
+									responseList := list.SearchInList(license)
+									reponseQueue := queue.SearchInQueue(license)
+									if responseList == nil && reponseQueue == nil {
+										stack := &Stacks.Stack{}
+										newStudent := &Model.Student{FullName: fullName, License: license, Password: password, Stack: stack}
+										queue.Enqueue(newStudent)
+									} else {
+										message := fmt.Sprintf("¡Estudiante %d ya ha sido registrado anteriormente!", license)
+										fmt.Println(message)
+									}
 								} else {
 									fmt.Println("¡Error! No se pudo convertir la variable")
 								}
@@ -283,6 +302,8 @@ func main() {
 								fmt.Println(temp.Details)
 								temp = temp.Next
 							}
+						} else {
+							fmt.Println("¡La contraseña y/o el usuario no es valido!")
 						}
 					} else {
 						fmt.Println("¡La contraseña y/o el usuario no es valido!")
