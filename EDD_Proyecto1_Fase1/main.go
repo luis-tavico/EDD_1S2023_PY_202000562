@@ -197,6 +197,7 @@ func main() {
 									stackActionsAdmin.Push(message)
 									fmt.Println("¡Estudiante Rechazado Exitosamente!")
 								case 3:
+									createFilejson(list)
 									GenerateReports(stackActionsAdmin, queue, list)
 								default:
 									fmt.Println("¡Ingrese una opcion valida!")
@@ -318,8 +319,6 @@ func main() {
 			}
 		case 2:
 			fmt.Println("¡Ejecucion Finalizada!")
-		case 3:
-			createFilejson(list)
 		default:
 			fmt.Println("¡Ingrese una opcion valida!")
 		}
