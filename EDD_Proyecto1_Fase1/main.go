@@ -208,10 +208,10 @@ func main() {
 						}
 
 					case 2:
-
 						DoubleListValues := list.GetValues()
 						temp := DoubleListValues.Head
 						if temp != nil {
+							fmt.Println("----------Estudiantes-Pendientes----------")
 							for temp != nil {
 								fmt.Printf("Nombre: %s, Carnet: %d\n", temp.Student.GetFullName(), temp.Student.GetLicense())
 								temp = temp.Next
@@ -243,6 +243,7 @@ func main() {
 							stack := &Stacks.Stack{}
 							newStudent := &Model.Student{FullName: name + " " + lastname, License: license, Password: password, RootFolder: "/", Stack: stack}
 							queue.Enqueue(newStudent)
+							fmt.Println("¡Estudiante registrado exitosamente!")
 							GenerateReports(stackActionsAdmin, queue, list)
 						} else {
 							message := fmt.Sprintf("¡Estudiante %d ya ha sido registrado anteriormente!", license)
