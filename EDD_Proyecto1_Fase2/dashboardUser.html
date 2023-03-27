@@ -12,19 +12,78 @@
 
 <body>
 
-    <div class="w-75 position-absolute top-50 start-50 translate-middle">
-        <div class="row">
+    <style>
+        .folder:hover {
+            background-color: cornsilk;
+            color: rgb(33, 37, 41);
+            transform: .3s;
+            cursor: pointer;
+        }
+    </style>
 
-            <div class="col-md-4 bg-danger">a</div>
-            <div class="col-md-8 bg-primary">b</div>
-            <div class="col-md-4 bg-warning">
+    <!--Start Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form class="form" onsubmit="crearCarpeta(event)">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <br>
+                            <input type="text" id="folderName" name="folderName" class="form-control"
+                                placeholder="Nombre de Carpeta">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Aceptar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End Modal-->
+
+    <div class="w-75 position-absolute top-50 start-50 translate-middle">
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-8">
                 <div class="row">
-                    <div class="col-md-12 bg-primary">a</div>
+                    <div class="col-md-8">
+                        <input type="text" id="path" name="path" class="form-control w-100" disabled value="/" />
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" onclick="retornarInicio()" class="btn btn-primary w-100">Inicio</button>
+                    </div>
                 </div>
             </div>
-            <div class="overflow-x-hidden col-md-8" style="height: 351px; max-height: 351px;">
+            <div class="col-md-4 bg-warning">
                 <div class="row">
+                    <div class="col-md-12 bg-primary">Bienvenido</div>
+                    <div class="col-md-12">202000562</div>
+                    <div class="col-md-12">
+                        <input class="btn btn-primary w-75" type="submit" value="Crear Carpeta" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+                    </div>
+                    <div class="col-md-12 bg-light">
+                        <input class="btn btn-danger w-75" type="submit" value="Eliminar Carpeta">
+                    </div>
+                    <div class="col-md-12 bg-light">
+                        <img src="images/upload.png" class="rounded mx-auto d-block" style="width:20%"
+                            alt="img_usuario">
+                        <!--<label for="" class="text-center">Cargar Archivo</label>-->
+                        <p class="text-center">Cargar Archivo</p>
 
+                    </div>
+                </div>
+            </div>
+            <div class="overflow-x-hidden col-md-8 border border-primary" style="height: 351px; max-height: 351px;">
+                <div class="row" id="folders">
+                    <!--
                     <div class="col-md-3 p-2 text-center">
                         <div class="row">
                             <div class="col-md-12">
@@ -35,154 +94,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 p-2 text-center">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="text-center">Carpeta</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-2 text-center">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="text-center">Carpeta</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-2 text-center">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="text-center">Carpeta</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-2 text-center">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="text-center">Carpeta</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-2 text-center">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="text-center">Carpeta</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-2 text-center">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="text-center">Carpeta</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-2 text-center">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="text-center">Carpeta</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-2 text-center">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="text-center">Carpeta</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-2 text-center">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="text-center">Carpeta</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-2 text-center">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="text-center">Carpeta</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-2 text-center">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="text-center">Carpeta</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-2 text-center">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="text-center">Carpeta</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-2 text-center">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="text-center">Carpeta</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-2 text-center">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="" class="text-center">Carpeta</label>
-                            </div>
-                        </div>
-                    </div>
-
+                    -->
                 </div>
             </div>
             <div class="col-md-4 bg-danger">a</div>
             <div class="col-md-8 bg-primary">b</div>
 
         </div>
+
     </div>
+
+    <!--Scripts-->
+    <script src="treeN-ary.js"></script>
+    <script src="indexTreeN-ary.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"

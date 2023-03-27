@@ -20,16 +20,19 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <br>
-                        <input class="form-control" type="file" id="formFile">
+                <form class="form" onsubmit="loadStudentsForm(event)">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <br>
+                            <input class="form-control" type="file" id="inputFile" name="inputFile"
+                                placeholder="Pos. X">
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-success">Aceptar</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Aceptar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -37,64 +40,61 @@
 
     <div class="w-75 position-absolute top-50 start-50 translate-middle">
         <div class="w-100 position-absolute top-50 start-50 translate-middle">
-
             <div class="row g-3">
-
                 <div class="col-4">
                     <div class="row g-3">
                     </div>
                 </div>
-
                 <div class="col-8">
                     <div class="row">
                         <h3 class="text-center">Estudiantes</h3>
                     </div>
                 </div>
-
                 <div class="col-4">
                     <div class="row g-4">
-                        <input class="btn btn-secondary w-75" type="submit" value="Mostrar Alumnos">
-                        <input class="btn btn-success w-75" type="submit" value="Arbol de Estudiantes">
+                        <form class="form" onsubmit="showStudentsForm(event)">
+                            <select id="traversal" name="traversal" class="form-select w-75">
+                                <option selected disabled>Seleccionar Recorrido</option>
+                                <option value="inOrder">In Order</option>
+                                <option value="preOrder">Pre Order</option>
+                                <option value="postOrder">Post Order</option>
+                            </select>
+                            <input class="btn btn-secondary w-75" type="submit" value="Mostrar Alumnos">
+                        </form>
+
                         <input class="btn btn-primary w-75" type="submit" value="Carga Masiva" data-bs-toggle="modal"
                             data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+                        <input class="btn btn-success w-75" type="submit" value="Arbol de Estudiantes">
                     </div>
                 </div>
-
-                <div class="col-8">
+                <div class="col-8" id="studentsTable">
                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
-
                         <div class="table table-striped">
                             <table class="table table-striped table-hover">
                                 <thead class="table-dark">
                                     <tr>
                                         <th>Carnet</th>
                                         <th>Nombre</th>
+                                        <th>Contraseña</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    <!--
-                                    <tr>
-                                        <td>202000562</td>
-                                        <td>Juan Lopez</td>
-                                    </tr>
-                                -->
-
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
-
             </div>
-
-
-
-
         </div>
     </div>
 
+    <!--scripts-->
+    <script src="lib/cycle.js"></script>
+    <script src="treeAVL.js"></script>
+    <script src="indexTreeAVL.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
     <script>
         const exampleModal = document.getElementById('exampleModal')
         const exampleInput = document.getElementById('recipient-name')
@@ -103,11 +103,9 @@
             //exampleInput.focus()
         })
     </script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
-
 
 </body>
 
