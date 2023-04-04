@@ -1,8 +1,9 @@
 class Tnode {
     constructor(folderName) {
         this.folderName = folderName;
-        this.children = []; // TODOS LOS NODOS HIJOS
-        this.id = null; // PARA GENERAR LA GRÁFICA
+        this.files = [];
+        this.children = [];
+        this.id = null;
     }
 }
 
@@ -10,7 +11,7 @@ class Tree {
     constructor() {
         this.root = new Tnode('/');
         this.root.id = 0;
-        this.size = 1; // Para generar los ids
+        this.size = 1;
     }
 
     insert(folderName, fatherPath) {
@@ -26,7 +27,6 @@ class Tree {
     }
 
     getFolder(path) {
-
         if (path == this.root.folderName) {
             return this.root;
         } else {
@@ -71,24 +71,43 @@ class Tree {
         let node = this.getFolder(path);
         let code = "";
         node.children.map(child => {
-            /*
-            code += ` <div class="col-2 folder" onclick="entrarCarpeta('${child.folderName}')">
-                        <img src="./images/folder.png" width="50%"/>
-                        <p class="h6 text-center">${child.folderName}</p>
-                    </div>`
-            */
             code += `<div class="col-md-3 p-2 text-center folder" ondblclick="entrarCarpeta('${child.folderName}')">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                        </div>
-                        <div class="col-md-12">
-                            <label for="" class="text-center">${child.folderName}</label>
-                        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
+                </div>
+                <div class="col-md-12">
+                    <label for="" class="text-center">${child.folderName}</label>
+                </div>
+            </div>
+        </div>`
+
+        })
+        node.files.map(file => {
+            if (file.type === 'text/plain') {
+                let archivo = new Blob([file.content], file.type);
+                const url = URL.createObjectURL(archivo);
+                code += `
+                        <div class="col-2 folder">
+                        <img src="./imgs/file.png" width="100%"/>
+                        <p class="h6 text-center">
+                            <a href="${url}" download>
+                                ${file.name}
+                            </a>
+                        </p>
                     </div>
-                </div>`
+                `
+            } else {
+                code += ` <div class="col-2 folder">
+                        <img src="./imgs/file.png" width="100%"/>
+                        <p class="h6 text-center">
+                            <a href="${file.content}" download>
+                                ${file.name}
+                            </a>
+                        </p>
+                    </div>`
+            }
         })
         return code;
     }
-
 }

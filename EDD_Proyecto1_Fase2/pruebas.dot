@@ -1,0 +1,17 @@
+digraph {
+splines=ortho;
+node[shape=box];
+nodesep=0.5;
+ranksep=0.3;
+{head [width=0 shape=point style=invis];}
+{tail [width=0 shape=point style=invis];}
+{rank=same; head -> tail [arrowhead=none];}
+N1[label="Carpeta \"Imagenes\" creada\nFecha: 4/4/2023\nHora: 12:47:11 AM"]
+head [group=g1]
+N1 [group=g1]
+tail [group=g1]
+N1[group=g1]
+{head -> N1}
+{N1 -> tail [arrowhead=none];}
+{rank=same; N1;}
+}

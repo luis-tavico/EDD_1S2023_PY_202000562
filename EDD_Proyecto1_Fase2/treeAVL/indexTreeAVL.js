@@ -5,15 +5,15 @@ function loadStudentsForm(e) {
     const formData = new FormData(e.target);
     const form = Object.fromEntries(formData);
     let studentsArray = [];
-    try{        
+    try {
         let fr = new FileReader();
         fr.readAsText(form.inputFile);
         fr.onload = () => {
-            
+
             studentsArray = JSON.parse(fr.result).alumnos;
             $('#studentsTable tbody').html(
                 studentsArray.map((item, index) => {
-                    return(`
+                    return (`
                         <tr>
                             <td>${item.carnet}</td>
                             <td>${item.nombre}</td>
@@ -22,20 +22,32 @@ function loadStudentsForm(e) {
                     `);
                 }).join('')
             )
-            for(let i = 0; i < studentsArray.length; i++){
+            for (let i = 0; i < studentsArray.length; i++) {
                 avlTree.insert(studentsArray[i]);
             }
             localStorage.setItem("avlTree", JSON.stringify(avlTree))
-            alert('Alumnos cargados con éxito!')
+            Swal.fire({
+                position: 'bottom-end',
+                icon: 'success',
+                title: '¡Estudiantes Agregados Exitosamente!',
+                showConfirmButton: false,
+                timer: 1000
+            })
         }
-    }catch(error){
+    } catch (error) {
         console.log(error);
-        alert("Error en la inserción");
+        Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: '¡Estudiantes No Agregados!',
+            showConfirmButton: false,
+            timer: 1000
+        })
     }
 
 }
 
-function showLocalStudents(){
+function showLocalStudents() {
     let temp = localStorage.getItem("avlTree")
     avlTree.root = JSON.parse(temp).root;
     $('#studentsTable tbody').html(
@@ -44,12 +56,12 @@ function showLocalStudents(){
 }
 
 
-function showStudentsForm(e){
+function showStudentsForm(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const form = Object.fromEntries(formData);
-    if(avlTree.root !== null){
-        switch(form.traversal){
+    if (avlTree.root !== null) {
+        switch (form.traversal) {
             case 'inOrder':
                 $('#studentsTable tbody').html(
                     avlTree.inOrder()
@@ -72,11 +84,11 @@ function showStudentsForm(e){
     }
 }
 
-function showAvlGraph(){
+function showAvlGraph() {
     let url = 'https://quickchart.io/graphviz?graph=';
     let body = `digraph G { ${avlTree.treeGraph()} }`
     console.log(body);
     $("#graph").attr("src", url + body);
 }
 
-$( document ).ready(showLocalStudents);
+$(document).ready(showLocalStudents);

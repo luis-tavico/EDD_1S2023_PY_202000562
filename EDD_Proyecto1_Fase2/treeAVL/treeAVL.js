@@ -122,7 +122,7 @@ class AvlTree{
         }
         return row;
     }
-    
+
     //loop through in pre order
     preOrder(){
         let html = this.#preOrderRecursive(this.root);
@@ -168,5 +168,4 @@ class AvlTree{
         `;
         return row;
     }
-
 }
