@@ -36,6 +36,10 @@ function showMatrixGraph(){
     $("#graph").attr("src", url + body);
 }
 
+function click(){
+    console.log("click");
+}
+
 const toBase64 = file => new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);

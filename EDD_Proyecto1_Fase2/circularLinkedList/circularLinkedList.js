@@ -106,9 +106,3 @@ while (n) {
     }
     n = n.next;
 }*/
-
-let cll = new CircularLinkedList();
-var today = new Date();
-var action = "Carpeta \\\"Imagenes\\\" creada\\nFecha: " + today.toLocaleDateString('es-US') + "\\nHora: " + today.toLocaleTimeString('en-US');
-cll.insert(action)
-console.log(cll.graph())

@@ -33,6 +33,7 @@ function loadStudentsForm(e) {
                 showConfirmButton: false,
                 timer: 1000
             })
+            document.getElementById('inputFile').value = '';
         }
     } catch (error) {
         console.log(error);
@@ -49,12 +50,13 @@ function loadStudentsForm(e) {
 
 function showLocalStudents() {
     let temp = localStorage.getItem("avlTree")
-    avlTree.root = JSON.parse(temp).root;
-    $('#studentsTable tbody').html(
-        avlTree.inOrder()
-    )
+    if (temp != null) {
+        avlTree.root = JSON.parse(temp).root;
+        $('#studentsTable tbody').html(
+            avlTree.inOrder()
+        )
+    }
 }
-
 
 function showStudentsForm(e) {
     e.preventDefault();
@@ -87,7 +89,6 @@ function showStudentsForm(e) {
 function showAvlGraph() {
     let url = 'https://quickchart.io/graphviz?graph=';
     let body = `digraph G { ${avlTree.treeGraph()} }`
-    console.log(body);
     $("#graph").attr("src", url + body);
 }
 

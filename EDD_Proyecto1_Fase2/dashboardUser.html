@@ -11,26 +11,17 @@
 </head>
 
 <body>
-    <style type="text/css">
-        .containerTable {
-            background: none;
-            height: 400px;
+
+    <style>
+        .folder:hover {
+            background-color: cornsilk;
+            color: rgb(33, 37, 41);
+            transform: .3s;
+            cursor: pointer;
         }
 
-        .table-scroll tbody {
-            position: absolute;
-            overflow-y: scroll;
-            max-height: 350px;
-        }
-
-        .table-scroll tr {
-            width: 100%;
-            table-layout: fixed;
-            display: inline-table;
-        }
-
-        .table-scroll thead>tr>th {
-            border: none;
+        .titleFolder:hover {
+            cursor: pointer;
         }
     </style>
 
@@ -156,76 +147,77 @@
     </div>
 
     <div class="w-75 position-absolute top-50 start-50 translate-middle">
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-8">
+        <div class="row g-4">
+            <div class="col-4"></div>
+            <div class="col-8">
                 <div class="row">
-                    <div class="col-md-8">
-                        <input type="text" id="path" name="path" class="form-control w-100" disabled value="/" />
-                    </div>
-                    <div class="col-md-4">
-                        <button type="button" onclick="retornarInicio()" class="btn btn-primary w-100">Inicio</button>
+                    <div class="col-12 ps-0 pe-0">
+                        <div class="input-group">
+                            <input type="text" id="path" name="path" class="form-control border border-secondary"
+                                readonly value="/">
+                            <button onclick="retornarInicio()" class="btn btn-secondary" type="button"
+                                id="button-addon1">Inicio</button>
+                        </div>
+                        <!--<input type="text" id="path" name="path" class="form-control w-100" disabled value="/" />-->
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="row">
-                    <div class="col-md-12">Bienvenido</div>
-                    <div class="col-md-12">202000562</div>
-                    <div class="col-md-12">
-                        <button type="button" class="btn btn-primary w-75" data-bs-toggle="modal"
-                            data-bs-target="#modalCreateFolder">
-                            Crear Carpeta
-                        </button>
-                    </div>
-                    <div class="col-md-12">
-                        <button type="button" class="btn btn-danger w-75">
-                            Eliminar Carpeta
-                        </button>
-                    </div>
-                    <div class="col-md-12">
-                        <button type="button" class="btn w-75" data-bs-toggle="modal" data-bs-target="#modalLoadFile">
-                            <img src="images/upload.png" class="rounded mx-auto d-block" style="width:20%"
-                                alt="img_upload">
-                            <p class="text-center">Cargar Archivo</p>
-                        </button>
-                    </div>
+            <div class="col-4">
+                <div class="row g-4">
+                    <button type="button" class="btn btn-primary w-75" data-bs-toggle="modal"
+                        data-bs-target="#modalCreateFolder">
+                        Crear Carpeta
+                    </button>
+                    <button type="button" class="btn btn-danger w-75">
+                        Eliminar Carpeta
+                    </button>
+                    <button type="button" class="btn w-75" data-bs-toggle="modal" data-bs-target="#modalLoadFile">
+                        <img src="images/upload.png" class="rounded mx-auto d-block" style="width:20%" alt="img_upload">
+                        <p class="text-center">Cargar Archivo</p>
+                    </button>
                 </div>
             </div>
-            <div class="overflow-x-hidden col-md-8 border border-primary" style="height: 351px; max-height: 351px;">
+            <div class="overflow-x-hidden col-8 border border-secondary" style="height: 351px; max-height: 351px;">
                 <div class="row" id="folders">
                     <!--
-                    <div class="col-md-3 p-2 text-center">
+                    <div class="col-3 pt-3 text-center folder" ondblclick="entrarCarpeta('${child.folderName}')">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
                             </div>
-                            <div class="col-md-12">
-                                <label for="" class="text-center">Carpeta</label>
+                            <div class="col-12">
+                                <p class="text-center">
+                                    nombre de carpeta
+                                </p>
                             </div>
                         </div>
                     </div>
                     -->
+
                 </div>
             </div>
-            <div class="col-md-4"></div>
-            <div class="col-md-4">
-                <button onclick="showTreeGraph()" type="button" class="btn btn-primary w-75" data-bs-toggle="modal"
-                    data-bs-target="#modalFoldersChart">
-                    Reporte Carpetas
-                </button>
-            </div>
-            <div class="col-md-4">
-                <button onclick="showGraph()" type="button" class="btn btn-primary w-75" data-bs-toggle="modal"
-                    data-bs-target="#modalFilesChart">
-                    Reporte Archivos
-                </button>
-            </div>
-            <div class="col-md-4">
-                <button onclick="showCircularGraph()" type="button" class="btn btn-primary w-75" data-bs-toggle="modal"
-                    data-bs-target="#modalActionsChart">
-                    Reporte Acciones
-                </button>
+            <div class="col-4"></div>
+            <div class="col-8">
+                <div class="row">
+                    <div class="col-4 ps-0">
+                        <button onclick="showTreeGraph()" type="button" class="btn btn-success w-100"
+                            data-bs-toggle="modal" data-bs-target="#modalFoldersChart">
+                            Reporte Carpetas
+                        </button>
+                    </div>
+                    <div class="col-4">
+                        <button onclick="showGraph()" type="button" class="btn btn-secondary w-100"
+                            data-bs-toggle="modal" data-bs-target="#modalFilesChart">
+                            Reporte Archivos
+                        </button>
+                    </div>
+                    <div class="col-4 pe-0">
+                        <button onclick="showCircularGraph()" type="button" class="btn btn-primary w-100"
+                            data-bs-toggle="modal" data-bs-target="#modalActionsChart">
+                            Reporte Acciones
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

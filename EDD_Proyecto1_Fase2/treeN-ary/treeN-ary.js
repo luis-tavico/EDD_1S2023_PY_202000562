@@ -71,16 +71,18 @@ class Tree {
         let node = this.getFolder(path);
         let code = "";
         node.children.map(child => {
-            code += `<div class="col-md-3 p-2 text-center folder" ondblclick="entrarCarpeta('${child.folderName}')">
-            <div class="row">
-                <div class="col-md-12">
-                    <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                </div>
-                <div class="col-md-12">
-                    <label for="" class="text-center">${child.folderName}</label>
-                </div>
+            code += `<div class="col-3 pt-3 text-center folder" ondblclick="entrarCarpeta('${child.folderName}')">
+        <div class="row">
+            <div class="col-12">
+                <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
             </div>
-        </div>`
+            <div class="col-12">
+                <p class="text-center">
+                ${child.folderName}
+                </p>
+            </div>
+        </div>
+    </div>`
 
         })
         node.files.map(file => {
