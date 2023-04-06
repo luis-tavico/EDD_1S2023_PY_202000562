@@ -9,8 +9,8 @@ function loadStudentsForm(e) {
         let fr = new FileReader();
         fr.readAsText(form.inputFile);
         fr.onload = () => {
-
             studentsArray = JSON.parse(fr.result).alumnos;
+            /*
             $('#studentsTable tbody').html(
                 studentsArray.map((item, index) => {
                     return (`
@@ -21,11 +21,27 @@ function loadStudentsForm(e) {
                         </tr>
                     `);
                 }).join('')
-            )
+            )*/
             for (let i = 0; i < studentsArray.length; i++) {
-                avlTree.insert(studentsArray[i]);
+                if (i == 0) {
+                    let actions = new CircularLinkedList();
+                    var today = new Date();
+                    var action = "Carpeta \\\"Imagenes\\\" creada\\nFecha: " + today.toLocaleDateString('es-US') + "\\nHora: " + today.toLocaleTimeString('en-US');
+                    actions.insert(action)
+                    let student = new Student(studentsArray[i].nombre, studentsArray[i].carnet, studentsArray[i].password, "/", "folders", actions);
+                    avlTree.insert(student);
+                } else {
+                    let student = new Student(studentsArray[i].nombre, studentsArray[i].carnet, studentsArray[i].password, "/", "folders", "actions");
+                    avlTree.insert(student);
+                    //avlTree.insert(studentsArray[i]);
+                }
+
             }
-            localStorage.setItem("avlTree", JSON.stringify(avlTree))
+            $('#studentsTable tbody').html(
+                avlTree.inOrder()
+            )
+            //localStorage.setItem("avlTree", JSON.stringify(avlTree))
+            localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
             Swal.fire({
                 position: 'bottom-end',
                 icon: 'success',
@@ -52,6 +68,7 @@ function showLocalStudents() {
     let temp = localStorage.getItem("avlTree")
     if (temp != null) {
         avlTree.root = JSON.parse(temp).root;
+        console.log(JSON.parse(temp).root)
         $('#studentsTable tbody').html(
             avlTree.inOrder()
         )

@@ -54,18 +54,6 @@ class CircularLinkedList {
         return this.head;
     }
 
-    print() {
-        let currentNode = this.head;
-
-        while (currentNode) {
-            console.log(currentNode.value);
-            if (currentNode.next === this.head) {
-                break;
-            }
-            currentNode = currentNode.next;
-        }
-    }
-
     graph() {
         var num = 1;
         let code = "digraph {\nsplines=ortho;\nnode[shape=box];\nnodesep=0.5;\nranksep=0.3;\n";
