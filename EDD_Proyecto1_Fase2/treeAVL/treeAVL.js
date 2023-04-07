@@ -142,6 +142,22 @@ class AvlTree {
 
     }
 
+    //search node
+    searchNode(carnet) {
+        return this.#searchNodeRecursive(this.root, carnet);
+    }
+    #searchNodeRecursive(current, carnet) {
+        if (!current) return null;
+
+        if (current.value.carnet === carnet) return current;
+
+        if (carnet < current.value.carnet) {
+            return this.#searchNodeRecursive(current.left, carnet);
+        } else {
+            return this.#searchNodeRecursive(current.right, carnet);
+        }
+    }
+
     //loop through in order
     inOrder() {
         if (this.root) {

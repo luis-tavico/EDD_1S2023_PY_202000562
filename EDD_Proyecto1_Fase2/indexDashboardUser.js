@@ -1,34 +1,35 @@
-let tree =  new Tree();
+let tree = new Tree();
+let cicularList = new CircularLinkedList();
 
-function crearCarpeta(e){
+function crearCarpeta(e) {
     e.preventDefault();
-    let folderName =  $('#folderName').val();
-    let path =  $('#path').val();
+    let folderName = $('#folderName').val();
+    let path = $('#path').val();
     tree.insert(folderName, path);
     alert("Todo bien!")
     $('#folders').html(tree.getHTML(path))
 }
 
-function entrarCarpeta(folderName){
+function entrarCarpeta(folderName) {
     let path = $('#path').val();
-    let curretPath = path == '/'? path + folderName : path + "/"+ folderName;
+    let curretPath = path == '/' ? path + folderName : path + "/" + folderName;
     console.log(curretPath)
     $('#path').val(curretPath);
     $('#folders').html(tree.getHTML(curretPath))
 }
 
-function retornarInicio(){
+function retornarInicio() {
     $('#path').val("/");
     $('#folders').html(tree.getHTML("/"))
 }
 
-function showTreeGraph(){
+function showTreeGraph() {
     let url = 'https://quickchart.io/graphviz?graph=';
     let body = `digraph G { ${tree.graph()} }`
     $("#graph").attr("src", url + body);
 }
 
-function showMatrixGraph(){
+function showMatrixGraph() {
     let path = $('#path').val();
     let url = 'https://quickchart.io/graphviz?graph=';
     console.log(tree.matrixGrpah(path))
@@ -36,8 +37,30 @@ function showMatrixGraph(){
     $("#graph").attr("src", url + body);
 }
 
-function click(){
-    console.log("click");
+function showCircularGraph() {
+    let url = 'https://quickchart.io/graphviz?graph=';
+
+    //
+    let n = cicularList.getValues();
+    let head = cicularList.getValues();
+    while (n) {
+        console.log(n.value);
+        if (n.next === head) {
+            break;
+        }
+        n = n.next;
+    }
+    //
+
+    var today = new Date();
+    var action = "Carpeta \\\"Imagenes\\\" creada\\nFecha: " + today.toLocaleDateString('es-US') + "\\nHora: " + today.toLocaleTimeString('en-US');
+    cicularList.insert(action)
+
+    let body = cicularList.graph()
+
+
+    console.log(body);
+    $("#graphActions").attr("src", url + body);
 }
 
 const toBase64 = file => new Promise((resolve, reject) => {
@@ -47,31 +70,31 @@ const toBase64 = file => new Promise((resolve, reject) => {
     reader.onerror = error => reject(error);
 });
 
-const subirArchivo =  async (e) => {
+const subirArchivo = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const form = Object.fromEntries(formData);
     // console.log(form.file.type);
     let path = $('#path').val();
-    if(form.file.type === 'text/plain'){
+    if (form.file.type === 'text/plain') {
         // ARCHIVO DE TEXTO
         let fr = new FileReader();
         fr.readAsText(form.file);
-        fr.onload = () => { 
+        fr.onload = () => {
             // CARGAR ARCHIVO A LA MATRIZ
             tree.getFolder(path).files.push({
-                name: form.fileName, 
-                content: fr.result, 
+                name: form.fileName,
+                content: fr.result,
                 type: form.file.type
             })
             $('#folders').html(tree.getHTML(path));
         };
-    }else{
+    } else {
         // IMÁGENES O PDF 
         let parseBase64 = await toBase64(form.file);
         tree.getFolder(path).files.push({
-            name: form.fileName, 
-            content: parseBase64, 
+            name: form.fileName,
+            content: parseBase64,
             type: form.file.type
         })
         $('#folders').html(tree.getHTML(path));
@@ -81,3 +104,17 @@ const subirArchivo =  async (e) => {
     }
     alert('Archivo Subido!')
 }
+
+function getLocalCircularList() {
+    if (localStorage.getItem("circularLinkedList") !== null) {
+        //let temp = localStorage.getItem("circularLinkedList");
+        let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("circularLinkedList")));
+        cicularList.head = temp.head;
+        cicularList.tail = temp.head;
+        cicularList.tail.next = temp.head;
+    }
+}
+
+
+
+$(document).ready(getLocalCircularList);

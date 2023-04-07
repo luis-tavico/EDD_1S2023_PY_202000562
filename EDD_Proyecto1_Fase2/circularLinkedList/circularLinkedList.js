@@ -30,7 +30,7 @@ class CircularLinkedList {
             return;
         }
 
-        if (this.head.value === value) {
+        if (this.head.value == value) {
             this.head = this.head.next;
             this.tail.next = this.head;
             return;
@@ -42,7 +42,7 @@ class CircularLinkedList {
             currentNode = currentNode.next;
         }
 
-        if (currentNode.next === this.head) {
+        if (currentNode.next == this.head) {
             this.tail = currentNode;
         }
 
@@ -65,7 +65,7 @@ class CircularLinkedList {
             code += "{tail [width=0 shape=point style=invis];}\n";
             code += "{rank=same; head -> tail [arrowhead=none];}\n";
             while (currentNode) {
-                if (currentNode.next === head) {
+                if (currentNode.next == head) {
                     code += "N" + num + "[label=\"" + currentNode.value + "\"]\n";
                     nodes += "N" + num + ";}\n";
                     break;
@@ -85,12 +85,19 @@ class CircularLinkedList {
     }
 }
 
-/*let n = myList.getValues();
+/*
+let myList = new CircularLinkedList();
+var today = new Date();
+var action = "Carpeta \\\"Imagenes\\\" creada\\nFecha: " + today.toLocaleDateString('es-US') + "\\nHora: " + today.toLocaleTimeString('en-US');
+myList.insert(action)
+let n = myList.getValues();
 let head = myList.getValues();
 while (n) {
     console.log(n.value);
-    if (n.next === head) {
+    if (n.next == head) {
         break;
     }
     n = n.next;
-}*/
+}
+localStorage.setItem("circularLinkedList", JSON.stringify(myList));
+*/
