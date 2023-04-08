@@ -1,12 +1,25 @@
+let avlTree = new AvlTree();
 let tree = new Tree();
 let cicularList = new CircularLinkedList();
+let newCircularList = new CircularLinkedList();
+var userName = localStorage.getItem('currentUser');
+document.querySelector(".userName").textContent = userName;
 
 function crearCarpeta(e) {
     e.preventDefault();
     let folderName = $('#folderName').val();
     let path = $('#path').val();
     tree.insert(folderName, path);
-    alert("Todo bien!")
+    var today = new Date();
+    var action = "Carpeta \\\"" + folderName + "\\\" creada\\nFecha: " + today.toLocaleDateString('es-US') + "\\nHora: " + today.toLocaleTimeString('en-US');
+    newCircularList.insert(action);
+    Swal.fire({
+        position: 'bottom-end',
+        icon: 'success',
+        title: '¡Carpeta creada exitosamente!',
+        showConfirmButton: false,
+        timer: 1000
+    })
     $('#folders').html(tree.getHTML(path))
 }
 
@@ -39,27 +52,20 @@ function showMatrixGraph() {
 
 function showCircularGraph() {
     let url = 'https://quickchart.io/graphviz?graph=';
-
     //
+    /*
     let n = cicularList.getValues();
     let head = cicularList.getValues();
     while (n) {
         console.log(n.value);
-        if (n.next === head) {
+        n = n.next;
+        if (n.next == head) {
             break;
         }
-        n = n.next;
     }
+    */
     //
-
-    var today = new Date();
-    var action = "Carpeta \\\"Imagenes\\\" creada\\nFecha: " + today.toLocaleDateString('es-US') + "\\nHora: " + today.toLocaleTimeString('en-US');
-    cicularList.insert(action)
-
-    let body = cicularList.graph()
-
-
-    console.log(body);
+    let body = newCircularList.graph();
     $("#graphActions").attr("src", url + body);
 }
 
@@ -105,16 +111,41 @@ const subirArchivo = async (e) => {
     alert('Archivo Subido!')
 }
 
-function getLocalCircularList() {
-    if (localStorage.getItem("circularLinkedList") !== null) {
-        //let temp = localStorage.getItem("circularLinkedList");
-        let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("circularLinkedList")));
-        cicularList.head = temp.head;
-        cicularList.tail = temp.head;
-        cicularList.tail.next = temp.head;
+function getLocalStudents() {
+    let temp = localStorage.getItem("avlTree")
+    if (temp != null) {
+        avlTree.root = JSON.parse(temp).root;
     }
 }
 
+function getLocalFolders() {
 
+}
 
+function getLocalCircularList() {
+    if (localStorage.getItem("circularLinkedList") !== null) {
+        let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("circularLinkedList")));
+        cicularList.head = temp.head;
+        let n = cicularList.getValues();
+        let head = cicularList.getValues();
+        while (n) {
+            newCircularList.append(n.value);
+            if (n.next == head) {
+                break;
+            }
+            n = n.next;
+        }
+    }
+}
+
+function logout() {
+    currentUser = avlTree.searchNode(parseInt(userName));
+    currentUser.value.acciones = newCircularList;
+    localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
+    location.href = "login.html";
+    localStorage.removeItem('currentUser');
+}
+
+$(document).ready(getLocalStudents);
+$(document).ready(getLocalFolders);
 $(document).ready(getLocalCircularList);

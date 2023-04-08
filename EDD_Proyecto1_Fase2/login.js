@@ -40,22 +40,8 @@ function login() {
       if (exist) {
         if (password == exist.value.password) {
           circular_list = exist.value.acciones;
-          //localStorage.setItem("circularList", JSON.stringify(JSON.decycle(circular_list)));
-          let myList = new CircularLinkedList();
-          var today = new Date();
-          var action = "Carpeta \\\"Imagenes\\\" creada\\nFecha: " + today.toLocaleDateString('es-US') + "\\nHora: " + today.toLocaleTimeString('en-US');
-          myList.insert(action)
-          let n = myList.getValues();
-          let head = myList.getValues();
-          while (n) {
-            console.log(n.value);
-            if (n.next === head) {
-              break;
-            }
-            n = n.next;
-          }
-          //localStorage.setItem("circularLinkedList", JSON.stringify(myList));
-          localStorage.setItem("circularLinkedList", JSON.stringify(JSON.decycle(myList)));
+          localStorage.setItem("circularLinkedList", JSON.stringify(JSON.decycle(circular_list)));
+          localStorage.setItem('currentUser', username);
           location.href = "dashboardUser.html";
         } else {
           incorrectPassword();

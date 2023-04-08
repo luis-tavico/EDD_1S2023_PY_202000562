@@ -13,7 +13,7 @@ function loadStudentsForm(e) {
             for (let i = 0; i < studentsArray.length; i++) {
                 let actions = new CircularLinkedList();
                 var today = new Date();
-                var action = "Carpeta \\\"Imagenes\\\" creada\\nFecha: " + today.toLocaleDateString('es-US') + "\\nHora: " + today.toLocaleTimeString('en-US');
+                var action = "Carpeta" + [i] + " \\\"Imagenes\\\" creada\\nFecha: " + today.toLocaleDateString('es-US') + "\\nHora: " + today.toLocaleTimeString('en-US');
                 actions.insert(action)
                 let folders = new Tree();
                 let student = new Student(studentsArray[i].nombre, studentsArray[i].carnet, studentsArray[i].password, "/", folders, actions);

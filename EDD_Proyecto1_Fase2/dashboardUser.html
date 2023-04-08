@@ -23,12 +23,17 @@
         .titleFolder:hover {
             cursor: pointer;
         }
+        
+        .logout:hover {
+            cursor: pointer;
+        }
+
     </style>
 
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand userName"></a>
-            <a class="navbar-brand" href="login.html"><img src="images/log_out.png" style="float: left"
+            <a class="navbar-brand logout" onclick='logout()'><img src="images/log_out.png" style="float: left"
                     alt="logout">|Salir|</a>
         </div>
     </nav>
@@ -238,6 +243,7 @@
         crossorigin="anonymous"></script>
     <!--SCRIPTS-->
     <script src="lib/cycle.js"></script>
+    <script src="treeAVL/treeAVL.js"></script>
     <script src="treeN-ary/treeN-ary.js"></script>
     <script src="circularLinkedList/circularLinkedList.js"></script>
     <script src="indexDashboardUser.js"></script>

@@ -25,6 +25,20 @@ class CircularLinkedList {
         this.tail.next = this.head;
     }
 
+    append(value) {
+        const node = new CllNode(value);
+
+        if (!this.head) {
+            this.head = node;
+            this.tail = node;
+        } else {
+            this.tail.next = node;
+            this.tail = node;
+        }
+
+        this.tail.next = this.head;
+    }
+
     delete(value) {
         if (!this.head) {
             return;
