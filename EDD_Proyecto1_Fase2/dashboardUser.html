@@ -23,11 +23,10 @@
         .titleFolder:hover {
             cursor: pointer;
         }
-        
+
         .logout:hover {
             cursor: pointer;
         }
-
     </style>
 
     <nav class="navbar navbar-dark bg-dark">
@@ -47,7 +46,7 @@
                     <h1 class="modal-title fs-5" id="modalCreateFolderLabel">Crear Carpeta</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form class="form" onsubmit="crearCarpeta(event)">
+                <form class="form" onsubmit="createFolder(event)">
                     <div class="modal-body">
                         <div class="mb-3">
                             <br>
@@ -96,6 +95,48 @@
         </div>
     </div>
 
+    <!-- Modal File Permissions-->
+    <div class="modal fade" id="modalFilePermissions" tabindex="-1" aria-labelledby="modalFilePermissionsLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalFilePermissionsLabel">Otorgar Permisos</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form class="form" onsubmit="createPermission(event)">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="disabledSelect" class="form-label">Seleccionar Usuario</label>
+                            <select id="users" class="form-select">
+                            </select>
+                            <br>
+                            <label for="disabledSelect" class="form-label">Seleccionar Archivo</label>
+                            <select id="files" class="form-select">
+                                <option value="" selected disabled>---</option>
+                                <option value="Archivo.pdf">Archivo.pdf</option>
+                                <option value="Archivo.txt">Archivo.txt</option>
+                                <option value="Archivo">Archivo</option>
+                            </select>
+                            <br>
+                            <label for="disabledSelect" class="form-label">Seleccionar Permiso</label>
+                            <select id="permissions" class="form-select">
+                                <option value="" selected disabled>---</option>
+                                <option value="r">r</option>
+                                <option value="w">w</option>
+                                <option value="r_w">r-w</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Folders Chart-->
     <div class="modal fade" id="modalFoldersChart" tabindex="-1" aria-labelledby="modalFoldersChartLabel"
         aria-hidden="true">
@@ -128,7 +169,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="text-center">
-                        <img id="graph" class="img-thumbnail border border-white">
+                        <img id="graphFiles" class="img-thumbnail border border-white">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -186,6 +227,10 @@
                     <button type="button" class="btn btn-danger w-75">
                         Eliminar Carpeta
                     </button>
+                    <button type="button" class="btn btn-warning w-75" data-bs-toggle="modal"
+                        data-bs-target="#modalFilePermissions">
+                        Compartir Archivo
+                    </button>
                     <button type="button" class="btn w-75" data-bs-toggle="modal" data-bs-target="#modalLoadFile">
                         <img src="images/upload.png" class="rounded mx-auto d-block" style="width:20%" alt="img_upload">
                         <p class="text-center">Cargar Archivo</p>
@@ -221,7 +266,7 @@
                         </button>
                     </div>
                     <div class="col-4">
-                        <button onclick="showGraph()" type="button" class="btn btn-secondary w-100"
+                        <button onclick="showMatrixGraph()" type="button" class="btn btn-secondary w-100"
                             data-bs-toggle="modal" data-bs-target="#modalFilesChart">
                             Reporte Archivos
                         </button>
@@ -244,8 +289,9 @@
     <!--SCRIPTS-->
     <script src="lib/cycle.js"></script>
     <script src="treeAVL/treeAVL.js"></script>
-    <script src="treeN-ary/treeN-ary.js"></script>
     <script src="circularLinkedList/circularLinkedList.js"></script>
+    <script src="sparseMatriz/sparseMatrix.js"></script>
+    <script src="treeN-ary/treeN-ary.js"></script>
     <script src="indexDashboardUser.js"></script>
     <!--BOOTSTRAP-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"

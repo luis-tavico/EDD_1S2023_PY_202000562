@@ -12,9 +12,6 @@ function loadStudentsForm(e) {
             studentsArray = JSON.parse(fr.result).alumnos;
             for (let i = 0; i < studentsArray.length; i++) {
                 let actions = new CircularLinkedList();
-                var today = new Date();
-                var action = "Carpeta" + [i] + " \\\"Imagenes\\\" creada\\nFecha: " + today.toLocaleDateString('es-US') + "\\nHora: " + today.toLocaleTimeString('en-US');
-                actions.insert(action)
                 let folders = new Tree();
                 let student = new Student(studentsArray[i].nombre, studentsArray[i].carnet, studentsArray[i].password, "/", folders, actions);
                 avlTree.insert(student);
@@ -22,8 +19,6 @@ function loadStudentsForm(e) {
             $('#studentsTable tbody').html(
                 avlTree.inOrder()
             )
-            //localStorage.setItem("avlTree", JSON.stringify(avlTree))
-            //localStorage.setItem("circularLinkedList", JSON.stringify(JSON.decycle(myList)));
             localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
             Swal.fire({
                 position: 'bottom-end',
@@ -44,7 +39,6 @@ function loadStudentsForm(e) {
             timer: 1000
         })
     }
-
 }
 
 function showLocalStudents() {

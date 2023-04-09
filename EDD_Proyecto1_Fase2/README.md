@@ -1,4 +1,3 @@
-# EDD GoDRIVE (Fase 2)
 # MANUAL TECNICO
 
 _El manual técnico hace referencia a la información necesaria con el fin de orientar al personal en la concepción, planteamiento análisis programación e instalación del sistema. Es de notar que la redacción propia del manual técnico está orientada a personal con conocimientos en sistemas y tecnologías de información, conocimientos de programación avanzada sobre JavaScript, responsables del mantenimiento e instalación del programa computacional en el computador._
@@ -12,7 +11,6 @@ El presente documento describe la seria de pasos que realizan algunos de los mé
 * Orientar al usuario a entender la estructura del programa, como lo son sus clases y cada uno de los métodos que componen dicha clase.
 
 ## Conocimientos Previos 💡
-
 Los conocimientos mínimos que deben tener las personas que operarán las páginas y deberán utilizar este manual son:
 
 * Conocimientos en lenguaje de programacion JavaScript.
@@ -21,7 +19,6 @@ Los conocimientos mínimos que deben tener las personas que operarán las págin
 * Conocimiento básico de Windows 
 
 ## Requerimientos 📋
-
 El sistema puede ser instalado en cualquier sistema operativo que cumpla con los siguientes requerimientos:
 
 * Sistema Operativo: Windows 7 o superior
@@ -31,17 +28,14 @@ El sistema puede ser instalado en cualquier sistema operativo que cumpla con los
 * Exploradores: Internet Explorer 9 y superior
 
 ## Instalación y Configuración 🔧
-
 Para el proceso de instalación de esta aplicación únicamente es necesario tener instalado un IDE que sea compatible con el lenguaje de programacion JavaScript para ejecutar la aplicación desde la terminal de este.
 
 No es necesario tener alguna configuración ya que la configuración que trae por determinado el IDE es la necesaria para que el funcionamiento del programa sea posible.
 
 ## Despliegue 🚀
-
 Para ejecutar el proyecto es necesario abrir el archivo login.html ya que este es el principal.
 
 ## Estructura del Proyecto 🔩
-
 En este apartado se muestran las carpetas implementadas para el optimo funcionamiento y ordenamiento del programa.
 
 <div>
@@ -51,11 +45,9 @@ En este apartado se muestran las carpetas implementadas para el optimo funcionam
 </div>
 
 ## Fragmentos de Código 💻
-
 En este apartado se explican detalladamente los método y funciones más importantes que conforman el código del programa. Esto con el objetivo de que la persona a usar el programa necesite dar soporte a la aplicación se le realice una manera más sencilla comprender la lógica del programa.
 
 ### Codigo de la Clase **Student**
-
 ```
 type Student struct {
 	FullName   string        `json:"nombre"`
@@ -65,11 +57,9 @@ type Student struct {
 	Stack      *Stacks.Stack `json:"-"`
 }
 ```
-
 En este apartado se declaran todos los atributos que conforman la clase *Student* como lo son nombre (FullName), carnet (Password) entre otros.
 
 ### Codigo de la Clase **Administrator**
-
 ```
 type Administrator struct {
 	User  string
@@ -77,11 +67,9 @@ type Administrator struct {
 	Stack *Stacks.Stack
 }
 ```
-
 En este apartado se declaran todos los atributos que conforman la clase *Administrator* como lo son usuario (User), contraseña (Pass) y una pila (Stack) que hace referencia a una pila de acciones realizadas por el administrador.
 
 ### Codigo de la Clase **DoubleList**
-
 ```
 type Node struct {
 	Student  *Model.Student
@@ -110,7 +98,6 @@ func (list *DoubleList) InsertStart(student *Model.Student) {
 En la clase *DoubleList* como se puede observar primero se crea un nodo para poder enlazar los datos. En esta clase se encuentra la funcion *InsertStart*, esta funcion se encarga de agregar el dato introducido por el usuario a la lista, y su funcionamiento es el siguiente: Primero verifica si la lista esta vacia, de ser asi, el dato es introducido a la cabezera del nodo, en caso contrario la lista es recorrida hasta encontrar la cabecera del nodo vacio e insertar el dato.
 
 ### Codigo de la Clase **Queue**
-
 ```
 type Node struct {
 	Student *Model.Student
@@ -150,7 +137,6 @@ func (queue *Queue) Dequeue() *Model.Student {
 La clase *Queue* hace refencia a una cola. Para la creacion de esta clase fue necesario implementar un nodo ya que el nodo permite enlazar un dato con otro. Esta clase contiene la funcion *Enqueue* la cual se encarga de agregar mas datos a la cola, y la funcion *Dequeue* la cual se encarga de extraer los datos ingresados a la cola.
 
 ### Codigo de la Clase **Stack**
-
 ```
 type Node struct {
 	Details string
@@ -188,15 +174,62 @@ func (stack *Stack) Pop() string {
 Esta clase hace referencia a una pila, para la creacion de esta clase fue necesario implementar un nodo, ya que el nodo es el que permite enlazar un dato con otro. Como se puede obervar se encuentra las funciones *Push* y *Pop* en la cual la primera funcion se encarga de agregar un dato ingresado por el usuario a la cola y la segunda funcion se encarga de eliminar en dato existente en la cola.
 
 ## Construido con 🛠️
+_Para la creacion del proyecto se utilizaron los siguientes lenguajes y librerias:_
 
-_Para la creacion del proyecto se utilizaron los siguientes lenguajes:_
+* [JavaScript](https://developer.mozilla.org/es/docs/Web/JavaScript) - Usado para la creacion total del proyecto.
 
-* [Golang](https://go.dev/) - Usado para la creacion total del proyecto.
+* [HTML](https://developer.mozilla.org/es/docs/Web/HTML) - Usado para la creacion total del proyecto.
+
+* [CSS](https://developer.mozilla.org/es/docs/Web/CSS) - Usado para la creacion total del proyecto.
+
+* [Bootstrap](https://getbootstrap.com/) - Usado para la creacion total del proyecto.
 
 ## Autor ✒️
-
 * [Pedro Luis Tavico](https://github.com/luis-tavico)
 
----
+<br>
+
+***
+
+<br>
 
 # MANUAL DE USUARIO
+
+_El manual de usuario hace referencia a la información necesaria con el fin de orientar al usuario para que obtenga el maximo beneficio de la aplicacion web y pueda hacer un buen uso de esta. Es de notar que la redacción propia del manual de usuario está orientada a personal con poco conocimiento en sistemas y tecnologías de información._
+
+## Introduccion 📄
+El presente documento detalla de la mejor manera posible el funcionamiento de cada una de las partes que integra la aplicacion web, mostrando con imagenes y explicando cada uno de sus componentes que se muestra en la pantalla actual en la que se encuentre el usuario.
+
+## Objetivo ✔️
+Brindar asistencia al usuario de este programa informático (EDD GoDrive), describiendo las opciones o el funcionamiento del proceso que se muestra en cada una de las pantallas conforme al usuario vaya avanzando en dicho programa.
+
+## Requerimientos 📋
+El sistema puede ser instalado en cualquier sistema operativo que cumpla con los siguientes requerimientos: 
+* Sistema Operativo: Windows 7 o superior
+* Procesador mínimo: Intel Pentium (800MHz Intel Pentium)
+* Mínimo 1GB en RAM
+* IDE Visual Studio Code o compatible con JavaScript
+* Exploradores: Internet Explorer 9 o superior
+
+## Inicio de Sesion
+texto
+
+## Administrador
+texto
+
+## Usuario
+texto
+
+## Construido con 🛠️
+_Para la creacion del proyecto se utilizaron los siguientes lenguajes y librerias:_
+
+* [JavaScript](https://developer.mozilla.org/es/docs/Web/JavaScript) - Usado para la creacion total del proyecto.
+
+* [HTML](https://developer.mozilla.org/es/docs/Web/HTML) - Usado para la creacion total del proyecto.
+
+* [CSS](https://developer.mozilla.org/es/docs/Web/CSS) - Usado para la creacion total del proyecto.
+
+* [Bootstrap](https://getbootstrap.com/) - Usado para la creacion total del proyecto.
+
+## Autor ✒️
+* [Pedro Luis Tavico](https://github.com/luis-tavico)

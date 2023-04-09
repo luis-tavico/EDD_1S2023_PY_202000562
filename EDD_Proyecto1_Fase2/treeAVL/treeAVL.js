@@ -124,10 +124,10 @@ class AvlTree {
         nodes = "";
         connections = "";
         if (this.root == null) {
-            return "\nnode[shape=note]\nn[label=\"Sin Alumnos\" fontname=\"calibri\"]\n";
+            return "\nnode[shape=none]\nn[label=\"Sin Alumnos\" fontname=\"calibri\"]\n";
         }
         this.treeGraphRecursive(this.root);
-        return "\nnode[shape=box];\n" + nodes + connections;
+        return "\nnode[shape=box fontname=\"calibri\"];\n" + nodes + connections;
     }
     treeGraphRecursive(current) {
         if (current.left != null) {
@@ -233,6 +233,28 @@ class AvlTree {
                     <td>${current.value.password}</td>
                 </tr>
             `;
+        return row;
+    }
+
+    //show Students
+    showStudents() {
+        if (this.root) {
+            let html = this.#showStudentsRecursive(this.root);
+            return html;
+        }
+        return "";
+    }
+    #showStudentsRecursive(current) {
+        let row = "";
+        if (current.left != null) {
+            row += this.#showStudentsRecursive(current.left);
+        }
+        row += `
+                <option value="${current.value.carnet}">${current.value.carnet}</option>
+            `;
+        if (current.right != null) {
+            row += this.#showStudentsRecursive(current.right);
+        }
         return row;
     }
 

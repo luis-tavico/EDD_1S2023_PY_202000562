@@ -3,6 +3,8 @@ class Tnode {
         this.folderName = folderName;
         this.files = [];
         this.children = [];
+        this.sparseMatrix = new SparseMatrix(folderName);
+        //this.sparseMatrix = sparseMatrix;
         this.id = null;
     }
 }
@@ -49,7 +51,6 @@ class Tree {
     graph() {
         let nodes = "";
         let connections = "";
-
         let node = this.root;
         let queue = [];
         queue.push(node);
@@ -64,11 +65,12 @@ class Tree {
                 });
             }
         }
-        return 'node[shape="record"];\n' + nodes + '\n' + connections;
+        return '\nsplines=ortho;\nnode[shape="folder" fontname=\"calibri\"];\nedge[arrowsize=0.7];\n' + nodes + connections;
     }
 
     getHTML(path) {
         let node = this.getFolder(path);
+        //console.log(node.sparseMatrix)
         let code = "";
         node.children.map(child => {
             code += `<div class="col-3 pt-3 text-center folder" ondblclick="entrarCarpeta('${child.folderName}')">
@@ -111,5 +113,10 @@ class Tree {
             }
         })
         return code;
+    }
+
+    getFilesMatrix(path) {
+        let node = this.getFolder(path);
+        return node.sparseMatrix;
     }
 }

@@ -1,17 +1,21 @@
-digraph {
+digraph G { 
 splines=ortho;
 node[shape=box];
-nodesep=0.5;
-ranksep=0.3;
-{head [width=0 shape=point style=invis];}
-{tail [width=0 shape=point style=invis];}
-{rank=same; head -> tail [arrowhead=none];}
-N1[label="Carpeta \"Imagenes\" creada\nFecha: 6/4/2023\nHora: 4:30:45 PM"]
-N2[label="undefined"]
-head [group=g1]
-N1 [group=g1]
-tail [group=g3]
-N3[group=g3]
-{head -> N1}
-{N3 -> tail [arrowhead=none];}
-{rank=same; N1->N2->}
+edge[arrowsize=0.7];
+nodesep=0.6;
+ranksep=0.6;
+M0[ label = "/" group="0"];
+Y44[label="44" group = 44];
+XArchivotxt[label="Archivo.txt" group="0"];
+
+M0 ->Y44[dir="both"];
+M0 ->XArchivotxt[dir="both"];
+
+{rank = same; M0; Y44;}
+SArchivotxt_44[label="r" group="44"];
+
+{rank=same; XArchivotxt; SArchivotxt_44;}
+
+XArchivotxt -> SArchivotxt_44 [dir="both"]; 
+Y44 -> SArchivotxt_44 [dir="both"]; 
+ }

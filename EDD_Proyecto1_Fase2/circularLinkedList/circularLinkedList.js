@@ -70,30 +70,31 @@ class CircularLinkedList {
 
     graph() {
         var num = 1;
-        let code = "digraph {\nsplines=ortho;\nnode[shape=box];\nnodesep=0.5;\nranksep=0.3;\n";
+        let code = "digraph {\nsplines=ortho;\nnode[shape=box fontname=\"calibri\"];\nedge[arrowsize=0.7];\nnodesep=0.5;\nranksep=0.3;\n";
         let currentNode = this.head;
         let head = this.head;
-        if (currentNode) {
-            let nodes = "{rank=same; "
-            code += "{head [width=0 shape=point style=invis];}\n";
-            code += "{tail [width=0 shape=point style=invis];}\n";
-            code += "{rank=same; head -> tail [arrowhead=none];}\n";
-            while (currentNode) {
-                if (currentNode.next == head) {
-                    code += "N" + num + "[label=\"" + currentNode.value + "\"]\n";
-                    nodes += "N" + num + ";}\n";
-                    break;
-                }
-                code += "N" + num + "[label=\"" + currentNode.value + "\"]\n";
-                nodes += "N" + num + "->";
-                num += 1;
-                currentNode = currentNode.next;
-            }
-            code += "head [group=g1]\nN1 [group=g1]\n"
-            code += "tail [group=g" + num + "]\nN" + num + "[group=g" + num + "]\n"
-            code += "{head -> N1}\n{N" + num + " -> tail [arrowhead=none];}\n"
-            code += nodes;
+        if (!currentNode) {
+            return code + "node[shape=none]\nn[label=\"Sin Actividad\" fontname=\"calibri\"]\n}";
         }
+        let nodes = "{rank=same; "
+        code += "{head [width=0 shape=point style=invis];}\n";
+        code += "{tail [width=0 shape=point style=invis];}\n";
+        code += "{rank=same; head -> tail [arrowhead=none];}\n";
+        while (currentNode) {
+            if (currentNode.next == head) {
+                code += "N" + num + "[label=\"" + currentNode.value + "\"]\n";
+                nodes += "N" + num + ";}\n";
+                break;
+            }
+            code += "N" + num + "[label=\"" + currentNode.value + "\"]\n";
+            nodes += "N" + num + "->";
+            num += 1;
+            currentNode = currentNode.next;
+        }
+        code += "head [group=g1]\nN1 [group=g1]\n"
+        code += "tail [group=g" + num + "]\nN" + num + "[group=g" + num + "]\n"
+        code += "{head -> N1}\n{N" + num + " -> tail [arrowhead=none];}\n"
+        code += nodes;
         code += "}"
         return code;
     }
