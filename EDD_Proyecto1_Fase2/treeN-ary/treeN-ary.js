@@ -212,4 +212,9 @@ class Tree {
         }
         return code;
     }
+
+    files(path) {
+        let node = this.getFolder(path);
+        return node.files.length;
+    }
 }

@@ -237,23 +237,25 @@ class AvlTree {
     }
 
     //show Students
-    showStudents() {
+    showStudents(carnet) {
         if (this.root) {
-            let html = this.#showStudentsRecursive(this.root);
+            let html = this.#showStudentsRecursive(this.root, carnet);
             return html;
         }
         return "";
     }
-    #showStudentsRecursive(current) {
+    #showStudentsRecursive(current, carnet) {
         let row = "";
         if (current.left != null) {
-            row += this.#showStudentsRecursive(current.left);
+            row += this.#showStudentsRecursive(current.left, carnet);
         }
-        row += `
-                <option value="${current.value.carnet}">${current.value.carnet}</option>
-            `;
+        if (current.value.carnet != carnet) {
+            row += `
+            <option value="${current.value.carnet}">${current.value.carnet}</option>
+        `;
+        }
         if (current.right != null) {
-            row += this.#showStudentsRecursive(current.right);
+            row += this.#showStudentsRecursive(current.right, carnet);
         }
         return row;
     }

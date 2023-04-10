@@ -180,45 +180,50 @@ class SparseMatrix {
     }
 
     graph() {
-        let code = "\nsplines=ortho;\nnode[shape=box];\nedge[arrowsize=0.7];\nnodesep=0.6;\nranksep=0.6;\n"
+        let code = "\nsplines=ortho;\nnode[shape=box fontname=\"calibri\"];\nedge[arrowsize=0.7];\nnodesep=0.6;\nranksep=0.6;\n"
         code += "M0[ label = \"" + this.folderName + "\" group=\"0\"];\n";
-        console.log(this.folderName)
         code += this.#headersGraph()
         code += this.#nodesGraph()
         return (code)
     }
     #headersGraph() {
-        let conn = "M0 ->";
+        let conn = "";
         let nodes = "";
-        let rank = "{rank = same; M0; "
+        let rank = "";
         let temp = null;
         try { temp = this.head.right } catch (error) { temp = null; console.log("GRAPH"); }
-        while (temp != null) {
-            nodes += "Y" + temp.value + `[label="${temp.value}" group = ${temp.value}];\n`
-            rank += "Y" + temp.value + ";";
-            if (temp.right != null) {
-                conn += "Y" + temp.value + "->";
-            } else {
-                conn += "Y" + temp.value + `[dir="both"];\n`;
+        if (temp != null) {
+            conn += "M0 ->";
+            nodes += "";
+            rank += "{rank = same; M0; "
+            while (temp != null) {
+                nodes += "Y" + temp.value + `[label="${temp.value}" group = ${temp.value}];\n`
+                rank += "Y" + temp.value + ";";
+                if (temp.right != null) {
+                    conn += "Y" + temp.value + "->";
+                } else {
+                    conn += "Y" + temp.value + `[dir="both"];\n`;
+                }
+                temp = temp.right;
             }
-            temp = temp.right;
         }
 
-        conn += 'M0 ->';
         try { temp = this.head.down } catch (error) { temp = null; console.log("GRAPH"); }
-        while (temp != null) {
-            let val = temp.value.replace(".", "");
-            val = val.replace(" ", "");
-            nodes += "X" + val + `[label="${temp.value}" group="0"];\n`
-            if (temp.down != null) {
-                conn += "X" + val + "->";
-            } else {
-                conn += "X" + val + `[dir="both"];\n`;
+        if (temp != null) {
+            conn += 'M0 ->';
+            while (temp != null) {
+                let val = temp.value.replace(".", "");
+                val = val.replace(" ", "");
+                nodes += "X" + val + `[label="${temp.value}" group="0"];\n`
+                if (temp.down != null) {
+                    conn += "X" + val + "->";
+                } else {
+                    conn += "X" + val + `[dir="both"];\n`;
+                }
+                temp = temp.down;
             }
-            temp = temp.down;
+            rank += "}";
         }
-
-        rank += "}";
         return nodes + "\n" + conn + "\n" + rank + "\n";
     }
 

@@ -39,11 +39,7 @@ function login() {
       exist = avlTree.searchNode(parseInt(username));
       if (exist) {
         if (password == exist.value.password) {
-          tree_n_ary = exist.value.carpetas;
-          sparse_matrix = exist.value.carpetas.root.sparseMatrix;
           circular_list = exist.value.acciones;
-          localStorage.setItem("avlN_ary", JSON.stringify(JSON.decycle(tree_n_ary)));
-          localStorage.setItem("sparseMatrix", JSON.stringify(JSON.decycle(sparse_matrix)));
           localStorage.setItem("circularLinkedList", JSON.stringify(JSON.decycle(circular_list)));
           localStorage.setItem('currentUser', username);
           location.href = "dashboardUser.html";
