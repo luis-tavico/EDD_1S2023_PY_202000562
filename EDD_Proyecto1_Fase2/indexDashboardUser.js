@@ -10,6 +10,8 @@ function createFolder(e) {
     e.preventDefault();
     let folderName = $('#folderName').val();
     let path = $('#path').val();
+    folderName = tree.verifyFolder(folderName, path);
+    console.log(folderName);
     tree.insert(folderName, path);
     newCircularList.insert(messageCreateFolder(folderName));
     Swal.fire({
@@ -19,7 +21,33 @@ function createFolder(e) {
         showConfirmButton: false,
         timer: 1000
     })
+    /////////////////////////////////////////
+    currentUser = avlTree.searchNode(parseInt(userName));
+    currentUser.value.acciones = newCircularList;
+    currentUser.value.carpetas = tree;
+    localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
+    localStorage.setItem("avlN_ary", JSON.stringify(JSON.decycle(tree)));
+    localStorage.setItem("sparseMatrix", JSON.stringify(JSON.decycle(sparseMatrix)));
+    localStorage.setItem("circularLinkedList", JSON.stringify(JSON.decycle(newCircularList)));
+    console.log("done")
     $('#folders').html(tree.getHTML(path))
+}
+
+function deleteFolder(e) {
+    e.preventDefault();
+    let folderName = $('#name_folder').val();
+    let path = $('#path').val();
+    loadFolderInList(path);
+    tree.delete(folderName, path);
+    newCircularList.insert(messageDeleteFolder(folderName));
+    Swal.fire({
+        position: 'bottom-end',
+        icon: 'success',
+        title: '¡Carpeta eliminada exitosamente!',
+        showConfirmButton: false,
+        timer: 1000
+    })
+    //$('#folders').html(tree.getHTML(path))
 }
 
 function createPermission(e) {
@@ -43,25 +71,31 @@ function messageCreateFolder(folderName) {
     return action;
 }
 
+function messageDeleteFolder(fileName) {
+    var today = new Date();
+    var action = "Carpeta \\\"" + fileName + "\\\" eliminada\\nFecha: " + today.toLocaleDateString('es-US') + "\\nHora: " + today.toLocaleTimeString('en-US');
+    return action;
+}
+
 function messageCreateFile(fileName) {
     var today = new Date();
     var action = "Archivo \\\"" + fileName + "\\\" creado\\nFecha: " + today.toLocaleDateString('es-US') + "\\nHora: " + today.toLocaleTimeString('en-US');
     return action;
 }
 
-function entrarCarpeta(folderName) {
+function getInFolder(folderName) {
     let path = $('#path').val();
     let curretPath = path == '/' ? path + folderName : path + "/" + folderName;
-    console.log(curretPath)
+    //console.log(curretPath)
     $('#path').val(curretPath);
     $('#folders').html(tree.getHTML(curretPath))
-    console.log(tree.getFilesMatrix(curretPath));
+    //console.log(tree.getFilesMatrix(curretPath));
     sparseMatrix.head = tree.getFilesMatrix(curretPath).head;
     sparseMatrix.folderName = tree.getFilesMatrix(curretPath).folderName;
     localStorage.setItem("sparseMatrix", JSON.stringify(JSON.decycle(sparseMatrix)));
 }
 
-function retornarInicio() {
+function backToStart() {
     sparseMatrix.head = tree.getFilesMatrix("/").head;
     sparseMatrix.folderName = tree.getFilesMatrix("/").folderName;
     localStorage.setItem("sparseMatrix", JSON.stringify(JSON.decycle(sparseMatrix)));
@@ -77,15 +111,7 @@ function showTreeGraph() {
 }
 
 function showMatrixGraph() {
-    /*
-    let path = $('#path').val();
     let url = 'https://quickchart.io/graphviz?graph=';
-    console.log(tree.matrixGrpah(path))
-    // let body = `digraph G { ${tree.matrixGrpah(path)} }`
-    $("#graph").attr("src", url + body);
-    */
-    let url = 'https://quickchart.io/graphviz?graph=';
-    //console.log(sparseMatrix.graph());
     let body = `digraph G { ${sparseMatrix.graph()} }`
     $("#graphFiles").attr("src", url + body);
 }
@@ -93,7 +119,6 @@ function showMatrixGraph() {
 function showCircularGraph() {
     let url = 'https://quickchart.io/graphviz?graph=';
     let body = newCircularList.graph();
-    //console.log(body);
     $("#graphActions").attr("src", url + body);
 }
 
@@ -104,39 +129,55 @@ const toBase64 = file => new Promise((resolve, reject) => {
     reader.onerror = error => reject(error);
 });
 
-const subirArchivo = async (e) => {
+const uploadFile = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const form = Object.fromEntries(formData);
-    // console.log(form.file.type);
+    ///////
+    let fileName = form.file.name;
+    ///////
     let path = $('#path').val();
+    ///////
+    fileName = tree.verifyFile(fileName, path)
+    console.log(fileName)
+    ///////
     if (form.file.type === 'text/plain') {
-        // ARCHIVO DE TEXTO
         let fr = new FileReader();
         fr.readAsText(form.file);
         fr.onload = () => {
-            // CARGAR ARCHIVO A LA MATRIZ
             tree.getFolder(path).files.push({
-                name: form.fileName,
+                name: fileName,
                 content: fr.result,
                 type: form.file.type
             })
             $('#folders').html(tree.getHTML(path));
         };
     } else {
-        // IMÁGENES O PDF 
         let parseBase64 = await toBase64(form.file);
         tree.getFolder(path).files.push({
-            name: form.fileName,
+            name: fileName,
             content: parseBase64,
             type: form.file.type
         })
         $('#folders').html(tree.getHTML(path));
-        // console.log(parseBase64)
-        // $("#imagenSubida").attr("src", imgBase64); 
-        // console.log(await toBase64(form.file));
     }
-    alert('Archivo Subido!')
+    newCircularList.insert(messageCreateFile(fileName));
+    ///////////////////////////////////////////////////
+    currentUser = avlTree.searchNode(parseInt(userName));
+    currentUser.value.acciones = newCircularList;
+    currentUser.value.carpetas = tree;
+    localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
+    localStorage.setItem("avlN_ary", JSON.stringify(JSON.decycle(tree)));
+    localStorage.setItem("sparseMatrix", JSON.stringify(JSON.decycle(sparseMatrix)));
+    localStorage.setItem("circularLinkedList", JSON.stringify(JSON.decycle(newCircularList)));
+    console.log("done")
+    Swal.fire({
+        position: 'bottom-end',
+        icon: 'success',
+        title: '¡Arhivo subido exitosamente!',
+        showConfirmButton: false,
+        timer: 1000
+    })
 }
 
 function getLocalStudents() {
@@ -147,12 +188,11 @@ function getLocalStudents() {
 }
 
 function getLocalFoldersAndFiles() {
-    let temp = localStorage.getItem("avlN_ary")
-    tree.root = JSON.parse(temp).root;
-    tree.size = JSON.parse(temp).size;
+    let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("avlN_ary")));
+    tree.root = temp.root;
+    tree.size = temp.size;
     let path = $('#path').val();
     $('#folders').html(tree.getHTML(path))
-    ///////////////////
     sparseMatrix.head = tree.root.sparseMatrix.head;
     sparseMatrix.folderName = tree.root.sparseMatrix.folderName;
 }
@@ -172,10 +212,34 @@ function getLocalCircularList() {
 }
 
 function loadStudentInList() {
-    //e.preventDefault();
     $('#users').html(
         "<option value=\"\" selected disabled>---</option>" + avlTree.showStudents()
     )
+}
+
+function loadFileInList() {
+    let path = $('#path').val();
+    $('#files').html(
+        "<option value=\"\" selected disabled>---</option>" + tree.showFiles(path)
+    )
+}
+
+function loadFolderInList() {
+    let path = $('#path').val();
+    $('#foldersInList').html(
+        "<option value=\"\" selected disabled>---</option>" + tree.showFolders(path)
+    )
+}
+
+function saveData() {
+    currentUser = avlTree.searchNode(parseInt(userName));
+    currentUser.value.acciones = newCircularList;
+    currentUser.value.carpetas = tree;
+    localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
+    localStorage.setItem("avlN_ary", JSON.stringify(JSON.decycle(tree)));
+    localStorage.setItem("sparseMatrix", JSON.stringify(JSON.decycle(sparseMatrix)));
+    localStorage.setItem("circularLinkedList", JSON.stringify(JSON.decycle(newCircularList)));
+    console.log("done")
 }
 
 function logout() {
@@ -183,6 +247,10 @@ function logout() {
     currentUser.value.acciones = newCircularList;
     currentUser.value.carpetas = tree;
     localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
+    localStorage.setItem("avlN_ary", JSON.stringify(JSON.decycle(tree)));
+    localStorage.setItem("sparseMatrix", JSON.stringify(JSON.decycle(sparseMatrix)));
+    localStorage.setItem("circularLinkedList", JSON.stringify(JSON.decycle(newCircularList)));
+    console.log("done")
     location.href = "login.html";
     localStorage.removeItem('currentUser');
     localStorage.removeItem('avlN_ary');
@@ -194,3 +262,5 @@ $(document).ready(getLocalStudents);
 $(document).ready(getLocalFoldersAndFiles);
 $(document).ready(getLocalCircularList);
 $(document).ready(loadStudentInList);
+$(document).ready(loadFolderInList);
+$(document).ready(loadFileInList);

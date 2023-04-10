@@ -4,7 +4,6 @@ class Tnode {
         this.files = [];
         this.children = [];
         this.sparseMatrix = new SparseMatrix(folderName);
-        //this.sparseMatrix = sparseMatrix;
         this.id = null;
     }
 }
@@ -25,6 +24,44 @@ class Tree {
             fatherNode.children.push(newNode);
         } else {
             console.log("Ruta no existe");
+        }
+    }
+
+    verifyFolder(folderName, fatherPath) {
+        let fatherNode = this.getFolder(fatherPath);
+        let childrenInFolder = fatherNode.children;
+        if (childrenInFolder.find(fol => fol.folderName === folderName)) {
+            let i = 1;
+            while (childrenInFolder.find(fol => fol.folderName === folderName + "(" + i + ")")) {
+                i += 1;
+            }
+            folderName += "(" + i + ")";
+        }
+        return folderName;
+    }
+
+    verifyFile(fileName, fatherPath) {
+        let fatherNode = this.getFolder(fatherPath);
+        let filesInFolder = fatherNode.files;
+        if (filesInFolder.find(fil => fil.name === fileName)) {
+            let i = 1;
+            while (filesInFolder.find(fil => fil.name === fileName.split(".")[0] + "(" + i + ")." + fileName.split(".")[1])) {
+                i += 1;
+            }
+            fileName = fileName.split(".")[0] + "(" + i + ")." + fileName.split(".")[1]
+        }
+        return fileName;
+    }
+
+    delete(folderName, fatherPath) {
+        //Pendiente arreglar "size"
+        let fatherNode = this.getFolder(fatherPath);
+        let childrenInFolder = fatherNode.children;
+        for (var i = 0; i < childrenInFolder.length; i++) {
+            if (childrenInFolder[i].folderName == folderName) {
+                childrenInFolder.splice(i, 1);
+                console.log(folderName);
+            }
         }
     }
 
@@ -73,13 +110,13 @@ class Tree {
         //console.log(node.sparseMatrix)
         let code = "";
         node.children.map(child => {
-            code += `<div class="col-3 pt-3 text-center folder" ondblclick="entrarCarpeta('${child.folderName}')">
+            code += `<div class="col-3 pt-3 text-center folder" ondblclick="getInFolder('${child.folderName}')">
         <div class="row">
             <div class="col-12">
                 <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
             </div>
             <div class="col-12">
-                <p class="text-center">
+                <p class="text-center titleFile">
                 ${child.folderName}
                 </p>
             </div>
@@ -89,27 +126,59 @@ class Tree {
         })
         node.files.map(file => {
             if (file.type === 'text/plain') {
-                let archivo = new Blob([file.content], file.type);
+                let archivo = new Blob([file.content], { type: file.type });
                 const url = URL.createObjectURL(archivo);
-                code += `
+                /*code += `
                         <div class="col-2 folder">
-                        <img src="./imgs/file.png" width="100%"/>
+                        <img src="./images/file.png" width="30%"/>
                         <p class="h6 text-center">
                             <a href="${url}" download>
                                 ${file.name}
                             </a>
                         </p>
                     </div>
-                `
-            } else {
-                code += ` <div class="col-2 folder">
-                        <img src="./imgs/file.png" width="100%"/>
-                        <p class="h6 text-center">
-                            <a href="${file.content}" download>
-                                ${file.name}
-                            </a>
+                `*/
+                code += `<div class="col-3 pt-3 text-center folder"')">
+                <div class="row">
+                    <div class="col-12">
+                        <img src="images/txt.png" class="" style="width:30%" alt="img_archivo">
+                    </div>
+                    <div class="col-12">
+                        <p class="text-center titleFile"><a class="text-dark text-decoration-none" href="${url}" download>
+                        ${file.name}
+                        </a>
                         </p>
-                    </div>`
+                    </div>
+                </div>
+            </div>`
+            } else if (file.type === 'application/pdf') {
+                code += `<div class="col-3 pt-3 text-center folder"')">
+                <div class="row">
+                    <div class="col-12">
+                        <img src="images/pdf.png" class="" style="width:30%" alt="img_archivo">
+                    </div>
+                    <div class="col-12">
+                    <p class="text-center titleFile"><a class="text-dark text-decoration-none" href="${file.content}" download>
+                    ${file.name}
+                    </a>
+                    </p>
+                    </div>
+                </div>
+            </div>`
+            } else {
+                code += `<div class="col-3 pt-3 text-center folder"')">
+                <div class="row">
+                    <div class="col-12">
+                        <img src="images/image.png" class="" style="width:30%" alt="img_foto">
+                    </div>
+                    <div class="col-12">
+                    <p class="text-center titleFile"><a class="text-dark text-decoration-none" href="${file.content}" download>
+                    ${file.name}
+                    </a>
+                    </p>
+                    </div>
+                </div>
+            </div>`
             }
         })
         return code;
@@ -118,5 +187,29 @@ class Tree {
     getFilesMatrix(path) {
         let node = this.getFolder(path);
         return node.sparseMatrix;
+    }
+
+    showFolders(path) {
+        let node = this.getFolder(path);
+        let flds = node.children;
+        let code = "";
+        for (let i = 0; i < flds.length; i++) {
+            code += `
+                <option value="${flds[i].folderName}">${flds[i].folderName}</option>
+            `;
+        }
+        return code;
+    }
+
+    showFiles(path) {
+        let node = this.getFolder(path);
+        let fls = node.files;
+        let code = "";
+        for (let i = 0; i < fls.length; i++) {
+            code += `
+                <option value="${fls[i].name}">${fls[i].name}</option>
+            `;
+        }
+        return code;
     }
 }

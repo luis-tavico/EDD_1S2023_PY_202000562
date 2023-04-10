@@ -42,9 +42,9 @@ function loadStudentsForm(e) {
 }
 
 function showLocalStudents() {
-    let temp = localStorage.getItem("avlTree")
-    if (temp != null) {
-        avlTree.root = JSON.parse(temp).root;
+    if (localStorage.getItem("avlTree") != null) {
+        let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("avlTree")));
+        avlTree.root = temp.root;
         $('#studentsTable tbody').html(
             avlTree.inOrder()
         )

@@ -42,7 +42,7 @@ function login() {
           tree_n_ary = exist.value.carpetas;
           sparse_matrix = exist.value.carpetas.root.sparseMatrix;
           circular_list = exist.value.acciones;
-          localStorage.setItem("avlN_ary", JSON.stringify(tree_n_ary));
+          localStorage.setItem("avlN_ary", JSON.stringify(JSON.decycle(tree_n_ary)));
           localStorage.setItem("sparseMatrix", JSON.stringify(JSON.decycle(sparse_matrix)));
           localStorage.setItem("circularLinkedList", JSON.stringify(JSON.decycle(circular_list)));
           localStorage.setItem('currentUser', username);
@@ -64,20 +64,10 @@ function login() {
 }
 
 function getLocalStudents() {
-  /*
-  let temp = localStorage.getItem("avlTree")
-  if (temp != null) {
-    avlTree.root = JSON.parse(temp).root;
-  }
-  */
   if (localStorage.getItem("avlTree") !== null) {
-    //let temp = localStorage.getItem("circularLinkedList");
     let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("avlTree")));
     avlTree.root = temp.root;
   }
-
-
-
 }
 
 $(document).ready(getLocalStudents);

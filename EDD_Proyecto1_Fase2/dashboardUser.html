@@ -14,18 +14,21 @@
 
     <style>
         .folder:hover {
-            background-color: cornsilk;
+            border: solid #85C1E9;
+            border-width: 1px;
+            background-color: #EAFAF1;
             color: rgb(33, 37, 41);
             transform: .3s;
             cursor: pointer;
         }
 
-        .titleFolder:hover {
+        .logout:hover {
             cursor: pointer;
         }
 
-        .logout:hover {
-            cursor: pointer;
+        .titleFile {
+            font-size: 14px;
+            line-height: 16px;
         }
     </style>
 
@@ -63,6 +66,33 @@
         </div>
     </div>
 
+    <!-- Modal Delete Folder-->
+    <div class="modal fade" id="modalDeleteFolder" tabindex="-1" aria-labelledby="modalDeleteFolderLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalDeleteFolderLabel">Seleccionar Carpeta</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form class="form" onsubmit="deleteFolder(event)">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <br>
+                            <select id="foldersInList" class="form-select">
+                                <option value="" selected disabled>---</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Load File-->
     <div class="modal fade" id="modalLoadFile" tabindex="-1" aria-labelledby="modalLoadFileLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -71,19 +101,12 @@
                     <h1 class="modal-title fs-5" id="modalLoadFileLabel">Cargar Archivo</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <!--<form class="form" onsubmit="subirArchivo(event)">
-                    <input type="text" id="fileName" name="fileName" class="form-control mb-4" placeholder="Nombre de Archivos"/>
-                    <input type="file" id="file" name="file" class="form-control" accept="application/pdf, .txt, image/*">
-                    <div class="form-group mt-4">
-                        <button type="submit" class="btn btn-primary w-100">Subir Archivo</button>
-                    </div>
-                </form>-->
-                <form class="form" onsubmit="subirArchivo(event)">
+                <form class="form" onsubmit="uploadFile(event)">
                     <div class="modal-body">
                         <div class="mb-3">
                             <br>
-                            <input class="form-control" type="file" id="inputFile" name="inputFile"
-                                placeholder="Pos. X">
+                            <input class="form-control" type="file" id="file" name="file" placeholder="Pos. X"
+                                accept="application/pdf, .txt, image/*">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -113,10 +136,6 @@
                             <br>
                             <label for="disabledSelect" class="form-label">Seleccionar Archivo</label>
                             <select id="files" class="form-select">
-                                <option value="" selected disabled>---</option>
-                                <option value="Archivo.pdf">Archivo.pdf</option>
-                                <option value="Archivo.txt">Archivo.txt</option>
-                                <option value="Archivo">Archivo</option>
                             </select>
                             <br>
                             <label for="disabledSelect" class="form-label">Seleccionar Permiso</label>
@@ -211,7 +230,7 @@
                         <div class="input-group">
                             <input type="text" id="path" name="path" class="form-control border border-secondary"
                                 readonly value="/">
-                            <button onclick="retornarInicio()" class="btn btn-secondary" type="button"
+                            <button onclick="backToStart()" class="btn btn-secondary" type="button"
                                 id="button-addon1">Inicio</button>
                         </div>
                         <!--<input type="text" id="path" name="path" class="form-control w-100" disabled value="/" />-->
@@ -224,7 +243,8 @@
                         data-bs-target="#modalCreateFolder">
                         Crear Carpeta
                     </button>
-                    <button type="button" class="btn btn-danger w-75">
+                    <button type="button" class="btn btn-danger w-75" data-bs-toggle="modal"
+                        data-bs-target="#modalDeleteFolder">
                         Eliminar Carpeta
                     </button>
                     <button type="button" class="btn btn-warning w-75" data-bs-toggle="modal"
@@ -232,15 +252,15 @@
                         Compartir Archivo
                     </button>
                     <button type="button" class="btn w-75" data-bs-toggle="modal" data-bs-target="#modalLoadFile">
-                        <img src="images/upload.png" class="rounded mx-auto d-block" style="width:20%" alt="img_upload">
-                        <p class="text-center">Cargar Archivo</p>
+                        <img src="images/upload.png" class="rounded mx-auto d-block" style="width:30%" alt="img_upload">
+                        <p class="text-center">Subir Archivo</p>
                     </button>
                 </div>
             </div>
             <div class="overflow-x-hidden col-8 border border-secondary" style="height: 351px; max-height: 351px;">
                 <div class="row" id="folders">
                     <!--
-                    <div class="col-3 pt-3 text-center folder" ondblclick="entrarCarpeta('${child.folderName}')">
+                    <div class="col-3 pt-3 text-center folder" ondblclick="getInFolder('${child.folderName}')">
                         <div class="row">
                             <div class="col-12">
                                 <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">

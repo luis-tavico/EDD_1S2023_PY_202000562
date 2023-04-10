@@ -208,6 +208,7 @@ class SparseMatrix {
         try { temp = this.head.down } catch (error) { temp = null; console.log("GRAPH"); }
         while (temp != null) {
             let val = temp.value.replace(".", "");
+            val = val.replace(" ", "");
             nodes += "X" + val + `[label="${temp.value}" group="0"];\n`
             if (temp.down != null) {
                 conn += "X" + val + "->";
@@ -231,6 +232,7 @@ class SparseMatrix {
         while (tx != null) {
             try { ty = tx.right } catch (error) { ty = null; console.log("errorX2"); }
             let valX = ty.x.replace(".", "");
+            valX = valX.replace(" ", "");
             conn += `X${valX} -> `
             while (ty != null) {
                 nodes += `S${valX}_${ty.y}[label="${ty.value}" group="${ty.y}"];\n`
@@ -253,9 +255,11 @@ class SparseMatrix {
             while (tx != null) {
                 if (tx.down != null) {
                     let val_x = tx.x.replace(".", "");
+                    val_x = val_x.replace(" ", "");
                     conn += `S${val_x}_${tx.y} ->`;
                 } else {
                     let val_x = tx.x.replace(".", "");
+                    val_x = val_x.replace(".", "");
                     conn += `S${val_x}_${tx.y} [dir="both"]; \n`;
                 }
                 tx = tx.down;
