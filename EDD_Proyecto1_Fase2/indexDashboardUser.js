@@ -29,17 +29,27 @@ function createFolder(e) {
     localStorage.setItem("avlN_ary", JSON.stringify(JSON.decycle(tree)));
     localStorage.setItem("sparseMatrix", JSON.stringify(JSON.decycle(sparseMatrix)));
     localStorage.setItem("circularLinkedList", JSON.stringify(JSON.decycle(newCircularList)));
-    console.log("done")
-    $('#folders').html(tree.getHTML(path))
+    console.log("done");
+    $('#folders').html(tree.getHTML(path));
+    document.getElementById('folderName').value = '';
 }
 
 function deleteFolder(e) {
     e.preventDefault();
-    let folderName = $('#name_folder').val();
+    let folderName = $('#foldersInList').val();
     let path = $('#path').val();
     loadFolderInList(path);
     tree.delete(folderName, path);
     newCircularList.insert(messageDeleteFolder(folderName));
+    ///////////////////////////////////////
+    currentUser = avlTree.searchNode(parseInt(userName));
+    currentUser.value.acciones = newCircularList;
+    currentUser.value.carpetas = tree;
+    localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
+    localStorage.setItem("avlN_ary", JSON.stringify(JSON.decycle(tree)));
+    localStorage.setItem("sparseMatrix", JSON.stringify(JSON.decycle(sparseMatrix)));
+    localStorage.setItem("circularLinkedList", JSON.stringify(JSON.decycle(newCircularList)));
+    console.log("done");
     Swal.fire({
         position: 'bottom-end',
         icon: 'success',
@@ -47,7 +57,8 @@ function deleteFolder(e) {
         showConfirmButton: false,
         timer: 1000
     })
-    //$('#folders').html(tree.getHTML(path))
+    $('#folders').html(tree.getHTML(path))
+    document.getElementById('foldersInList').value = "";
 }
 
 function createPermission(e) {
@@ -63,6 +74,9 @@ function createPermission(e) {
         showConfirmButton: false,
         timer: 1000
     })
+    document.getElementById('users').value = "";
+    document.getElementById('files').value = "";
+    document.getElementById('permissions').value = "";
 }
 
 function messageCreateFolder(folderName) {
@@ -178,6 +192,7 @@ const uploadFile = async (e) => {
         showConfirmButton: false,
         timer: 1000
     })
+    document.getElementById('file').value = '';
 }
 
 function getLocalStudents() {
