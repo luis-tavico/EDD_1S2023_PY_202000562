@@ -166,7 +166,7 @@ function getData() {
     let temp = localStorage.getItem("avlTree")
     if (temp != null) {
         avlTree.root = JSON.parse(temp).root;
-        currentUser = avlTree.searchNode(parseInt(userName));
+        let currentUser = avlTree.searchNode(parseInt(userName));
         tree.root = currentUser.value.carpetas.root;
         tree.size = currentUser.value.carpetas.size;
         sparseMatrix.head = tree.root.sparseMatrix.head;
@@ -188,7 +188,7 @@ function getData() {
 }
 
 function saveData() {
-    currentUser = avlTree.searchNode(parseInt(userName));
+    let currentUser = avlTree.searchNode(parseInt(userName));
     currentUser.value.acciones = newCircularList;
     currentUser.value.carpetas = tree;
     localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
