@@ -99,20 +99,3 @@ class CircularLinkedList {
         return code;
     }
 }
-
-/*
-let myList = new CircularLinkedList();
-var today = new Date();
-var action = "Carpeta \\\"Imagenes\\\" creada\\nFecha: " + today.toLocaleDateString('es-US') + "\\nHora: " + today.toLocaleTimeString('en-US');
-myList.insert(action)
-let n = myList.getValues();
-let head = myList.getValues();
-while (n) {
-    console.log(n.value);
-    if (n.next == head) {
-        break;
-    }
-    n = n.next;
-}
-localStorage.setItem("circularLinkedList", JSON.stringify(myList));
-*/

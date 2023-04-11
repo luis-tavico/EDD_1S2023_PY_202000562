@@ -274,10 +274,3 @@ class SparseMatrix {
         return nodes + "\n" + rank + "\n" + conn;
     }
 }
-
-/*
-sparseMatrix = new SparseMatrix("/");
-sparseMatrix.insert("Curriculum", "201780044", "r-w");
-sparseMatrix.insert("Tesis", "201700918", "w");
-console.log(sparseMatrix.graph());
-*/

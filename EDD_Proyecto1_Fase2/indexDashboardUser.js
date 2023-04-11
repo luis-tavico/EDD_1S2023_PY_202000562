@@ -11,7 +11,6 @@ function createFolder(e) {
     let folderName = $('#folderName').val();
     let path = $('#path').val();
     folderName = tree.verifyFolder(folderName, path);
-    console.log(folderName);
     tree.insert(folderName, path);
     newCircularList.insert(messageCreateFolder(folderName));
     Swal.fire({
@@ -22,9 +21,7 @@ function createFolder(e) {
         timer: 1000
     })
     $('#folders').html(tree.getHTML(path));
-    loadFolderInList();
     document.getElementById('folderName').value = '';
-    saveData();
 }
 
 function deleteFolder(e) {
@@ -41,9 +38,7 @@ function deleteFolder(e) {
         showConfirmButton: false,
         timer: 1000
     })
-    loadFolderInList();
     document.getElementById('foldersInList').value = "";
-    saveData();
 }
 
 const toBase64 = file => new Promise((resolve, reject) => {
@@ -60,7 +55,6 @@ const uploadFile = async (e) => {
     let fileName = form.file.name;
     let path = $('#path').val();
     fileName = tree.verifyFile(fileName, path)
-    console.log(fileName)
     if (form.file.type === 'text/plain') {
         let fr = new FileReader();
         fr.readAsText(form.file);
@@ -89,9 +83,7 @@ const uploadFile = async (e) => {
         showConfirmButton: false,
         timer: 1000
     })
-    loadFileInList();
     document.getElementById('file').value = '';
-    saveData();
 }
 
 function createPermission(e) {
@@ -115,13 +107,10 @@ function createPermission(e) {
 function getInFolder(folderName) {
     let path = $('#path').val();
     let curretPath = path == '/' ? path + folderName : path + "/" + folderName;
-    //console.log(curretPath)
     $('#path').val(curretPath);
     $('#folders').html(tree.getHTML(curretPath))
     sparseMatrix.head = tree.getFilesMatrix(curretPath).head;
     sparseMatrix.folderName = tree.getFilesMatrix(curretPath).folderName;
-    loadFolderInList();
-    loadFileInList();
 }
 
 function backToStart() {
@@ -129,8 +118,6 @@ function backToStart() {
     $('#folders').html(tree.getHTML("/"))
     sparseMatrix.head = tree.getFilesMatrix("/").head;
     sparseMatrix.folderName = tree.getFilesMatrix("/").folderName;
-    loadFolderInList();
-    loadFileInList();
 }
 
 function messageCreateFolder(folderName) {
@@ -154,7 +141,6 @@ function messageCreateFile(fileName) {
 function showTreeGraph() {
     let url = 'https://quickchart.io/graphviz?graph=';
     let body = `digraph G {${tree.graph()}}`
-    //console.log(body);
     $("#graph").attr("src", url + body);
 }
 
@@ -162,8 +148,6 @@ function showMatrixGraph() {
     let url = 'https://quickchart.io/graphviz?graph=';
     let body = `digraph G { ${sparseMatrix.graph()}}`
     let path = $('#path').val();
-    console.log(tree.files(path));
-    console.log(body);
     if (tree.files(path) < 1) {
         body = "digraph G {\nnode[shape=none]\nn[label=\"No se pudo crear la matriz por falta de archivos.\" fontname=\"calibri\"]\n}"
         $("#graphFiles").attr("src", url + body);
@@ -175,7 +159,6 @@ function showMatrixGraph() {
 function showCircularGraph() {
     let url = 'https://quickchart.io/graphviz?graph=';
     let body = newCircularList.graph();
-    console.log(body)
     $("#graphActions").attr("src", url + body);
 }
 
@@ -184,6 +167,10 @@ function getData() {
     if (temp != null) {
         avlTree.root = JSON.parse(temp).root;
         currentUser = avlTree.searchNode(parseInt(userName));
+        tree.root = currentUser.value.carpetas.root;
+        tree.size = currentUser.value.carpetas.size;
+        sparseMatrix.head = tree.root.sparseMatrix.head;
+        sparseMatrix.folderName = tree.root.sparseMatrix.folderName;
         let circular = JSON.retrocycle(JSON.parse(localStorage.getItem("circularLinkedList")));
         cicularList.head = circular.head;
         let n = cicularList.getValues();
@@ -195,13 +182,8 @@ function getData() {
             }
             n = n.next;
         }
-        tree.root = currentUser.value.carpetas.root;
-        tree.size = currentUser.value.carpetas.size;
         let path = $('#path').val();
         $('#folders').html(tree.getHTML(path))
-        sparseMatrix.head = tree.root.sparseMatrix.head;
-        sparseMatrix.folderName = tree.root.sparseMatrix.folderName;
-
     }
 }
 
@@ -210,13 +192,13 @@ function saveData() {
     currentUser.value.acciones = newCircularList;
     currentUser.value.carpetas = tree;
     localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
-    console.log("done")
 }
 
 function logout() {
     saveData();
     location.href = "login.html";
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('treeNary');
     localStorage.removeItem('circularLinkedList')
 }
 
@@ -242,5 +224,3 @@ function loadFileInList() {
 
 $(document).ready(getData);
 $(document).ready(loadStudentInList);
-$(document).ready(loadFolderInList);
-$(document).ready(loadFileInList);

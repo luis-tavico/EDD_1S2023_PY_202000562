@@ -40,7 +40,7 @@ En este apartado se muestran las carpetas implementadas para el optimo funcionam
 
 <div>
 <p style = 'text-align:center;'>
-<img src="images/img.png" alt="imagen de estructura del proyecto">
+<img src="images/structure.png" alt="imagen de estructura del proyecto">
 </p>
 </div>
 
@@ -49,140 +49,204 @@ En este apartado se explican detalladamente los método y funciones más importa
 
 ### Codigo de la Clase **Student**
 ```
-type Student struct {
-	FullName   string        `json:"nombre"`
-	License    int           `json:"carnet"`
-	Password   string        `json:"password"`
-	RootFolder string        `json:"Carpeta_Raiz"`
-	Stack      *Stacks.Stack `json:"-"`
+class Student {
+    constructor(nombre, carnet, password, carpeta_raiz, carpetas, acciones) {
+        this.nombre = nombre;
+        this.carnet = carnet;
+        this.password = password;
+        this.carpeta_raiz = carpeta_raiz;
+        this.carpetas = carpetas;
+        this.acciones = acciones;
+    }
+
+    //GETTERS
+    get name() {
+        return this.nombre;
+    }
+	...
+	
+	//SETTERS
+    set name(new_name) {
+        this.nombre = new_name;
+    }
+	....
+	
 }
 ```
-En este apartado se declaran todos los atributos que conforman la clase *Student* como lo son nombre (FullName), carnet (Password) entre otros.
+Esta clase hace referencia a un usuario el cual es de tipo estudiante como se puede observar el estudiante posee atributos, como lo son "carpetas" y "acciones" en donde el atributo "carpetas" es una instancia de la clase "Tree" que representa un arbol n-ario y el atributo es una instancia de la clase "CircularLinkedList" que representa una lista enlazada circular.
 
-### Codigo de la Clase **Administrator**
+### Codigo de la Clase **SparseMatrix**
 ```
-type Administrator struct {
-	User  string
-	Pass  string
-	Stack *Stacks.Stack
+class Mnode {
+    constructor(x = "", y = "", value, content, type) {
+        this.x = x.toString();
+        this.y = y.toString();
+        this.value = value;
+        this.content = content;
+        this.type = type;
+        this.up = null;
+        this.down = null;
+        this.right = null;
+        this.left = null;
+    }
 }
+
+class SparseMatrix {
+    constructor(folderName) {
+        this.folderName = folderName;
+        this.head = new Mnode(-1, -1, folderName);
+    }
+
+    insert(x, y, value) {
+        this.#xHeaders(x);
+        this.#yHeaders(y);
+        const node = new Mnode(x, y, value);
+        this.#addX(node, x);
+        this.#addY(node, y);
+    }
+  }
 ```
-En este apartado se declaran todos los atributos que conforman la clase *Administrator* como lo son usuario (User), contraseña (Pass) y una pila (Stack) que hace referencia a una pila de acciones realizadas por el administrador.
+La clase "SparseMatrix" hace referencia a una matriz dispersa. Para la creacion de esta clase fue necesario implementar un nodo ya que el nodo permite enlazar un dato con otro y este a su vez contiente atributos. Esta clase posee metodos y funciones las cuales sirven para el funcionamiento correcto de esta en el codigo anterior se puede oberservar la funcion "insertar" la cual solo es una parte de la verdadera funcion.
 
-### Codigo de la Clase **DoubleList**
+### Codigo de la Clase **CircularLinkedList**
 ```
-type Node struct {
-	Student  *Model.Student
-	Next     *Node
-	Previous *Node
+class CllNode {
+    constructor(value) {
+        this.value = value;
+        this.next = null;
+    }
 }
 
-type DoubleList struct {
-	Head *Node
-	Tail *Node
-	Size int
-}
+class CircularLinkedList {
+    constructor() {
+        this.head = null;
+        this.tail = null;
+    }
 
-func (list *DoubleList) InsertStart(student *Model.Student) {
-	newNode := &Node{Student: student, Previous: nil, Next: nil}
-	if list.Head == nil {
-		list.Head = newNode
-		list.Tail = newNode
-	} else {
-		list.Head.Previous = newNode
-		newNode.Next = list.Head
-		list.Head = newNode
-	}
-}
-```
-En la clase *DoubleList* como se puede observar primero se crea un nodo para poder enlazar los datos. En esta clase se encuentra la funcion *InsertStart*, esta funcion se encarga de agregar el dato introducido por el usuario a la lista, y su funcionamiento es el siguiente: Primero verifica si la lista esta vacia, de ser asi, el dato es introducido a la cabezera del nodo, en caso contrario la lista es recorrida hasta encontrar la cabecera del nodo vacio e insertar el dato.
-
-### Codigo de la Clase **Queue**
-```
-type Node struct {
-	Student *Model.Student
-	Next    *Node
-}
-
-type Queue struct {
-	Head *Node
-	Size int
-}
-
-func (queue *Queue) Enqueue(student *Model.Student) {
-	newNode := &Node{Student: student, Next: nil}
-	if queue.Head == nil {
-		queue.Head = newNode
-	} else {
-		temp := queue.Head
-		for temp.Next != nil {
-			temp = temp.Next
-		}
-		temp.Next = newNode
-	}
-	queue.Size += 1
-}
-
-func (queue *Queue) Dequeue() *Model.Student {
-	if queue.Head == nil {
-		return nil
-	} else {
-		temp := queue.Head
-		queue.Head = queue.Head.Next
-		queue.Size -= 1
-		return temp.Student
-	}
+	//Metodos y Funciones
 }
 ```
-La clase *Queue* hace refencia a una cola. Para la creacion de esta clase fue necesario implementar un nodo ya que el nodo permite enlazar un dato con otro. Esta clase contiene la funcion *Enqueue* la cual se encarga de agregar mas datos a la cola, y la funcion *Dequeue* la cual se encarga de extraer los datos ingresados a la cola.
+La clase "CircularLinkedList" hace referencia a una lista circular enlazada. Para la creacion de esta clase fue necesario implementar un nodo ya que el nodo permite enlazar un dato con otro. Esta clase posee metodos y funciones las cuales sirven para el funcionamiento correcto de esta.
 
-### Codigo de la Clase **Stack**
+### Codigo de la funcion **login()**
 ```
-type Node struct {
-	Details string
-	Next    *Node
-}
-
-type Stack struct {
-	Head *Node
-	Size int
-}
-
-func (stack *Stack) Push(details string) {
-	newNode := &Node{Details: details, Next: nil}
-	if stack.Head == nil {
-		stack.Head = newNode
-	} else {
-		temp := stack.Head
-		stack.Head = newNode
-		newNode.Next = temp
-	}
-	stack.Size += 1
-}
-
-func (stack *Stack) Pop() string {
-	if stack.Head == nil {
-		return ""
-	} else {
-		temp := stack.Head
-		stack.Head = stack.Head.Next
-		stack.Size -= 1
-		return temp.Details
-	}
+function login() {
+  const username = forms[0][0].value;
+  const password = forms[0][1].value;
+  if (username != "" && password != "") {
+    if (username == "Admin") {
+      if (password == "Admin") {
+        location.href = "dashboardAdmin.html"
+      } else {
+        incorrectPassword();
+      }
+    } else {
+      exist = avlTree.searchNode(parseInt(username));
+      if (exist) {
+        if (password == exist.value.password) {
+          circular_list = exist.value.acciones;
+          localStorage.setItem("circularLinkedList", JSON.stringify(JSON.decycle(circular_list)));
+          localStorage.setItem('currentUser', username);
+          location.href = "dashboardUser.html";
+        } else {
+          incorrectPassword();
+        }
+      } else {
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: 'Usuario no existe',
+          showConfirmButton: false,
+          timer: 1000
+        })
+      }
+    }
+  }
 }
 ```
-Esta clase hace referencia a una pila, para la creacion de esta clase fue necesario implementar un nodo, ya que el nodo es el que permite enlazar un dato con otro. Como se puede obervar se encuentra las funciones *Push* y *Pop* en la cual la primera funcion se encarga de agregar un dato ingresado por el usuario a la cola y la segunda funcion se encarga de eliminar en dato existente en la cola.
+Esta funcion es la encargada de verificar que al momento en el que el usuario ingrese sus datos en el formulario, el usuario sea de tipo administrador o estudiante, de no ser asi se lanzara un mensaje en el cual se indica que el usuario no existe.
+
+### Codigo de la funcion **loadStudentsForm()**
+```
+function loadStudentsForm(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const form = Object.fromEntries(formData);
+    let studentsArray = [];
+    try {
+        let fr = new FileReader();
+        fr.readAsText(form.inputFile);
+        fr.onload = () => {
+            studentsArray = JSON.parse(fr.result).alumnos;
+            for (let i = 0; i < studentsArray.length; i++) {
+                let actions = new CircularLinkedList();
+                let folders = new Tree();
+                let student = new Student(studentsArray[i].nombre, studentsArray[i].carnet, studentsArray[i].password, "/", folders, actions);
+                avlTree.insert(student);
+            }
+            $('#studentsTable tbody').html(
+                avlTree.inOrder()
+            )
+            localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
+            Swal.fire({
+                position: 'bottom-end',
+                icon: 'success',
+                title: '¡Estudiantes Agregados Exitosamente!',
+                showConfirmButton: false,
+                timer: 1000
+            })
+            document.getElementById('inputFile').value = '';
+        }
+    } catch (error) {
+        console.log(error);
+        Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: '¡Estudiantes No Agregados!',
+            showConfirmButton: false,
+            timer: 1000
+        })
+    }
+}
+```
+Esta funcion se encarga de obtener los datos que se encuentran almacenados en el archivo a leer.
+El comportamiento de esta funcion es el siguiente: lee linea por linea del archivo e inserta el valor obtenido a un ojeto de tipo "AVLTree" el cual hace referencia a un arbol AVL, luego de leer linea por linea los datos obtenidos son cargados a una tabla, los cuales son mostrados ordenadamente y por ultimo lanza un mensaje de realizado.
+
+### Codigo de la funcion **createFolder()**
+```
+function createFolder(e) {
+    e.preventDefault();
+    let folderName = $('#folderName').val();
+    let path = $('#path').val();
+    folderName = tree.verifyFolder(folderName, path);
+    console.log(folderName);
+    tree.insert(folderName, path);
+    newCircularList.insert(messageCreateFolder(folderName));
+    Swal.fire({
+        position: 'bottom-end',
+        icon: 'success',
+        title: '¡Carpeta creada exitosamente!',
+        showConfirmButton: false,
+        timer: 1000
+    })
+    $('#folders').html(tree.getHTML(path));
+    loadFolderInList();
+    document.getElementById('folderName').value = '';
+    saveData();
+}
+```
+La funcion "createFolder" es la encarga de que al momento en el que el usuario cree una carpeta esta sea almacenada en su respectivo lugar. La funcion primero verifica si el nombre de la carpeta ya existe y de ser asi se creara la carpeta pero se le agregara un numero, esto para tener una mejor referencia de la carpeta y evitar confusiones.
 
 ## Construido con 🛠️
 _Para la creacion del proyecto se utilizaron los siguientes lenguajes y librerias:_
 
-* [JavaScript](https://developer.mozilla.org/es/docs/Web/JavaScript) - Usado para la creacion total del proyecto.
+* [HTML](https://developer.mozilla.org/es/docs/Web/HTML) - Usado para la estructura del proyecto.
 
-* [HTML](https://developer.mozilla.org/es/docs/Web/HTML) - Usado para la creacion total del proyecto.
+* [CSS](https://developer.mozilla.org/es/docs/Web/CSS) - Usado para el estilo del proyecto.
 
-* [CSS](https://developer.mozilla.org/es/docs/Web/CSS) - Usado para la creacion total del proyecto.
+* [Bootstrap](https://getbootstrap.com/) - Usado para el estilo del proyecto.
 
-* [Bootstrap](https://getbootstrap.com/) - Usado para la creacion total del proyecto.
+* [JavaScript](https://developer.mozilla.org/es/docs/Web/JavaScript) - Usado para la funcionalidad dinamica del proyecto.
 
 ## Autor ✒️
 * [Pedro Luis Tavico](https://github.com/luis-tavico)
@@ -212,24 +276,121 @@ El sistema puede ser instalado en cualquier sistema operativo que cumpla con los
 * Exploradores: Internet Explorer 9 o superior
 
 ## Inicio de Sesion
-texto
+Al iniciar con la aplicacion se muestra esta pantalla en la cual el usario debe ingresar su nombre de usuario y contraseña para acceder a su panel correspondiente.
+
+<div>
+<p style = 'text-align:center;'>
+<img src="images/login.png" alt="imagen de estructura del proyecto">
+</p>
+</div>
 
 ## Administrador
-texto
+Si el usuario es de tipo "Administrador" se monstrara esta pantalla en la cual se encuetran las acciones que el usario puede realizar.
+
+<div>
+<p style = 'text-align:center;'>
+<img src="images/administrator.png" alt="imagen de estructura del proyecto">
+</p>
+</div>
+
+## Cargar Archivo
+Al presionar el boton "Carga Masiva" se muestra un ventana emergente en la cual el usuario puede seleccionar el archivo que desea mostrar en la tabla estudiantes.
+
+<div>
+<p style = 'text-align:center;'>
+<img src="images/uploadFileStudents.png" alt="imagen de estructura del proyecto">
+</p>
+</div>
+
+## Seleccionar Orden
+Al presionar el boton "Mostrar Alumnos" se muestra un ventana emergente en la cual el usuario puede elegir el orden en que desea que se muestren los estudiantes en la tabla.
+
+<div>
+<p style = 'text-align:center;'>
+<img src="images/selectOrder.png" alt="imagen de estructura del proyecto">
+</p>
+</div>
+
+## Mostar Grafico de Arbol AVL
+Al presionar el boton "Arbol de Estudiantes" se desplegara una ventana emergente en la que se muestran todos los estudiantes existentes ordenados.
+
+<div>
+<p style = 'text-align:center;'>
+<img src="images/treeAVLChart.png" alt="imagen de estructura del proyecto">
+</p>
+</div>
 
 ## Usuario
-texto
+Si el usuario es de tipo "Estudiante" se mostrara esta pantalla en la cual se encuetran las acciones que el usario puede realizar.
 
-## Construido con 🛠️
-_Para la creacion del proyecto se utilizaron los siguientes lenguajes y librerias:_
+<div>
+<p style = 'text-align:center;'>
+<img src="images/dashboardUser.png" alt="imagen de estructura del proyecto">
+</p>
+</div>
 
-* [JavaScript](https://developer.mozilla.org/es/docs/Web/JavaScript) - Usado para la creacion total del proyecto.
+## Crear Carpeta
+El usuario puede crear carpetas al momento de presionar el boton "Crear Carpeta" las cuales son mostradas en un contenedor visible para el usuario.
 
-* [HTML](https://developer.mozilla.org/es/docs/Web/HTML) - Usado para la creacion total del proyecto.
+<div>
+<p style = 'text-align:center;'>
+<img src="images/createFolder.png" alt="imagen de estructura del proyecto">
+</p>
+</div>
 
-* [CSS](https://developer.mozilla.org/es/docs/Web/CSS) - Usado para la creacion total del proyecto.
+## Eliminar Carpeta
+El usuario puede eliminar carpetas al momento de presionar el boton "Eliminar Carpeta" donde se mostrara una ventana emergente y podra elegir la carpeta que desea eliminar.
 
-* [Bootstrap](https://getbootstrap.com/) - Usado para la creacion total del proyecto.
+<div>
+<p style = 'text-align:center;'>
+<img src="images/deleteFolder.png" alt="imagen de estructura del proyecto">
+</p>
+</div>
+
+## Permisos de Archivo
+El usuario puede otorgar permisos de sus archivos a otros usuarios. Para ello es necesario presionar el boton "Compartir Archivo" donde se mostrar una ventana emergen en la cual el usario podra elegir el usuario, el archivo y el tipo de permiso a conceder.
+
+<div>
+<p style = 'text-align:center;'>
+<img src="images/shareFile.png" alt="imagen de estructura del proyecto">
+</p>
+</div>
+
+## Subir Archivo
+El usuario puede subir archivos al momento de presionar el boton "Subir archivo" donde se mostrara una ventana emergente en la cual el usuario podra seleccionar el archivo que desea subir. Es importante tener en cuenta que solo se permiten subir archivos de tipo pdf, txt e imagenes de cualquier tipo.
+
+<div>
+<p style = 'text-align:center;'>
+<img src="images/uploadFile.png" alt="imagen de estructura del proyecto">
+</p>
+</div>
+
+## Mostrar Grafico de Carpetas
+Al presionar el boton "Reporte Archivos" se despleguera una ventana emergente donde el usario puedra observar en un grafico todos los permisos otorgados de sus archivos a otros usuarios.
+
+<div>
+<p style = 'text-align:center;'>
+<img src="images/folders.png" alt="imagen de estructura del proyecto">
+</p>
+</div>
+
+## Mostrar Grafico de Permisos 
+Al presionar el boton "Reporte Carpetas" se despleguera una ventana emergente donde el usario puedra observar en un grafico todas las carpetas existentes.
+
+<div>
+<p style = 'text-align:center;'>
+<img src="images/permissions.png" alt="imagen de estructura del proyecto">
+</p>
+</div>
+
+## Mostrar Grafico de Bitacora
+Al presionar el boton "Reporte Acciones" se despleguera una ventana emergente donde el usario puedra observar en un grafico todas las aciones que ha realizado como crear o eliminar una carpeta.
+
+<div>
+<p style = 'text-align:center;'>
+<img src="images/actions.png" alt="imagen de estructura del proyecto">
+</p>
+</div>
 
 ## Autor ✒️
 * [Pedro Luis Tavico](https://github.com/luis-tavico)

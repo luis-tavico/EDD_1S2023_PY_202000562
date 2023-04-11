@@ -60,7 +60,6 @@ class Tree {
         for (var i = 0; i < childrenInFolder.length; i++) {
             if (childrenInFolder[i].folderName == folderName) {
                 childrenInFolder.splice(i, 1);
-                console.log(folderName);
             }
         }
     }
@@ -107,7 +106,6 @@ class Tree {
 
     getHTML(path) {
         let node = this.getFolder(path);
-        //console.log(node.sparseMatrix)
         let code = "";
         node.children.map(child => {
             code += `<div class="col-3 pt-3 text-center folder" ondblclick="getInFolder('${child.folderName}')">
@@ -128,16 +126,6 @@ class Tree {
             if (file.type === 'text/plain') {
                 let archivo = new Blob([file.content], { type: file.type });
                 const url = URL.createObjectURL(archivo);
-                /*code += `
-                        <div class="col-2 folder">
-                        <img src="./images/file.png" width="30%"/>
-                        <p class="h6 text-center">
-                            <a href="${url}" download>
-                                ${file.name}
-                            </a>
-                        </p>
-                    </div>
-                `*/
                 code += `<div class="col-3 pt-3 text-center folder"')">
                 <div class="row">
                     <div class="col-12">

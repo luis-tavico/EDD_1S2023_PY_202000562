@@ -233,7 +233,6 @@
                             <button onclick="backToStart()" class="btn btn-secondary" type="button"
                                 id="button-addon1">Inicio</button>
                         </div>
-                        <!--<input type="text" id="path" name="path" class="form-control w-100" disabled value="/" />-->
                     </div>
                 </div>
             </div>
@@ -243,11 +242,11 @@
                         data-bs-target="#modalCreateFolder">
                         Crear Carpeta
                     </button>
-                    <button type="button" class="btn btn-danger w-75" data-bs-toggle="modal"
+                    <button onclick="loadFolderInList()" type="button" class="btn btn-danger w-75" data-bs-toggle="modal"
                         data-bs-target="#modalDeleteFolder">
                         Eliminar Carpeta
                     </button>
-                    <button type="button" class="btn btn-warning w-75" data-bs-toggle="modal"
+                    <button onclick="loadFileInList()" type="button" class="btn btn-warning w-75" data-bs-toggle="modal"
                         data-bs-target="#modalFilePermissions">
                         Compartir Archivo
                     </button>
@@ -259,21 +258,6 @@
             </div>
             <div class="overflow-x-hidden col-8 border border-secondary" style="height: 351px; max-height: 351px;">
                 <div class="row" id="folders">
-                    <!--
-                    <div class="col-3 pt-3 text-center folder" ondblclick="getInFolder('${child.folderName}')">
-                        <div class="row">
-                            <div class="col-12">
-                                <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
-                            </div>
-                            <div class="col-12">
-                                <p class="text-center">
-                                    nombre de carpeta
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    -->
-
                 </div>
             </div>
             <div class="col-4"></div>
