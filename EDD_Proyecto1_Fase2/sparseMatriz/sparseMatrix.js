@@ -264,7 +264,7 @@ class SparseMatrix {
                     conn += `S${val_x}_${tx.y} ->`;
                 } else {
                     let val_x = tx.x.replace(".", "");
-                    val_x = val_x.replace(".", "");
+                    val_x = val_x.replace(" ", "");
                     conn += `S${val_x}_${tx.y} [dir="both"]; \n`;
                 }
                 tx = tx.down;
