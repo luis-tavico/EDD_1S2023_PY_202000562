@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDD GoDrive</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <style>
+        .folder:hover {
+            border: solid #85C1E9;
+            border-width: 1px;
+            background-color: #EAFAF1;
+            color: rgb(33, 37, 41);
+            transform: .3s;
+            cursor: pointer;
+        }
+
+        .logout:hover {
+            cursor: pointer;
+        }
+
+        .titleFile {
+            font-size: 14px;
+            line-height: 16px;
+        }
+    </style>
+
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand userName"></a>
+            <a class="navbar-brand logout" onclick='logout()'><img src="images/log_out.png" style="float: left"
+                    alt="logout">|Salir|</a>
+        </div>
+    </nav>
+
+    <!-- Modal Create Folder-->
+    <div class="modal fade" id="modalCreateFolder" tabindex="-1" aria-labelledby="modalCreateFolderLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalCreateFolderLabel">Crear Carpeta</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form class="form" onsubmit="createFolder(event)">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <br>
+                            <input type="text" id="folderName" name="folderName" class="form-control"
+                                placeholder="Nombre de Carpeta">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Delete Folder-->
+    <div class="modal fade" id="modalDeleteFolder" tabindex="-1" aria-labelledby="modalDeleteFolderLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalDeleteFolderLabel">Seleccionar Carpeta</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form class="form" onsubmit="deleteFolder(event)">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <br>
+                            <select id="foldersInList" class="form-select">
+                                <option value="" selected disabled>---</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Load File-->
+    <div class="modal fade" id="modalLoadFile" tabindex="-1" aria-labelledby="modalLoadFileLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalLoadFileLabel">Cargar Archivo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form class="form" onsubmit="uploadFile(event)">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <br>
+                            <input class="form-control" type="file" id="file" name="file" placeholder="Pos. X"
+                                accept="application/pdf, .txt, image/*">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal File Permissions-->
+    <div class="modal fade" id="modalFilePermissions" tabindex="-1" aria-labelledby="modalFilePermissionsLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalFilePermissionsLabel">Otorgar Permisos</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form class="form" onsubmit="createPermission(event)">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="disabledSelect" class="form-label">Seleccionar Usuario</label>
+                            <select id="users" class="form-select">
+                            </select>
+                            <br>
+                            <label for="disabledSelect" class="form-label">Seleccionar Archivo</label>
+                            <select id="files" class="form-select">
+                            </select>
+                            <br>
+                            <label for="disabledSelect" class="form-label">Seleccionar Permiso</label>
+                            <select id="permissions" class="form-select">
+                                <option value="" selected disabled>---</option>
+                                <option value="r">r</option>
+                                <option value="w">w</option>
+                                <option value="r_w">r-w</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Folders Chart-->
+    <div class="modal fade" id="modalFoldersChart" tabindex="-1" aria-labelledby="modalFoldersChartLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalFoldersChartLabel">Reporte de Carpetas</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img id="graph" class="img-thumbnail border border-white">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Files Chart-->
+    <div class="modal fade" id="modalFilesChart" tabindex="-1" aria-labelledby="modalFilesChartLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalFilesChartLabel">Reporte de Archivos</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img id="graphFiles" class="img-thumbnail border border-white">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Actions Chart-->
+    <div class="modal fade" id="modalActionsChart" tabindex="-1" aria-labelledby="modalActionsChartLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalActionsChartLabel">Reporte de Bitacora</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img id="graphActions" class="img border border-white">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-75 position-absolute top-50 start-50 translate-middle">
+        <br>
+        <br>
+        <div class="row g-4">
+            <div class="col-4"></div>
+            <div class="col-8">
+                <div class="row">
+                    <div class="col-12 ps-0 pe-0">
+                        <div class="input-group">
+                            <input type="text" id="path" name="path" class="form-control border border-secondary"
+                                readonly value="/">
+                            <button onclick="backToStart()" class="btn btn-secondary" type="button"
+                                id="button-addon1">Inicio</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="row g-4">
+                    <button type="button" class="btn btn-primary w-75" data-bs-toggle="modal"
+                        data-bs-target="#modalCreateFolder">
+                        Crear Carpeta
+                    </button>
+                    <button onclick="loadFolderInList()" type="button" class="btn btn-danger w-75" data-bs-toggle="modal"
+                        data-bs-target="#modalDeleteFolder">
+                        Eliminar Carpeta
+                    </button>
+                    <button onclick="loadFileInList()" type="button" class="btn btn-warning w-75" data-bs-toggle="modal"
+                        data-bs-target="#modalFilePermissions">
+                        Compartir Archivo
+                    </button>
+                    <button type="button" class="btn w-75" data-bs-toggle="modal" data-bs-target="#modalLoadFile">
+                        <img src="images/upload.png" class="rounded mx-auto d-block" style="width:30%" alt="img_upload">
+                        <p class="text-center">Subir Archivo</p>
+                    </button>
+                </div>
+            </div>
+            <div class="overflow-x-hidden col-8 border border-secondary" style="height: 351px; max-height: 351px;">
+                <div class="row" id="folders">
+                </div>
+            </div>
+            <div class="col-4"></div>
+            <div class="col-8">
+                <div class="row">
+                    <div class="col-4 ps-0">
+                        <button onclick="showTreeGraph()" type="button" class="btn btn-success w-100"
+                            data-bs-toggle="modal" data-bs-target="#modalFoldersChart">
+                            Reporte Carpetas
+                        </button>
+                    </div>
+                    <div class="col-4">
+                        <button onclick="showMatrixGraph()" type="button" class="btn btn-secondary w-100"
+                            data-bs-toggle="modal" data-bs-target="#modalFilesChart">
+                            Reporte Archivos
+                        </button>
+                    </div>
+                    <div class="col-4 pe-0">
+                        <button onclick="showCircularGraph()" type="button" class="btn btn-primary w-100"
+                            data-bs-toggle="modal" data-bs-target="#modalActionsChart">
+                            Reporte Acciones
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--JQUERY-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <!--SCRIPTS-->
+    <script src="lib/cycle.js"></script>
+    <script src="treeAVL/treeAVL.js"></script>
+    <script src="circularLinkedList/circularLinkedList.js"></script>
+    <script src="sparseMatriz/sparseMatrix.js"></script>
+    <script src="treeN-ary/treeN-ary.js"></script>
+    <script src="indexDashboardUser.js"></script>
+    <!--BOOTSTRAP-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+    <!--SWEET-ALERT-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>

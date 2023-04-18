@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDD GoDrive</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <style type="text/css">
+        .containerTable {
+            background: none;
+            height: 350px;
+        }
+
+        .table-scroll tbody {
+            position: absolute;
+            overflow-y: scroll;
+            max-height: 355px;
+        }
+
+        .table-scroll tr {
+            width: 100%;
+            table-layout: fixed;
+            display: inline-table;
+        }
+
+        .table-scroll thead>tr>th {
+            border: none;
+        }
+    </style>
+
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand">Administrador</a>
+            <a class="navbar-brand" href="login.html"><img src="images/log_out.png" style="float: left"
+                    alt="logout">|Salir|</a>
+        </div>
+    </nav>
+
+    <!-- Modal Show Students-->
+    <div class="modal fade" id="modalShowStudents" tabindex="-1" aria-labelledby="modalShowStudentsLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalShowStudentsLabel">Seleccionar Recorrido</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form class="form" onsubmit="showStudentsForm(event)">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <br>
+                            <select id="traversal" name="traversal" class="form-select">
+                                <option value="inOrder">In-Orden</option>
+                                <option value="preOrder">Pre-Orden</option>
+                                <option value="postOrder">Post-Orden</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Load File-->
+    <div class="modal fade" id="modalLoadFile" tabindex="-1" aria-labelledby="modalLoadFileLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalLoadFileLabel">Cargar Archivo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form class="form" onsubmit="loadStudentsForm(event)">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <br>
+                            <input class="form-control" type="file" id="inputFile" name="inputFile"
+                                placeholder="Pos. X">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Students Chart-->
+    <div class="modal fade" id="modalStudentsChart" tabindex="-1" aria-labelledby="modalStudentsChartLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalStudentsChartLabel">Reporte de Estudiantes</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img id="graph" class="img-thumbnail border border-white">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-75 position-absolute top-50 start-50 translate-middle">
+        <div class="w-100 position-absolute top-50 start-50 translate-middle">
+            <div class="row g-3">
+                <div class="col-4">
+                    <div class="row g-3">
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="row">
+                        <h3 class="text-center">Estudiantes</h3>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row g-4">
+                        <button type="button" class="btn btn-secondary w-75" data-bs-toggle="modal"
+                            data-bs-target="#modalShowStudents">
+                            Mostrar Alumnos
+                        </button>
+                        <button type="button" class="btn btn-primary w-75" data-bs-toggle="modal"
+                            data-bs-target="#modalLoadFile">
+                            Carga Masiva
+                        </button>
+                        <button onclick="showAvlGraph()" type="button" class="btn btn-success w-75"
+                            data-bs-toggle="modal" data-bs-target="#modalStudentsChart">
+                            Arbol de Estudiantes
+                        </button>
+                    </div>
+                </div>
+                <div class="col-8 containerTable">
+                    <div id="studentsTable">
+                        <table class="table table-primary table-scroll table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Carnet</th>
+                                    <th>Nombre</th>
+                                    <th>Contraseña</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--JQUERY-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <!--SCRIPTS-->
+    <script src="lib/cycle.js"></script>
+    <script src="model/student.js"></script>
+    <script src="treeAVL/treeAVL.js"></script>
+    <script src="circularLinkedList/circularLinkedList.js"></script>
+    <script src="sparseMatriz/sparseMatrix.js"></script>
+    <script src="treeN-ary/treeN-ary.js"></script>
+    <script src="indexDashboardAdmin.js"></script>
+    <!--BOOTSTRAP-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+    <!--SWEET-ALERT-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>
