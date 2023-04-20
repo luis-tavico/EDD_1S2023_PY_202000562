@@ -17,36 +17,43 @@
     </div>
   </nav>
 
-  <div class="w-50 position-absolute top-50 start-50 translate-middle">
-    <div class="w-50 position-absolute top-50 start-50 translate-middle">
-      <div class="card">
-        <div class="card-header text-center">
-          Inicio de Sesion
-        </div>
-        <br>
-        <img src="images/user.png" class="rounded mx-auto d-block" style="width:20%" alt="img_usuario">
-        <div class="card-body">
-          <form id="form_login" class="row g-3 needs-validation" novalidate>
-            <div class="col-md-12">
-              <label for="iinput_user" class="form-label">Carnet</label>
-              <input type="text" class="form-control" id="input_user" required value="">
-              <div class="invalid-feedback">
-                Ingrese su carnet
+  <div class="container">
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-4"></div>
+      <div class="col-4">
+        <div class="card">
+          <div class="card-header text-center">
+            <h5>Inicio de Sesion</h5>
+          </div>
+          <br>
+          <img src="images/user.png" class="rounded mx-auto d-block" style="width:20%" alt="img_usuario">
+          <div class="card-body">
+            <form id="form_login" class="row g-3 needs-validation" novalidate>
+              <div class="col-md-12">
+                <label for="iinput_user" class="form-label">Carnet</label>
+                <input type="text" class="form-control" id="input_user" required value="">
+                <div class="invalid-feedback">
+                  Ingrese su carnet
+                </div>
               </div>
-            </div>
-            <div class="col-md-12 mb-2">
-              <label for="input_password" class="form-label">Contraseña</label>
-              <input type="password" class="form-control" id="input_password" required value="">
-              <div class="invalid-feedback">
-                Ingrese su contraseña
+              <div class="col-md-12 mb-2">
+                <label for="input_password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="input_password" required value="">
+                <div class="invalid-feedback">
+                  Ingrese su contraseña
+                </div>
               </div>
-            </div>
-            <div class="col-md-12">
-              <button onclick="login()" type="submit" class="btn btn-success w-100">
-                Ingresar
-              </button>
-            </div>
-          </form>
+              <div class="col-md-12">
+                <button onclick="login()" type="submit" class="btn btn-success w-100">
+                  Ingresar
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

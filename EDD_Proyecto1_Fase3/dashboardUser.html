@@ -30,6 +30,20 @@
             font-size: 14px;
             line-height: 16px;
         }
+
+        #areaFilesAndFolders::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        #areaFilesAndFolders::-webkit-scrollbar-track {
+            background: white;
+        }
+
+        #areaFilesAndFolders::-webkit-scrollbar-thumb {
+            background-color: lightgray;
+            border-radius: 20px;
+            border: 3px solid white;
+        }
     </style>
 
     <nav class="navbar navbar-dark bg-dark">
@@ -219,11 +233,23 @@
         </div>
     </div>
 
-    <div class="w-75 position-absolute top-50 start-50 translate-middle">
+
+    <div class="container">
         <br>
         <br>
         <div class="row g-4">
-            <div class="col-4"></div>
+            <div class="col-4 ps-0 pe-0">
+                <div class="w-75">
+                    <div class="col-12 btn-group">
+                        <input type="radio" class="btn-check" name="options" id="option1" onclick="presionar(this.id);"
+                            autocomplete="off" checked>
+                        <label class="btn btn-outline-secondary" for="option1">Mi Unidad</label>
+                        <input type="radio" class="btn-check" name="options" id="option2" onclick="presionar(this.id)"
+                            autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="option2">Compartido Conmigo</label>
+                    </div>
+                </div>
+            </div>
             <div class="col-8">
                 <div class="row">
                     <div class="col-12 ps-0 pe-0">
@@ -242,8 +268,8 @@
                         data-bs-target="#modalCreateFolder">
                         Crear Carpeta
                     </button>
-                    <button onclick="loadFolderInList()" type="button" class="btn btn-danger w-75" data-bs-toggle="modal"
-                        data-bs-target="#modalDeleteFolder">
+                    <button onclick="loadFolderInList()" type="button" class="btn btn-danger w-75"
+                        data-bs-toggle="modal" data-bs-target="#modalDeleteFolder">
                         Eliminar Carpeta
                     </button>
                     <button onclick="loadFileInList()" type="button" class="btn btn-warning w-75" data-bs-toggle="modal"
@@ -256,11 +282,14 @@
                     </button>
                 </div>
             </div>
-            <div class="overflow-x-hidden col-8 border border-secondary" style="height: 351px; max-height: 351px;">
+            <div class="overflow-x-hidden col-8 border border-secondary" id="areaFilesAndFolders" style="height: 351px; max-height: 351px;">
                 <div class="row" id="folders">
                 </div>
             </div>
-            <div class="col-4"></div>
+            <div class="col-4 ps-0 pe-0">
+                <button onclick="chat()" class="btn btn-primary w-75" type="button"
+                id="button-addon1">Chatear</button>
+            </div>
             <div class="col-8">
                 <div class="row">
                     <div class="col-4 ps-0">

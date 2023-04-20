@@ -108,7 +108,7 @@ class Tree {
         let node = this.getFolder(path);
         let code = "";
         node.children.map(child => {
-            code += `<div class="col-3 pt-3 text-center folder" ondblclick="getInFolder('${child.folderName}')">
+            code += `<div class="col-3 pt-2 text-center folder" ondblclick="getInFolder('${child.folderName}')">
         <div class="row">
             <div class="col-12">
                 <img src="images/folder.png" class="" style="width:30%" alt="img_carpeta">
@@ -126,7 +126,7 @@ class Tree {
             if (file.type === 'text/plain') {
                 let archivo = new Blob([file.content], { type: file.type });
                 const url = URL.createObjectURL(archivo);
-                code += `<div class="col-3 pt-3 text-center folder"')">
+                code += `<div class="col-3 pt-2 text-center folder"')">
                 <div class="row">
                     <div class="col-12">
                         <img src="images/txt.png" class="" style="width:30%" alt="img_archivo">
@@ -140,7 +140,7 @@ class Tree {
                 </div>
             </div>`
             } else if (file.type === 'application/pdf') {
-                code += `<div class="col-3 pt-3 text-center folder"')">
+                code += `<div class="col-3 pt-2 text-center folder"')">
                 <div class="row">
                     <div class="col-12">
                         <img src="images/pdf.png" class="" style="width:30%" alt="img_archivo">
@@ -154,7 +154,7 @@ class Tree {
                 </div>
             </div>`
             } else {
-                code += `<div class="col-3 pt-3 text-center folder"')">
+                code += `<div class="col-3 pt-2 text-center folder"')">
                 <div class="row">
                     <div class="col-12">
                         <img src="images/image.png" class="" style="width:30%" alt="img_foto">

@@ -202,6 +202,14 @@ function logout() {
     localStorage.removeItem('circularLinkedList')
 }
 
+function chat() {
+    saveData();
+    location.href = "chat.html";
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('treeNary');
+    localStorage.removeItem('circularLinkedList')
+}
+
 function loadStudentInList() {
     $('#users').html(
         "<option value=\"\" selected disabled>---</option>" + avlTree.showStudents(parseInt(userName))
@@ -220,6 +228,10 @@ function loadFileInList() {
     $('#files').html(
         "<option value=\"\" selected disabled>---</option>" + tree.showFiles(path)
     )
+}
+
+function presionar(val) {
+    console.log(val)
 }
 
 $(document).ready(getData);

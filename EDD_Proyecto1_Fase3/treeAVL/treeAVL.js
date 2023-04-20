@@ -173,9 +173,9 @@ class AvlTree {
         }
         row += `
             <tr>
-                <td>${current.value.carnet}</td>
-                <td>${current.value.nombre}</td>
-                <td>${current.value.password}</td>
+                <td class="col-3">${current.value.carnet}</td>
+                <td class="col-5">${current.value.nombre}</td>
+                <td class="col-4">${current.value.password}</td>
             </tr>
         `;
         if (current.right != null) {
@@ -196,10 +196,10 @@ class AvlTree {
         let row = "";
         row += `
                 <tr>
-                    <td>${current.value.carnet}</td>
-                    <td>${current.value.nombre}</td>
-                    <td>${current.value.password}</td>
-                </tr>
+                    <td class="col-3">${current.value.carnet}</td>
+                    <td class="col-5">${current.value.nombre}</td>
+                    <td class="col-4">${current.value.password}</td>
+                </tr>        
             `;
         if (current.left != null) {
             row += this.#preOrderRecursive(current.left);
@@ -228,9 +228,9 @@ class AvlTree {
         }
         row += `
                 <tr>
-                    <td>${current.value.carnet}</td>
-                    <td>${current.value.nombre}</td>
-                    <td>${current.value.password}</td>
+                    <td class="col-3">${current.value.carnet}</td>
+                    <td class="col-5">${current.value.nombre}</td>
+                    <td class="col-4">${current.value.password}</td>
                 </tr>
             `;
         return row;

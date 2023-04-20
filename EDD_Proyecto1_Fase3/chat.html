@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDD GoDrive</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <style>
+        .back:hover {
+            cursor: pointer;
+        }
+
+        #areaUsers {
+            height: 440px;
+        }
+
+        #areaUsers::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        #areaUsers::-webkit-scrollbar-track {
+            background: white;
+        }
+
+        #areaUsers::-webkit-scrollbar-thumb {
+            background-color: lightgray;
+            border-radius: 20px;
+            border: 3px solid white;
+        }
+
+        #areaChat {
+            height: 384px;
+            max-height: 384px;
+        }
+
+        #areaChat::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        #areaChat::-webkit-scrollbar-track {
+            background: white;
+        }
+
+        #areaChat::-webkit-scrollbar-thumb {
+            background-color: lightgray;
+            border-radius: 20px;
+            border: 3px solid white;
+        }
+
+        #areaMessage {
+            resize: none;
+        }
+
+        #areaMessage::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        #areaMessage::-webkit-scrollbar-track {
+            background: white;
+        }
+
+        #areaMessage::-webkit-scrollbar-thumb {
+            background-color: lightgray;
+            border-radius: 20px;
+            border: 3px solid white;
+        }
+
+        .chatContainer {
+            border: 2px solid #dedede;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 5px;
+        }
+
+        .darker {
+            border-color: #ccc;
+            background-color: #ddd;
+        }
+
+        .chatContainer::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .chatContainer img {
+            float: left;
+            max-width: 60px;
+            width: 100%;
+            margin-right: 20px;
+            border-radius: 50%;
+        }
+
+        .chatContainer img.right {
+            float: right;
+            margin-left: 20px;
+            margin-right: 0;
+        }
+
+        .time-right {
+            float: right;
+            color: #aaa;
+        }
+
+        .time-left {
+            float: left;
+            color: #999;
+        }
+    </style>
+
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand userName">202000562</a>
+            <a class="navbar-brand back" onclick='back()'><img src="images/back.png" style="float: left"
+                    alt="back">|Regresar|</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-12 mb-2">
+                <h1 class="text-center">Mensajeria</h1>
+            </div>
+            <div class="col-4">
+                <div class="col-12 border border-secondary">
+                    <h5 class="text-center">Chats</h5>
+                </div>
+                <div class="overflow-x-hidden col-12 border border-secondary" id="areaUsers">
+                    <!---->
+                    <div class="list-group list-group-flush">
+                        <button type="button"
+                            class="list-group-item list-group-item-action border border-secondary-subtle border-start-0 border-end-0 border-top-0 border-bottom-1">201700562</button>
+                        <button type="button"
+                            class="list-group-item list-group-item-action border border-secondary-subtle border-start-0 border-end-0 border-top-0 border-bottom-1">201700562</button>
+                        <button type="button"
+                            class="list-group-item list-group-item-action border border-secondary-subtle border-start-0 border-end-0 border-top-0 border-bottom-1">201700562</button>
+                        <button type="button"
+                            class="list-group-item list-group-item-action border border-secondary-subtle border-start-0 border-end-0 border-top-0 border-bottom-1">201700562</button>
+                        <button type="button"
+                            class="list-group-item list-group-item-action border border-secondary-subtle border-start-0 border-end-0 border-top-0 border-bottom-1">201700562</button>
+                        <button type="button"
+                            class="list-group-item list-group-item-action border border-secondary-subtle border-start-0 border-end-0 border-top-0 border-bottom-1">201700562</button>
+                        <button type="button"
+                            class="list-group-item list-group-item-action border border-secondary-subtle border-start-0 border-end-0 border-top-0 border-bottom-1">201700562</button>
+                        <button type="button"
+                            class="list-group-item list-group-item-action border border-secondary-subtle border-start-0 border-end-0 border-top-0 border-bottom-1">201700562</button>
+                        <button type="button"
+                            class="list-group-item list-group-item-action border border-secondary-subtle border-start-0 border-end-0 border-top-0 border-bottom-1">201700562</button>
+                        <button type="button"
+                            class="list-group-item list-group-item-action border border-secondary-subtle border-start-0 border-end-0 border-top-0 border-bottom-1">201700562</button>
+                        <button type="button"
+                            class="list-group-item list-group-item-action border border-secondary-subtle border-start-0 border-end-0 border-top-0 border-bottom-1">201700562</button>
+                        <button type="button"
+                            class="list-group-item list-group-item-action border border-secondary-subtle border-start-0 border-end-0 border-top-0 border-bottom-1">201700562</button>
+                        <button type="button"
+                            class="list-group-item list-group-item-action border border-secondary-subtle border-start-0 border-end-0 border-top-0 border-bottom-1">201700562</button>
+                        <button type="button"
+                            class="list-group-item list-group-item-action border border-secondary-subtle border-start-0 border-end-0 border-top-0 border-bottom-1">201700562</button>
+                        <button type="button"
+                            class="list-group-item list-group-item-action border border-secondary-subtle border-start-0 border-end-0 border-top-0 border-bottom-1">201700562</button>
+                    </div>
+                    <!---->
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="col-12 border border-secondary">
+                    <h5 class="text-center">201780044</h5>
+                </div>
+                <div class="overflow-x-hidden col-12 border border-secondary border-bottom-0" id="areaChat">
+                    <div class="chatContainer">
+                        <img src="/images/avatar.png" alt="Avatar">
+                        <p class="mb-2">Hello. How are you today?</p>
+                        <span class="time-right">11:00</span>
+                    </div>
+                    <div class="chatContainer darker">
+                        <img src="/images/avatar.png" alt="Avatar" class="right">
+                        <p class="mb-2">Hey! I'm fine. Thanks for asking!</p>
+                        <span class="time-left">11:01</span>
+                    </div>
+                    <div class="chatContainer">
+                        <img src="/images/avatar.png" alt="Avatar">
+                        <p class="mb-2">Hello. How are you today?</p>
+                        <span class="time-right">11:00</span>
+                    </div>
+                    <div class="chatContainer darker">
+                        <img src="/images/avatar.png" alt="Avatar" class="right">
+                        <p class="mb-2">Hey! I'm fine. Thanks for asking!</p>
+                        <span class="time-left">11:01</span>
+                    </div>
+                    <div class="chatContainer">
+                        <img src="/images/avatar.png" alt="Avatar">
+                        <p class="mb-2">Hello. How are you today?</p>
+                        <span class="time-right">11:00</span>
+                    </div>
+                    <div class="chatContainer darker">
+                        <img src="/images/avatar.png" alt="Avatar" class="right">
+                        <p class="mb-2">Hey! I'm fine. Thanks for asking! fhjgg jh h kj kjklj kljlk lkjñkj lkjkj kj kj
+                            lkjlk lkjlk jhj kjh jhkljkj kljkl lkjlkj kljlkjkl jk jlkjlk </p>
+                        <span class="time-left">11:01</span>
+                    </div>
+                </div>
+                <div class="col-12 bg-success border border-success border-top-0">
+                    <form class="form" onsubmit="print(event)">
+                        <div class="row">
+                            <div class="col-11 ps-4 pe-2 mt-2 mb-2">
+                                <textarea class="form-control" name="" id="areaMessage" rows="1"
+                                    placeholder="Type Here"></textarea>
+                            </div>
+                            <div class="col-1 ps-0 mt-2 mb-2">
+                                <button type="submit" class="btn btn-light rounded-circle w-75"><img
+                                        src="/images/send.png" height="20" width="15" /></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function print(e) {
+            e.preventDefault();
+            let message = $('#areaMessage').val();
+            Swal.fire({
+                position: 'bottom-end',
+                icon: 'success',
+                title: message,
+                showConfirmButton: false,
+                timer: 1000
+            })
+        }
+
+        function back() {
+            location.href = "dashboardUser.html";
+        }
+    </script>
+
+    <!--JQUERY-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <!--BOOTSTRAP-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+    <!--SWEET-ALERT-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>
