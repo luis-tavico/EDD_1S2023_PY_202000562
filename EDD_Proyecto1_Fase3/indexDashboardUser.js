@@ -1,10 +1,10 @@
 let avlTree = new AvlTree();
 let tree = new Tree();
-let sparseMatrix = new SparseMatrix("/");
 let cicularList = new CircularLinkedList();
 let newCircularList = new CircularLinkedList();
 var userName = localStorage.getItem('currentUser');
 document.querySelector(".userName").textContent = userName;
+var name_folder = "/";
 
 function createFolder(e) {
     e.preventDefault();
@@ -91,7 +91,11 @@ function createPermission(e) {
     let userSelected = $('#users').val();
     let fileSelected = $('#files').val();
     let permissionSelected = $('#permissions').val();
+    let path = $('#path').val();
+    let sparseMatrix = new SparseMatrix(name_folder);
+    sparseMatrix.head = tree.getFilesMatrix(path).head;
     sparseMatrix.insert(fileSelected, userSelected, permissionSelected);
+    tree.setFilesMatrix(path, sparseMatrix);
     Swal.fire({
         position: 'bottom-end',
         icon: 'success',
@@ -108,16 +112,14 @@ function getInFolder(folderName) {
     let path = $('#path').val();
     let curretPath = path == '/' ? path + folderName : path + "/" + folderName;
     $('#path').val(curretPath);
-    $('#folders').html(tree.getHTML(curretPath))
-    sparseMatrix.head = tree.getFilesMatrix(curretPath).head;
-    sparseMatrix.folderName = tree.getFilesMatrix(curretPath).folderName;
+    $('#folders').html(tree.getHTML(curretPath));
+    name_folder = folderName;
 }
 
 function backToStart() {
     $('#path').val("/");
-    $('#folders').html(tree.getHTML("/"))
-    sparseMatrix.head = tree.getFilesMatrix("/").head;
-    sparseMatrix.folderName = tree.getFilesMatrix("/").folderName;
+    $('#folders').html(tree.getHTML("/"));
+    name_folder = "/";
 }
 
 function messageCreateFolder(folderName) {
@@ -146,8 +148,12 @@ function showTreeGraph() {
 
 function showMatrixGraph() {
     let url = 'https://quickchart.io/graphviz?graph=';
-    let body = `digraph G { ${sparseMatrix.graph()}}`
     let path = $('#path').val();
+    let spsMatrix = new SparseMatrix(name_folder);
+    spsMatrix.head = tree.getFilesMatrix(path).head;
+    spsMatrix.printX();
+    spsMatrix.printY();
+    let body = `digraph G { ${spsMatrix.graph()}}`;
     if (tree.files(path) < 1) {
         body = "digraph G {\nnode[shape=none]\nn[label=\"No se pudo crear la matriz por falta de archivos.\" fontname=\"calibri\"]\n}"
         $("#graphFiles").attr("src", url + body);
@@ -169,8 +175,6 @@ function getData() {
         let currentUser = avlTree.searchNode(parseInt(userName));
         tree.root = currentUser.value.carpetas.root;
         tree.size = currentUser.value.carpetas.size;
-        sparseMatrix.head = tree.root.sparseMatrix.head;
-        sparseMatrix.folderName = tree.root.sparseMatrix.folderName;
         let circular = JSON.retrocycle(JSON.parse(localStorage.getItem("circularLinkedList")));
         cicularList.head = circular.head;
         let n = cicularList.getValues();
@@ -205,9 +209,9 @@ function logout() {
 function chat() {
     saveData();
     location.href = "chat.html";
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('treeNary');
-    localStorage.removeItem('circularLinkedList')
+    //localStorage.removeItem('currentUser');
+    //localStorage.removeItem('treeNary');
+    //localStorage.removeItem('circularLinkedList')
 }
 
 function loadStudentInList() {
@@ -230,8 +234,22 @@ function loadFileInList() {
     )
 }
 
-function presionar(val) {
+function sharedWithMe(val) {
     console.log(val)
+    document.getElementById('btnCreateFolder').disabled = true
+    document.getElementById('btnDeleteFolder').disabled = true;
+    document.getElementById('btnShareFile').disabled = true;
+    document.getElementById('btnUploadFile').disabled = true;
+    document.getElementById('btnBackToStart').disabled = true;
+}
+
+function myUnit(val) {
+    console.log(val)
+    document.getElementById('btnCreateFolder').disabled = false;
+    document.getElementById('btnDeleteFolder').disabled = false;
+    document.getElementById('btnShareFile').disabled = false;
+    document.getElementById('btnUploadFile').disabled = false;
+    document.getElementById('btnBackToStart').disabled = false;
 }
 
 $(document).ready(getData);

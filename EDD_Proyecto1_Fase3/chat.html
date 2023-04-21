@@ -6,128 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EDD GoDrive</title>
+    <link rel="stylesheet" href="chat.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 
 <body>
-
-    <style>
-        .back:hover {
-            cursor: pointer;
-        }
-
-
-        #bgTop {
-            background-color: #f5f5f5;
-        }
-
-        #bgBottom {
-            background-color: #e0e0e0;
-        }
-
-        #areaUsers {
-            height: 440px;
-        }
-
-        #areaUsers::-webkit-scrollbar {
-            width: 12px;
-        }
-
-        #areaUsers::-webkit-scrollbar-track {
-            background: white;
-        }
-
-        #areaUsers::-webkit-scrollbar-thumb {
-            background-color: lightgray;
-            border-radius: 20px;
-            border: 3px solid white;
-        }
-
-        #areaChat {
-            height: 384px;
-            max-height: 384px;
-            background-color: #FFFFFF;
-        }
-
-        #areaChat::-webkit-scrollbar {
-            width: 12px;
-        }
-
-        #areaChat::-webkit-scrollbar-track {
-            background: white;
-        }
-
-        #areaChat::-webkit-scrollbar-thumb {
-            background-color: lightgray;
-            border-radius: 20px;
-            border: 3px solid white;
-        }
-
-        #areaMessage {
-            resize: none;
-        }
-
-        #areaMessage::-webkit-scrollbar {
-            width: 12px;
-        }
-
-        #areaMessage::-webkit-scrollbar-track {
-            background: white;
-        }
-
-        #areaMessage::-webkit-scrollbar-thumb {
-            background-color: lightgray;
-            border-radius: 20px;
-            border: 3px solid white;
-        }
-
-        .chatContainer {
-            border: 2px solid #bdbdbd;
-            background-color: #eeeeee;
-            padding: 10px;
-            margin: 10px 5px;
-        }
-
-        .darker {
-            border-color: #0277bd;
-            background-color: #039be5;
-        }
-
-        .chatContainer::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
-
-        .chatContainer img {
-            float: left;
-            max-width: 60px;
-            width: 100%;
-            margin-right: 20px;
-            border-radius: 50%;
-        }
-
-        .chatContainer img.right {
-            float: right;
-            margin-left: 20px;
-            margin-right: 0;
-        }
-
-        .time-right {
-            float: right;
-            font-size: 12px;
-        }
-
-        .time-left {
-            float: left;
-            font-size: 12px;
-        }
-    </style>
-
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand userName">202000562</a>
+            <a class="navbar-brand userName"></a>
             <a class="navbar-brand back" onclick='back()'><img src="images/back.png" style="float: left"
                     alt="back">|Regresar|</a>
         </div>
@@ -143,35 +30,8 @@
                     <h5 class="text-center">Chats</h5>
                 </div>
                 <div class="overflow-x-hidden col-12 border border-secondary border-top-0" id="areaUsers">
-                    <!---->
-                    <div class="list-group">
-                        <button type="button"
-                            class="rounded-0 border-0 border-bottom border-secondary-subtle list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Leonardo Martinez</div>
-                                201780044
-                            </div><span class="badge bg-danger rounded-pill">2</span>
-                        </button>
+                    <div class="list-group" id="usersChat">
                     </div>
-                    <div class="list-group">
-                        <button type="button"
-                            class="rounded-0 border-0 border-bottom border-secondary-subtle list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Leonardo Martinez</div>
-                                201780044
-                            </div><span class="badge bg-danger rounded-pill">2</span>
-                        </button>
-                    </div>
-                    <div class="list-group">
-                        <button type="button"
-                            class="rounded-0 border-0 border-bottom border-secondary-subtle list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Leonardo Martinez</div>
-                                201780044
-                            </div><span class="badge bg-danger rounded-pill">2</span>
-                        </button>
-                    </div>
-                    <!---->
                 </div>
             </div>
             <div class="col-8">
@@ -180,44 +40,44 @@
                 </div>
                 <div class="overflow-x-hidden col-12 border border-secondary border-top-0 border-bottom-0"
                     id="areaChat">
-                    <div class="chatContainer rounded-pill ps-2 pe-4">
+                    <div class="chatContainer ps-2 pe-4">
                         <img src="/images/avatar.png" alt="Avatar">
                         <p class="mb-3">Hello. How are you today?</p>
                         <span class="time-right">11:00 PM</span>
                     </div>
-                    <div class="chatContainer darker text-white rounded-pill ps-4 pe-2">
+                    <div class="chatContainer darker text-white ps-4 pe-2">
                         <img src="/images/avatar.png" alt="Avatar" class="right">
                         <p class="mb-3">Hey! I'm fine. Thanks for asking!</p>
                         <span class="time-left">11:01 PM</span>
                     </div>
-                    <div class="chatContainer rounded-pill ps-2 pe-4">
+                    <div class="chatContainer ps-2 pe-4">
                         <img src="/images/avatar.png" alt="Avatar">
                         <p class="mb-3">Hello. How are you today?</p>
                         <span class="time-right">11:00 PM</span>
                     </div>
-                    <div class="chatContainer darker text-white rounded-pill ps-4 pe-2">
+                    <div class="chatContainer darker text-white ps-4 pe-2">
                         <img src="/images/avatar.png" alt="Avatar" class="right">
                         <p class="mb-3">Hey! I'm fine. Thanks for asking!</p>
                         <span class="time-left">11:01 PM</span>
                     </div>
-                    <div class="chatContainer rounded-pill ps-2 pe-4">
+                    <div class="chatContainer ps-2 pe-4">
                         <img src="/images/avatar.png" alt="Avatar">
                         <p class="mb-3">Hello. How are you today?</p>
                         <span class="time-right">11:00 PM</span>
                     </div>
-                    <div class="chatContainer darker text-white rounded-pill ps-4 pe-2">
+                    <div class="chatContainer darker text-white ps-4 pe-2">
                         <img src="/images/avatar.png" alt="Avatar" class="right">
                         <p class="mb-3">Hey! I'm fine. Thanks for asking!</p>
                         <span class="time-left">11:01 PM</span>
                     </div>
-                    <div class="chatContainer rounded-pill ps-2 pe-4">
+                    <div class="chatContainer ps-2 pe-4">
                         <img src="/images/avatar.png" alt="Avatar">
                         <p class="mb-3">Hello. How are you today?</p>
                         <span class="time-right">11:00 PM</span>
                     </div>
-                    <div class="chatContainer darker text-white rounded-pill ps-4 pe-2">
+                    <div class="chatContainer darker text-white ps-4 pe-2">
                         <img src="/images/avatar.png" alt="Avatar" class="right">
-                        <p class="mb-3">Hey! I'm fine. Thanks for asking!</p>
+                        <p class="mb-3">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iure vero, fuga, quidem quod eveniet ex error impedit sed maiores, nostrum rem assumenda. Quasi totam deleniti sed cupiditate cum consequuntur obcaecati!</p>
                         <span class="time-left">11:01 PM</span>
                     </div>
                 </div>
@@ -239,28 +99,17 @@
         </div>
     </div>
 
-    <script>
-        function print(e) {
-            e.preventDefault();
-            let message = $('#areaMessage').val();
-            Swal.fire({
-                position: 'bottom-end',
-                icon: 'success',
-                title: message,
-                showConfirmButton: false,
-                timer: 1000
-            })
-        }
-
-        function back() {
-            location.href = "dashboardUser.html";
-        }
-    </script>
-
     <!--JQUERY-->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
+    <!--SCRIPTS-->
+    <script src="lib/cycle.js"></script>
+    <script src="treeAVL/treeAVL.js"></script>
+    <script src="circularLinkedList/circularLinkedList.js"></script>
+    <script src="sparseMatriz/sparseMatrix.js"></script>
+    <script src="treeN-ary/treeN-ary.js"></script>
+    <script src="indexDashboardUserChat.js"></script>
     <!--BOOTSTRAP-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"

@@ -150,6 +150,7 @@ class SparseMatrix {
         let tx = null;
         try { tx = this.head.down } catch (error) { tx = null; console.log("errorX1"); }
         let ty = null;
+        console.log(tx)
         while (tx != null) {
             try { ty = tx.right } catch (error) { ty = null; console.log("errorX2"); }
             let str = ""
@@ -166,8 +167,8 @@ class SparseMatrix {
         let ty = null;
         try { ty = this.head.right } catch (error) { ty = null; console.log("errorY1"); }
         let tx = null;
+        console.log(ty)
         while (ty != null) {
-            // console.log(ty.value)
             try { tx = ty.down } catch (error) { tx = null; console.log("errorY2"); }
             let str = ""
             while (tx != null) {

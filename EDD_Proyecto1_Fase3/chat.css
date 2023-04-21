@@ -1,0 +1,113 @@
+.back:hover {
+    cursor: pointer;
+}
+
+#bgTop {
+    background-color: #f5f5f5;
+}
+
+#bgBottom {
+    background-color: #e0e0e0;
+}
+
+#areaUsers {
+    height: 429px;
+}
+
+#areaUsers::-webkit-scrollbar {
+    width: 12px;
+}
+
+#areaUsers::-webkit-scrollbar-track {
+    background: white;
+}
+
+#areaUsers::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border-radius: 20px;
+    border: 3px solid white;
+}
+
+#areaChat {
+    height: 375px;
+    max-height: 375px;
+    background-color: #FFFFFF;
+}
+
+#areaChat::-webkit-scrollbar {
+    width: 12px;
+}
+
+#areaChat::-webkit-scrollbar-track {
+    background: white;
+}
+
+#areaChat::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border-radius: 20px;
+    border: 3px solid white;
+}
+
+#areaMessage {
+    resize: none;
+}
+
+#areaMessage::-webkit-scrollbar {
+    width: 12px;
+}
+
+#areaMessage::-webkit-scrollbar-track {
+    background: white;
+}
+
+#areaMessage::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border-radius: 20px;
+    border: 3px solid white;
+}
+
+.chatContainer {
+    float: left;
+    border: 1px solid #bdbdbd;
+    background-color: #eeeeee;
+    padding: 10px;
+    margin: 6px 5px;
+    border-radius: 25px;
+    width: 75%;
+}
+
+.darker {
+    float: right;
+    border-color: #0277bd;
+    background-color: #039be5;
+}
+
+.chatContainer::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.chatContainer img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.chatContainer img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right: 0;
+}
+
+.time-right {
+    float: right;
+    font-size: 12px;
+}
+
+.time-left {
+    float: left;
+    font-size: 12px;
+}

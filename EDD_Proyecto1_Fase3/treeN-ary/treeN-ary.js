@@ -177,6 +177,11 @@ class Tree {
         return node.sparseMatrix;
     }
 
+    setFilesMatrix(path, spsMatrix) {
+        let node = this.getFolder(path);
+        node.sparseMatrix = spsMatrix;
+    }
+
     showFolders(path) {
         let node = this.getFolder(path);
         let flds = node.children;

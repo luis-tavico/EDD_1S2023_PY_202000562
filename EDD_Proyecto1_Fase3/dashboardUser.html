@@ -43,6 +43,7 @@
             background-color: lightgray;
             border-radius: 20px;
             border: 3px solid white;
+
         }
     </style>
 
@@ -240,13 +241,13 @@
         <div class="row g-4">
             <div class="col-4 ps-0 pe-0">
                 <div class="w-75">
-                    <div class="col-12 btn-group">
-                        <input type="radio" class="btn-check" name="options" id="option1" onclick="presionar(this.id);"
+                    <div class="col-12 btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" onclick="myUnit(this.id)"
                             autocomplete="off" checked>
-                        <label class="btn btn-outline-secondary" for="option1">Mi Unidad</label>
-                        <input type="radio" class="btn-check" name="options" id="option2" onclick="presionar(this.id)"
-                            autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="option2">Compartido Conmigo</label>
+                        <label class="btn btn-outline-secondary" for="btnradio1">Mi Unidad</label>
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
+                            onclick="sharedWithMe(this.id)" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="btnradio2">Compartido Conmigo</label>
                     </div>
                 </div>
             </div>
@@ -257,38 +258,40 @@
                             <input type="text" id="path" name="path" class="form-control border border-secondary"
                                 readonly value="/">
                             <button onclick="backToStart()" class="btn btn-secondary" type="button"
-                                id="button-addon1">Inicio</button>
+                                id="btnBackToStart">Inicio</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="row g-4">
-                    <button type="button" class="btn btn-primary w-75" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-primary w-75" id="btnCreateFolder" data-bs-toggle="modal"
                         data-bs-target="#modalCreateFolder">
                         Crear Carpeta
                     </button>
-                    <button onclick="loadFolderInList()" type="button" class="btn btn-danger w-75"
+                    <button onclick="loadFolderInList()" type="button" class="btn btn-danger w-75" id="btnDeleteFolder"
                         data-bs-toggle="modal" data-bs-target="#modalDeleteFolder">
                         Eliminar Carpeta
                     </button>
-                    <button onclick="loadFileInList()" type="button" class="btn btn-warning w-75" data-bs-toggle="modal"
-                        data-bs-target="#modalFilePermissions">
+                    <button onclick="loadFileInList()" type="button" class="btn btn-warning w-75" id="btnShareFile"
+                        data-bs-toggle="modal" data-bs-target="#modalFilePermissions">
                         Compartir Archivo
                     </button>
-                    <button type="button" class="btn w-75" data-bs-toggle="modal" data-bs-target="#modalLoadFile">
+                    <button type="button" class="btn w-75 border-0" id="btnUploadFile" data-bs-toggle="modal"
+                        data-bs-target="#modalLoadFile">
                         <img src="images/upload.png" class="rounded mx-auto d-block" style="width:30%" alt="img_upload">
                         <p class="text-center">Subir Archivo</p>
                     </button>
                 </div>
             </div>
-            <div class="overflow-x-hidden col-8 border border-secondary" id="areaFilesAndFolders" style="height: 351px; max-height: 351px;">
+            <div class="overflow-x-hidden col-8 border border-secondary" id="areaFilesAndFolders"
+                style="height: 351px; max-height: 351px;">
                 <div class="row" id="folders">
                 </div>
             </div>
             <div class="col-4 ps-0 pe-0">
                 <button onclick="chat()" class="btn btn-primary w-75" type="button"
-                id="button-addon1">Chatear</button>
+                    id="button-addon1">Chatear</button>
             </div>
             <div class="col-8">
                 <div class="row">
@@ -299,13 +302,13 @@
                         </button>
                     </div>
                     <div class="col-4">
-                        <button onclick="showMatrixGraph()" type="button" class="btn btn-secondary w-100"
+                        <button onclick="showMatrixGraph()" type="button" class="btn btn-success w-100"
                             data-bs-toggle="modal" data-bs-target="#modalFilesChart">
                             Reporte Archivos
                         </button>
                     </div>
                     <div class="col-4 pe-0">
-                        <button onclick="showCircularGraph()" type="button" class="btn btn-primary w-100"
+                        <button onclick="showCircularGraph()" type="button" class="btn btn-success w-100"
                             data-bs-toggle="modal" data-bs-target="#modalActionsChart">
                             Reporte Acciones
                         </button>

@@ -260,4 +260,34 @@ class AvlTree {
         return row;
     }
 
+    //show Students in Chat
+    showStudentsChat(carnet) {
+        if (this.root) {
+            let html = this.#showStudentsChatRecursive(this.root, carnet);
+            return html;
+        }
+        return "";
+    }
+    #showStudentsChatRecursive(current, carnet) {
+        let row = "";
+        if (current.left != null) {
+            row += this.#showStudentsChatRecursive(current.left, carnet);
+        }
+        if (current.value.carnet != carnet) {
+            row += `
+            <button type="button"
+            class="rounded-0 border-0 border-bottom border-secondary-subtle list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">${current.value.nombre}</div>
+                ${current.value.carnet}
+            </div><span class="badge bg-danger rounded-pill">2</span>
+            </button>
+        `;
+        }
+        if (current.right != null) {
+            row += this.#showStudentsChatRecursive(current.right, carnet);
+        }
+        return row;
+    }
+
 }
