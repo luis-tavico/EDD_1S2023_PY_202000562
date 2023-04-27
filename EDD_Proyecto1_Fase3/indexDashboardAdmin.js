@@ -1,4 +1,5 @@
 let avlTree = new AvlTree();
+let tableHash = new HashTable();
 
 function loadStudentsForm(e) {
     e.preventDefault();
@@ -16,8 +17,10 @@ function loadStudentsForm(e) {
                 let student = new Student(studentsArray[i].nombre, studentsArray[i].carnet, studentsArray[i].password, "/", folders, actions);
                 avlTree.insert(student);
             }
+            stds = avlTree.inOrderList();
+            stds.forEach(student => tableHash.insert(student));
             $('#studentsTable tbody').html(
-                avlTree.inOrder()
+                tableHash.print()
             )
             localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
             Swal.fire({
@@ -41,48 +44,17 @@ function loadStudentsForm(e) {
     }
 }
 
-function showLocalStudents() {
+function getLocalStudents() {
     if (localStorage.getItem("avlTree") != null) {
         let temp = JSON.retrocycle(JSON.parse(localStorage.getItem("avlTree")));
         avlTree.root = temp.root;
+        /////////////////////////
+        stds = avlTree.inOrderList();
+        stds.forEach(student => tableHash.insert(student));
         $('#studentsTable tbody').html(
-            avlTree.inOrder()
+            tableHash.print()
         )
     }
 }
 
-function showStudentsForm(e) {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const form = Object.fromEntries(formData);
-    if (avlTree.root !== null) {
-        switch (form.traversal) {
-            case 'inOrder':
-                $('#studentsTable tbody').html(
-                    avlTree.inOrder()
-                )
-                break;
-            case 'preOrder':
-                $('#studentsTable tbody').html(
-                    avlTree.preOrder()
-                )
-                break;
-            case 'postOrder':
-                $('#studentsTable tbody').html(
-                    avlTree.postOrder()
-                )
-                break;
-            default:
-                $('#studentsTable tbody').html("")
-                break;
-        }
-    }
-}
-
-function showAvlGraph() {
-    let url = 'https://quickchart.io/graphviz?graph=';
-    let body = `digraph G { ${avlTree.treeGraph()} }`
-    $("#graph").attr("src", url + body);
-}
-
-$(document).ready(showLocalStudents);
+$(document).ready(getLocalStudents);

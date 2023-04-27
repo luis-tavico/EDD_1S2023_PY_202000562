@@ -41,7 +41,10 @@ function login() {
         if (password == exist.value.password) {
           circular_list = exist.value.acciones;
           localStorage.setItem("circularLinkedList", JSON.stringify(JSON.decycle(circular_list)));
-          localStorage.setItem('currentUser', username);
+          var currentUser = new Object();
+          currentUser.carnet = exist.value.carnet;
+          currentUser.nombre = exist.value.nombre;
+          localStorage.setItem("currentUser", JSON.stringify(currentUser));
           location.href = "dashboardUser.html";
         } else {
           incorrectPassword();

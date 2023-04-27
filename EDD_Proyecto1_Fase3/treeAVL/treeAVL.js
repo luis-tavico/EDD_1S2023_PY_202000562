@@ -119,29 +119,6 @@ class AvlTree {
         }
     }
 
-    //tree report
-    treeGraph() {
-        nodes = "";
-        connections = "";
-        if (this.root == null) {
-            return "\nnode[shape=none]\nn[label=\"Sin Alumnos\" fontname=\"calibri\"]\n";
-        }
-        this.treeGraphRecursive(this.root);
-        return "\nnode[shape=box fontname=\"calibri\"];\n" + nodes + connections;
-    }
-    treeGraphRecursive(current) {
-        if (current.left != null) {
-            this.treeGraphRecursive(current.left);
-            connections += `S_${current.value.carnet} -> S_${current.left.value.carnet};\n`;
-        }
-        nodes += `S_${current.value.carnet}[label="${current.value.carnet}\\n${current.value.nombre}\\nAltura: ${current.height}"];\n`
-        if (current.right != null) {
-            this.treeGraphRecursive(current.right);
-            connections += `S_${current.value.carnet} -> S_${current.right.value.carnet};\n`;
-        }
-
-    }
-
     //search node
     searchNode(carnet) {
         return this.#searchNodeRecursive(this.root, carnet);
@@ -159,80 +136,22 @@ class AvlTree {
     }
 
     //loop through in order
-    inOrder() {
+    inOrderList() {
+        let row = [];
         if (this.root) {
-            let html = this.#inOrderRecursive(this.root);
+            let html = this.#inOrderRecursiveList(this.root, row);
             return html;
-        }
-        return "";
-    }
-    #inOrderRecursive(current) {
-        let row = "";
-        if (current.left != null) {
-            row += this.#inOrderRecursive(current.left);
-        }
-        row += `
-            <tr>
-                <td class="col-3">${current.value.carnet}</td>
-                <td class="col-5">${current.value.nombre}</td>
-                <td class="col-4">${current.value.password}</td>
-            </tr>
-        `;
-        if (current.right != null) {
-            row += this.#inOrderRecursive(current.right);
         }
         return row;
     }
-
-    //loop through in pre order
-    preOrder() {
-        if (this.root) {
-            let html = this.#preOrderRecursive(this.root);
-            return html;
-        }
-        return "";
-    }
-    #preOrderRecursive(current) {
-        let row = "";
-        row += `
-                <tr>
-                    <td class="col-3">${current.value.carnet}</td>
-                    <td class="col-5">${current.value.nombre}</td>
-                    <td class="col-4">${current.value.password}</td>
-                </tr>        
-            `;
+    #inOrderRecursiveList(current, row) {
         if (current.left != null) {
-            row += this.#preOrderRecursive(current.left);
+            this.#inOrderRecursiveList(current.left, row);
         }
+        row.push(current.value)
         if (current.right != null) {
-            row += this.#preOrderRecursive(current.right);
+            this.#inOrderRecursiveList(current.right, row);
         }
-        return row;
-    }
-
-    //loop through in post order
-    postOrder() {
-        if (this.root) {
-            let html = this.#postOrderRecursive(this.root);
-            return html;
-        }
-        return "";
-    }
-    #postOrderRecursive(current) {
-        let row = "";
-        if (current.left != null) {
-            row += this.#postOrderRecursive(current.left);
-        }
-        if (current.right != null) {
-            row += this.#postOrderRecursive(current.right);
-        }
-        row += `
-                <tr>
-                    <td class="col-3">${current.value.carnet}</td>
-                    <td class="col-5">${current.value.nombre}</td>
-                    <td class="col-4">${current.value.password}</td>
-                </tr>
-            `;
         return row;
     }
 
@@ -251,7 +170,7 @@ class AvlTree {
         }
         if (current.value.carnet != carnet) {
             row += `
-            <option value="${current.value.carnet}">${current.value.carnet}</option>
+            <option value="${current.value.carnet}">${current.value.nombre}</option>
         `;
         }
         if (current.right != null) {

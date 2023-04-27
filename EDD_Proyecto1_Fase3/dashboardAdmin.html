@@ -67,35 +67,6 @@
         </div>
     </nav>
 
-    <!-- Modal Show Students-->
-    <div class="modal fade" id="modalShowStudents" tabindex="-1" aria-labelledby="modalShowStudentsLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalShowStudentsLabel">Seleccionar Recorrido</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form class="form" onsubmit="showStudentsForm(event)">
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <br>
-                            <select id="traversal" name="traversal" class="form-select">
-                                <option value="inOrder">In-Orden</option>
-                                <option value="preOrder">Pre-Orden</option>
-                                <option value="postOrder">Post-Orden</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal Load File-->
     <div class="modal fade" id="modalLoadFile" tabindex="-1" aria-labelledby="modalLoadFileLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -121,56 +92,27 @@
         </div>
     </div>
 
-    <!-- Modal Students Chart-->
-    <div class="modal fade" id="modalStudentsChart" tabindex="-1" aria-labelledby="modalStudentsChartLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalStudentsChartLabel">Reporte de Estudiantes</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="text-center">
-                        <img id="graph" class="img-thumbnail border border-white">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="container">
         <br>
         <div class="row g-2">
-            <div class="col-4">
+            <div class="col-3">
                 <div class="row">
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col-9">
                 <div class="row">
                     <h4 class="text-center">Estudiantes</h4>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <div class="row g-3">
-                    <button type="button" class="btn btn-secondary w-75" data-bs-toggle="modal"
-                        data-bs-target="#modalShowStudents">
-                        Mostrar Alumnos
-                    </button>
-                    <button type="button" class="btn btn-primary w-75" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-success w-75" data-bs-toggle="modal"
                         data-bs-target="#modalLoadFile">
                         Carga Masiva
                     </button>
-                    <button onclick="showAvlGraph()" type="button" class="btn btn-success w-75" data-bs-toggle="modal"
-                        data-bs-target="#modalStudentsChart">
-                        Reporte Estudiantes
-                    </button>
                 </div>
             </div>
-            <div class="col-8 ps-0 pe-0 containerTable">
+            <div class="col-9 ps-0 pe-0 containerTable">
                 <div id="studentsTable">
                     <table class="table table-fixed table-primary table-striped table-hover" id="tableScroll">
                         <thead class="table-dark">
@@ -218,7 +160,6 @@
         </div>
     </div>
 
-
     <!--JQUERY-->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -227,6 +168,7 @@
     <script src="lib/cycle.js"></script>
     <script src="model/student.js"></script>
     <script src="treeAVL/treeAVL.js"></script>
+    <script src="hashTable/hashTable.js"></script>
     <script src="circularLinkedList/circularLinkedList.js"></script>
     <script src="sparseMatriz/sparseMatrix.js"></script>
     <script src="treeN-ary/treeN-ary.js"></script>

@@ -13,6 +13,8 @@ class Tree {
         this.root = new Tnode('/');
         this.root.id = 0;
         this.size = 1;
+        /////
+        this.sharedWithMe = [];
     }
 
     insert(folderName, fatherPath) {

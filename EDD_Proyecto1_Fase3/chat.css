@@ -73,7 +73,15 @@
     padding: 10px;
     margin: 6px 5px;
     border-radius: 25px;
-    width: 75%;
+    width: 80%;
+}
+
+#conversationLeft {
+    width: 100%;
+}
+
+#conversationRight {
+    width: 78%;
 }
 
 .darker {
@@ -90,7 +98,7 @@
 
 .chatContainer img {
     float: left;
-    max-width: 60px;
+    max-width: 50px;
     width: 100%;
     margin-right: 20px;
     border-radius: 50%;
@@ -110,4 +118,38 @@
 .time-left {
     float: left;
     font-size: 12px;
+}
+
+#transmitter {
+    font-size: 18px;
+    font-weight: 600;
+    padding-top: 2px;
+}
+
+#receiver {
+    width: auto;
+    background: #f5f5f5;
+    text-align: center;
+    border: none;
+    font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 6px;
+}
+
+#receiver:focus { 
+    outline: none;
+}
+
+#receiver:hover {
+    cursor: pointer;
+}
+
+.selectEdited {
+    overflow: hidden;
+}
+
+.selectEdited select {
+   -moz-appearance: none;
+   -webkit-appearance: none;
+   appearance: none;
 }

@@ -2,7 +2,7 @@ let avlTree = new AvlTree();
 let tree = new Tree();
 let cicularList = new CircularLinkedList();
 let newCircularList = new CircularLinkedList();
-var userName = localStorage.getItem('currentUser');
+var userName = JSON.parse(localStorage.getItem('currentUser')).carnet;
 document.querySelector(".userName").textContent = userName;
 var name_folder = "/";
 
@@ -92,10 +92,24 @@ function createPermission(e) {
     let fileSelected = $('#files').val();
     let permissionSelected = $('#permissions').val();
     let path = $('#path').val();
-    let sparseMatrix = new SparseMatrix(name_folder);
-    sparseMatrix.head = tree.getFilesMatrix(path).head;
-    sparseMatrix.insert(fileSelected, userSelected, permissionSelected);
-    tree.setFilesMatrix(path, sparseMatrix);
+    //let sparseMatrix = new SparseMatrix(name_folder);
+    //sparseMatrix.head = tree.getFilesMatrix(path).head;
+    //sparseMatrix.insert(fileSelected, userSelected, permissionSelected);
+    //tree.setFilesMatrix(path, sparseMatrix);
+    //////////////////////
+    let selectedUser = avlTree.searchNode(parseInt(userSelected));
+    file = tree.getFolder(path).files.find(file => file.name == fileSelected);
+    console.log(file)
+    //selectedUser.value.compartidoConmigo.push(file);
+
+    selectedUser.value.compartidoConmigo.push({
+        name: file.name,
+        content: file.content,
+        type: file.type
+    })
+
+    console.log(selectedUser.value.compartidoConmigo);
+    //////////////////////
     Swal.fire({
         position: 'bottom-end',
         icon: 'success',
@@ -234,22 +248,74 @@ function loadFileInList() {
     )
 }
 
-function sharedWithMe(val) {
-    console.log(val)
+function sharedWithMe() {
     document.getElementById('btnCreateFolder').disabled = true
     document.getElementById('btnDeleteFolder').disabled = true;
     document.getElementById('btnShareFile').disabled = true;
     document.getElementById('btnUploadFile').disabled = true;
     document.getElementById('btnBackToStart').disabled = true;
+    //selectedUser.value.compartidoConmigo.push(file);
+    let code = "";
+    let usr = avlTree.searchNode(parseInt(userName));
+    console.log(usr.value.compartidoConmigo);
+    usr.value.compartidoConmigo.map(file => {
+        if (file.type === 'text/plain') {
+            let archivo = new Blob([file.content], { type: file.type });
+            const url = URL.createObjectURL(archivo);
+            code += `<div class="col-3 pt-2 text-center folder"')">
+                <div class="row">
+                    <div class="col-12">
+                        <img src="images/txt.png" class="" style="width:30%" alt="img_archivo">
+                    </div>
+                    <div class="col-12">
+                        <p class="text-center titleFile"><a class="text-dark text-decoration-none" href="${url}" download>
+                        ${file.name}
+                        </a>
+                        </p>
+                    </div>
+                </div>
+            </div>`
+        } else if (file.type === 'application/pdf') {
+            code += `<div class="col-3 pt-2 text-center folder"')">
+                <div class="row">
+                    <div class="col-12">
+                        <img src="images/pdf.png" class="" style="width:30%" alt="img_archivo">
+                    </div>
+                    <div class="col-12">
+                    <p class="text-center titleFile"><a class="text-dark text-decoration-none" href="${file.content}" download>
+                    ${file.name}
+                    </a>
+                    </p>
+                    </div>
+                </div>
+            </div>`
+        } else {
+            code += `<div class="col-3 pt-2 text-center folder"')">
+                <div class="row">
+                    <div class="col-12">
+                        <img src="images/image.png" class="" style="width:30%" alt="img_foto">
+                    </div>
+                    <div class="col-12">
+                    <p class="text-center titleFile"><a class="text-dark text-decoration-none" href="${file.content}" download>
+                    ${file.name}
+                    </a>
+                    </p>
+                    </div>
+                </div>
+            </div>`
+        }
+    })
+    $('#folders').html(code)
 }
 
-function myUnit(val) {
-    console.log(val)
+function myUnit() {
     document.getElementById('btnCreateFolder').disabled = false;
     document.getElementById('btnDeleteFolder').disabled = false;
     document.getElementById('btnShareFile').disabled = false;
     document.getElementById('btnUploadFile').disabled = false;
     document.getElementById('btnBackToStart').disabled = false;
+    let path = $('#path').val();
+    $('#folders').html(tree.getHTML(path))
 }
 
 $(document).ready(getData);

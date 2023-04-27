@@ -3,22 +3,10 @@ let tree = new Tree();
 let sparseMatrix = new SparseMatrix("/");
 let cicularList = new CircularLinkedList();
 let newCircularList = new CircularLinkedList();
-var userName = localStorage.getItem('currentUser');
+var userName = JSON.parse(localStorage.getItem('currentUser')).carnet;
 document.querySelector(".userName").textContent = userName;
-
-function print(e) {
-    e.preventDefault();
-    let message = $('#areaMessage').val();
-    $('#areaChat').html(
-        `
-        <div class="chatContainer darker text-white ps-4 pe-2">
-        <img src="/images/avatar.png" alt="Avatar" class="right">
-        <p class="mb-3">${message}</p>
-        <span class="time-left">11:01 PM</span>
-        </div>
-        `  
-    )
-}
+var nameUser = JSON.parse(localStorage.getItem('currentUser')).nombre;
+document.querySelector("#transmitter").textContent = nameUser;
 
 function back() {
     location.href = "dashboardUser.html";
@@ -47,11 +35,81 @@ function getData() {
     }
 }
 
-function loadStudentInListChat() {
-    $('#usersChat').html(
-        avlTree.showStudentsChat(parseInt(userName))
+function loadStudentInList() {
+    $('#receiver').html(
+        "<option value=\"\" selected disabled>---</option>" + avlTree.showStudents(parseInt(userName))
     )
 }
 
+let blockChain = new BlockChain();
+
+function updateChats() {
+    let transmitter = parseInt(userName);
+    let receiver = $('#receiver').val();
+    $('.areaChatTransmitter').html(blockChain.getMessages(transmitter, receiver));
+    $('.areaChatReceiver').html(blockChain.getMessages(receiver, transmitter));
+}
+
+async function sendMessage(whoSend) {
+    let transmitter = parseInt(userName);
+    let receiver = $('#receiver').val();
+
+    if (transmitter && receiver) {
+        switch (whoSend) {
+            case 'transmitter':
+                let msgt = $('.msg-transmitter').val();
+                await blockChain.insert(transmitter, receiver, msgt);
+                $('.msg-transmitter').val("");
+                break;
+            case 'receiver':
+                let msgr = $('.msg-receiver').val();
+                await blockChain.insert(receiver, transmitter, msgr);
+                $('.msg-receiver').val("");
+                break;
+        }
+        updateChats();
+    } else {
+        Swal.fire({
+            position: 'bottom-end',
+            icon: 'error',
+            title: '¡No ha seleccionado receptor!',
+            showConfirmButton: false,
+            timer: 1000
+        })
+    }
+}
+
+function getBlock(index) {
+    if (index === 0) {
+        let html = blockChain.blockReport(index);
+        if (html) {
+            $('.show-block').html(html);
+        }
+    } else {
+        let currentBlock = Number($('#block-table').attr('name'));
+
+        if (index < 0) {
+            if (currentBlock - 1 < 0) {
+                alert("No existen elementos anteriores");
+            } else {
+                let html = blockChain.blockReport(currentBlock - 1);
+                if (html) {
+                    $('.show-block').html(html);
+                }
+            }
+
+        } else if (index > 0) {
+            if (currentBlock + 1 > blockChain.size) {
+                alert("No existen elementos siguientes");
+            } else {
+                let html = blockChain.blockReport(currentBlock + 1);
+                if (html) {
+                    $('.show-block').html(html);
+                }
+            }
+        }
+    }
+}
+
 $(document).ready(getData);
-$(document).ready(loadStudentInListChat);
+$(document).ready(loadStudentInList);
