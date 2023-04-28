@@ -126,11 +126,11 @@ class BlockChain {
             while (temp !== null) {
                 if (temp.index === index) {
                     return `
-                        <table class="table table-bordered" id="block-table" name="${temp.index}">
+                        <table class="table table-borderless table-striped" id="block-table" name="${temp.index}">
                             <tbody>
                                 <tr>
-                                    <th scope="row" class="col-3">Index</th>
-                                    <td class="col-9">${temp.index}</td>
+                                    <th scope="row">Index</th>
+                                    <td>${temp.index}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Timestamp</th>
