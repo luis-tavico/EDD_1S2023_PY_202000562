@@ -120,8 +120,8 @@ class HashTable {
             row += `            
             <tr>
                 <td class="col-3">${student.value.carnet}</td>
-                <td class="col-5">${student.value.nombre}</td>
-                <td class="col-4">${student.value.password}</td>
+                <td class="col-4">${student.value.nombre}</td>
+                <td class="col-5">${student.value.password}</td>
             </tr>
             `);
         return row;

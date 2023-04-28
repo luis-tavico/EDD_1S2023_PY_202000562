@@ -3,7 +3,6 @@ class Tnode {
         this.folderName = folderName;
         this.files = [];
         this.children = [];
-        this.sparseMatrix = new SparseMatrix(folderName);
         this.id = null;
     }
 }
@@ -172,16 +171,6 @@ class Tree {
             }
         })
         return code;
-    }
-
-    getFilesMatrix(path) {
-        let node = this.getFolder(path);
-        return node.sparseMatrix;
-    }
-
-    setFilesMatrix(path, spsMatrix) {
-        let node = this.getFolder(path);
-        node.sparseMatrix = spsMatrix;
     }
 
     showFolders(path) {

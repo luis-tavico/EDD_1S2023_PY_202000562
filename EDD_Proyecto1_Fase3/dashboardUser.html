@@ -45,6 +45,21 @@
             border: 3px solid white;
 
         }
+
+        iframe {
+            border: none;
+            width: 100%;
+            height: 360px;
+        }
+
+        #textarea {
+            border: none;
+            resize: none;
+        }
+
+        #textarea:focus {
+            outline: none;
+        }
     </style>
 
     <nav class="navbar navbar-dark bg-dark">
@@ -192,27 +207,6 @@
         </div>
     </div>
 
-    <!-- Modal Files Chart-->
-    <div class="modal fade" id="modalFilesChart" tabindex="-1" aria-labelledby="modalFilesChartLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalFilesChartLabel">Reporte de Archivos</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="text-center">
-                        <img id="graphFiles" class="img-thumbnail border border-white">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal Actions Chart-->
     <div class="modal fade" id="modalActionsChart" tabindex="-1" aria-labelledby="modalActionsChartLabel"
         aria-hidden="true">
@@ -234,6 +228,25 @@
         </div>
     </div>
 
+    <!-- Modal Content FIle-->
+    <div class="modal fade" id="modalContentFile" tabindex="-1" aria-labelledby="modalContentFileLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalContentFileLabel">Contenido</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="content text-center">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
         <br>
@@ -245,8 +258,8 @@
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio1" onclick="myUnit()"
                             autocomplete="off" checked>
                         <label class="btn btn-outline-secondary" for="btnradio1">Mi Unidad</label>
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
-                            onclick="sharedWithMe()" autocomplete="off">
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" onclick="sharedWithMe()"
+                            autocomplete="off">
                         <label class="btn btn-outline-secondary" for="btnradio2">Compartido Conmigo</label>
                     </div>
                 </div>
@@ -290,24 +303,17 @@
                 </div>
             </div>
             <div class="col-4 ps-0 pe-0">
-                <button onclick="chat()" class="btn btn-primary w-75" type="button"
-                    id="button-addon1">Chatear</button>
+                <button onclick="chat()" class="btn btn-primary w-75" type="button" id="button-addon1">Chatear</button>
             </div>
             <div class="col-8">
                 <div class="row">
-                    <div class="col-4 ps-0">
+                    <div class="col-6 ps-0">
                         <button onclick="showTreeGraph()" type="button" class="btn btn-success w-100"
                             data-bs-toggle="modal" data-bs-target="#modalFoldersChart">
                             Reporte Carpetas
                         </button>
                     </div>
-                    <div class="col-4">
-                        <button onclick="showMatrixGraph()" type="button" class="btn btn-success w-100"
-                            data-bs-toggle="modal" data-bs-target="#modalFilesChart">
-                            Reporte Archivos
-                        </button>
-                    </div>
-                    <div class="col-4 pe-0">
+                    <div class="col-6 pe-0">
                         <button onclick="showCircularGraph()" type="button" class="btn btn-success w-100"
                             data-bs-toggle="modal" data-bs-target="#modalActionsChart">
                             Reporte Acciones
@@ -326,8 +332,8 @@
     <script src="lib/cycle.js"></script>
     <script src="treeAVL/treeAVL.js"></script>
     <script src="circularLinkedList/circularLinkedList.js"></script>
-    <script src="sparseMatriz/sparseMatrix.js"></script>
     <script src="treeN-ary/treeN-ary.js"></script>
+    <script src="blockChain/blockChain.js"></script>
     <script src="indexDashboardUser.js"></script>
     <!--BOOTSTRAP-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"

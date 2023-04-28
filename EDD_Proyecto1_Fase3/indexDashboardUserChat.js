@@ -1,8 +1,8 @@
 let avlTree = new AvlTree();
 let tree = new Tree();
-let sparseMatrix = new SparseMatrix("/");
 let cicularList = new CircularLinkedList();
 let newCircularList = new CircularLinkedList();
+let blockChain = new BlockChain();
 var userName = JSON.parse(localStorage.getItem('currentUser')).carnet;
 document.querySelector(".userName").textContent = userName;
 var nameUser = JSON.parse(localStorage.getItem('currentUser')).nombre;
@@ -10,6 +10,7 @@ document.querySelector("#transmitter").textContent = nameUser;
 
 function back() {
     location.href = "dashboardUser.html";
+    localStorage.setItem("blockChain", JSON.stringify(JSON.decycle(blockChain)));
 }
 
 function getData() {
@@ -19,8 +20,6 @@ function getData() {
         let currentUser = avlTree.searchNode(parseInt(userName));
         tree.root = currentUser.value.carpetas.root;
         tree.size = currentUser.value.carpetas.size;
-        sparseMatrix.head = tree.root.sparseMatrix.head;
-        sparseMatrix.folderName = tree.root.sparseMatrix.folderName;
         let circular = JSON.retrocycle(JSON.parse(localStorage.getItem("circularLinkedList")));
         cicularList.head = circular.head;
         let n = cicularList.getValues();
@@ -33,6 +32,12 @@ function getData() {
             n = n.next;
         }
     }
+    if (localStorage.getItem("blockChain") != null) {
+        let tempBC = JSON.retrocycle(JSON.parse(localStorage.getItem("blockChain")));
+        blockChain.head = tempBC.head;
+        blockChain.end = tempBC.end;
+        blockChain.size = tempBC.size;
+    }
 }
 
 function loadStudentInList() {
@@ -40,8 +45,6 @@ function loadStudentInList() {
         "<option value=\"\" selected disabled>---</option>" + avlTree.showStudents(parseInt(userName))
     )
 }
-
-let blockChain = new BlockChain();
 
 function updateChats() {
     let transmitter = parseInt(userName);
@@ -76,38 +79,6 @@ async function sendMessage(whoSend) {
             showConfirmButton: false,
             timer: 1000
         })
-    }
-}
-
-function getBlock(index) {
-    if (index === 0) {
-        let html = blockChain.blockReport(index);
-        if (html) {
-            $('.show-block').html(html);
-        }
-    } else {
-        let currentBlock = Number($('#block-table').attr('name'));
-
-        if (index < 0) {
-            if (currentBlock - 1 < 0) {
-                alert("No existen elementos anteriores");
-            } else {
-                let html = blockChain.blockReport(currentBlock - 1);
-                if (html) {
-                    $('.show-block').html(html);
-                }
-            }
-
-        } else if (index > 0) {
-            if (currentBlock + 1 > blockChain.size) {
-                alert("No existen elementos siguientes");
-            } else {
-                let html = blockChain.blockReport(currentBlock + 1);
-                if (html) {
-                    $('.show-block').html(html);
-                }
-            }
-        }
     }
 }
 

@@ -92,24 +92,14 @@ function createPermission(e) {
     let fileSelected = $('#files').val();
     let permissionSelected = $('#permissions').val();
     let path = $('#path').val();
-    //let sparseMatrix = new SparseMatrix(name_folder);
-    //sparseMatrix.head = tree.getFilesMatrix(path).head;
-    //sparseMatrix.insert(fileSelected, userSelected, permissionSelected);
-    //tree.setFilesMatrix(path, sparseMatrix);
-    //////////////////////
     let selectedUser = avlTree.searchNode(parseInt(userSelected));
     file = tree.getFolder(path).files.find(file => file.name == fileSelected);
-    console.log(file)
-    //selectedUser.value.compartidoConmigo.push(file);
-
     selectedUser.value.compartidoConmigo.push({
         name: file.name,
         content: file.content,
         type: file.type
     })
-
-    console.log(selectedUser.value.compartidoConmigo);
-    //////////////////////
+    console.log(userName + " " + userSelected + " \"" + path + "\" " + fileSelected + " " + permissionSelected)
     Swal.fire({
         position: 'bottom-end',
         icon: 'success',
@@ -128,6 +118,25 @@ function getInFolder(folderName) {
     $('#path').val(curretPath);
     $('#folders').html(tree.getHTML(curretPath));
     name_folder = folderName;
+}
+
+function showContentPdf(content) {
+    htmlPDF = `<iframe src=${content} title="description"></iframe>`;
+    $('.content').html(htmlPDF);
+    $('#modalContentFile').modal('show');
+}
+
+function showContentIMG(content) {
+    htmlIMG = `<img src=${content} alt="img"></img>`
+    $('.content').html(htmlIMG);
+    $('#modalContentFile').modal('show');
+}
+
+function showContentTXT(content) {
+    htmlTXT = `<textarea id="textarea" rows="10" cols="100" readonly >${content}</textarea>`
+    //htmlTXT = `<span><textarea cols=100 rows=10 readonly style="background-color:#FFE8D2"><?echo $descripcion;?></textarea></span>`
+    $('.content').html(htmlTXT);
+    $('#modalContentFile').modal('show');
 }
 
 function backToStart() {
@@ -158,22 +167,6 @@ function showTreeGraph() {
     let url = 'https://quickchart.io/graphviz?graph=';
     let body = `digraph G {${tree.graph()}}`
     $("#graph").attr("src", url + body);
-}
-
-function showMatrixGraph() {
-    let url = 'https://quickchart.io/graphviz?graph=';
-    let path = $('#path').val();
-    let spsMatrix = new SparseMatrix(name_folder);
-    spsMatrix.head = tree.getFilesMatrix(path).head;
-    spsMatrix.printX();
-    spsMatrix.printY();
-    let body = `digraph G { ${spsMatrix.graph()}}`;
-    if (tree.files(path) < 1) {
-        body = "digraph G {\nnode[shape=none]\nn[label=\"No se pudo crear la matriz por falta de archivos.\" fontname=\"calibri\"]\n}"
-        $("#graphFiles").attr("src", url + body);
-    } else {
-        $("#graphFiles").attr("src", url + body);
-    }
 }
 
 function showCircularGraph() {
@@ -216,16 +209,13 @@ function logout() {
     saveData();
     location.href = "login.html";
     localStorage.removeItem('currentUser');
-    localStorage.removeItem('treeNary');
     localStorage.removeItem('circularLinkedList')
 }
 
 function chat() {
+    localStorage.setItem("circularLinkedList", JSON.stringify(JSON.decycle(newCircularList)));
     saveData();
     location.href = "chat.html";
-    //localStorage.removeItem('currentUser');
-    //localStorage.removeItem('treeNary');
-    //localStorage.removeItem('circularLinkedList')
 }
 
 function loadStudentInList() {
@@ -254,15 +244,13 @@ function sharedWithMe() {
     document.getElementById('btnShareFile').disabled = true;
     document.getElementById('btnUploadFile').disabled = true;
     document.getElementById('btnBackToStart').disabled = true;
-    //selectedUser.value.compartidoConmigo.push(file);
     let code = "";
     let usr = avlTree.searchNode(parseInt(userName));
-    console.log(usr.value.compartidoConmigo);
     usr.value.compartidoConmigo.map(file => {
         if (file.type === 'text/plain') {
             let archivo = new Blob([file.content], { type: file.type });
             const url = URL.createObjectURL(archivo);
-            code += `<div class="col-3 pt-2 text-center folder"')">
+            code += `<div class="col-3 pt-2 text-center folder" ondblclick="showContentTXT('${file.content}')">
                 <div class="row">
                     <div class="col-12">
                         <img src="images/txt.png" class="" style="width:30%" alt="img_archivo">
@@ -276,7 +264,7 @@ function sharedWithMe() {
                 </div>
             </div>`
         } else if (file.type === 'application/pdf') {
-            code += `<div class="col-3 pt-2 text-center folder"')">
+            code += `<div class="col-3 pt-2 text-center folder" ondblclick="showContentPdf('${file.content}')">
                 <div class="row">
                     <div class="col-12">
                         <img src="images/pdf.png" class="" style="width:30%" alt="img_archivo">
@@ -290,7 +278,7 @@ function sharedWithMe() {
                 </div>
             </div>`
         } else {
-            code += `<div class="col-3 pt-2 text-center folder"')">
+            code += `<div class="col-3 pt-2 text-center folder" ondblclick="showContentIMG('${file.content}')">
                 <div class="row">
                     <div class="col-12">
                         <img src="images/image.png" class="" style="width:30%" alt="img_foto">

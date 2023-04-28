@@ -13,6 +13,10 @@
 <body>
 
     <style type="text/css">
+        .logout:hover {
+            cursor: pointer;
+        }
+
         .containerTable {
             background: none;
             height: 205px;
@@ -49,20 +53,20 @@
         }
 
         .table-fixed tbody::-webkit-scrollbar-track {
-            background:   #d0dcfc;
+            background: #d0dcfc;
         }
 
         .table-fixed tbody::-webkit-scrollbar-thumb {
             background-color: black;
             border-radius: 20px;
-            border: 3px solid  #d0dcfc ;
+            border: 3px solid #d0dcfc;
         }
     </style>
 
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand">Administrador</a>
-            <a class="navbar-brand" href="login.html"><img src="images/log_out.png" style="float: left"
+            <a class="navbar-brand logout" onclick='logout()'><img src="images/log_out.png" style="float: left"
                     alt="logout">|Salir|</a>
         </div>
     </nav>
@@ -92,6 +96,49 @@
         </div>
     </div>
 
+    <!-- Modal Message Report-->
+    <div class="modal fade" id="modalMessageReport" tabindex="-1" aria-labelledby="modalMessageReportLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalMessageReportLabel">Reporte de Mensaje</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="show-block">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="getBlock(0)" type="button" class="btn btn-secondary">Inicio</button>
+                    <button onclick="getBlock(-1)" type="button" class="btn btn-secondary">Anterior</button>
+                    <button onclick="getBlock(1)" type="button" class="btn btn-secondary">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Messages Report-->
+    <div class="modal fade" id="modalMessagesReport" tabindex="-1" aria-labelledby="modalMessagesReportLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalMessagesReportLabel">Contenido</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="">
+                        <img id="graphMessages" class="img border border-white">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <br>
         <div class="row g-2">
@@ -106,9 +153,20 @@
             </div>
             <div class="col-3">
                 <div class="row g-3">
-                    <button type="button" class="btn btn-success w-75" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-danger w-75" data-bs-toggle="modal"
                         data-bs-target="#modalLoadFile">
                         Carga Masiva
+                    </button>
+                    <button onclick="orderTableHash()" type="button" class="btn btn-danger w-75">
+                        Ordenar
+                    </button>
+                    <button onclick="getBlock(0)" type="button" class="btn btn-secondary w-75" data-bs-toggle="modal"
+                        data-bs-target="#modalMessageReport">
+                        Reporte Mensaje
+                    </button>
+                    <button onclick="showMessagesGraph()" type="button" class="btn btn-secondary w-75"
+                        data-bs-toggle="modal" data-bs-target="#modalMessagesReport">
+                        Reporte Mensajes
                     </button>
                 </div>
             </div>
@@ -118,8 +176,8 @@
                         <thead class="table-dark">
                             <tr>
                                 <th class="col-3">Carnet</th>
-                                <th class="col-5">Nombre</th>
-                                <th class="col-4">Contraseña</th>
+                                <th class="col-4">Nombre</th>
+                                <th class="col-5">Contraseña</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -165,13 +223,14 @@
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
     <!--SCRIPTS-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>-->
     <script src="lib/cycle.js"></script>
     <script src="model/student.js"></script>
     <script src="treeAVL/treeAVL.js"></script>
     <script src="hashTable/hashTable.js"></script>
     <script src="circularLinkedList/circularLinkedList.js"></script>
-    <script src="sparseMatriz/sparseMatrix.js"></script>
     <script src="treeN-ary/treeN-ary.js"></script>
+    <script src="blockChain/blockChain.js"></script>
     <script src="indexDashboardAdmin.js"></script>
     <!--BOOTSTRAP-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"

@@ -1,47 +1,47 @@
-class Block{
-    constructor(index, transmitter, receiver, message, previusHash, hash){
+class Block {
+    constructor(index, transmitter, receiver, message, previusHash, hash) {
         this.index = index;
-        this.timestamp = new Date();
+        //this.timestamp = new Date();
+        this.timestamp = this.getFormatDate();
         this.transmitter = transmitter;
         this.receiver = receiver;
         this.message = message;
+        //this.hour = this.timestamp.toLocaleTimeString('en-US');
+        this.hour = new Date().toLocaleTimeString('en-US');
         this.previusHash = previusHash;
         this.hash = hash;
         this.next = null;
         this.prev = null;
     }
 
-    getFormatDate(){
-        let day = this.timestamp.getDate();
-        let month = this.timestamp.getMonth();
-        let year = this.timestamp.getFullYear();
-        let hours = this.timestamp.getHours();
-        let min = this.timestamp.getMinutes();
-        let sec = this.timestamp.getSeconds();
+    getFormatDate() {
+        this.timestampFormat = new Date();
+        let day = this.timestampFormat.getDate();
+        let month = this.timestampFormat.getMonth();
+        let year = this.timestampFormat.getFullYear();
+        let hours = this.timestampFormat.getHours();
+        let min = this.timestampFormat.getMinutes();
+        let sec = this.timestampFormat.getSeconds();
         return `${day}-${month}-${year} :: ${hours}:${min}:${sec}`;
-    }
-
-    getHour(){
-        return this.timestamp.toLocaleTimeString('en-US');
     }
 }
 
-class BlockChain{
-    constructor(){
+class BlockChain {
+    constructor() {
         this.head = null;
         this.end = null;
         this.size = 0;
     }
 
-    async insert(transmitter, receiver, message){
-        let newNode = new Block(this.size, transmitter, receiver, message, "","");
-        if(this.head == null){
+    async insert(transmitter, receiver, message) {
+        let newNode = new Block(this.size, transmitter, receiver, message, "", "");
+        if (this.head == null) {
             newNode.previusHash = "00000";
             newNode.hash = await this.getSha256(newNode);
             this.head = newNode;
             this.end = newNode;
             this.size++;
-        }else{
+        } else {
             newNode.previusHash = this.end.hash;
             newNode.hash = await this.getSha256(newNode);
             this.end.next = newNode;
@@ -51,7 +51,7 @@ class BlockChain{
         }
     }
 
-    async getSha256(block){
+    async getSha256(block) {
         let str = JSON.stringify(block).toString();
         let bytes = new TextEncoder().encode(str);
         let hashBytes = await window.crypto.subtle.digest("SHA-256", bytes);
@@ -59,45 +59,45 @@ class BlockChain{
         return hash;
     }
 
-    print(){        
-        if(this.head !== null){
+    print() {
+        if (this.head !== null) {
             let temp = this.head;
-            while(temp !== null){
+            while (temp !== null) {
                 console.log(temp);
                 temp = temp.next;
             }
         }
     }
 
-    getMessages(transmitter, receiver){
-        if(this.head !== null){
+    getMessages(transmitter, receiver) {
+        if (this.head !== null) {
             let msgs = "";
             let temp = this.head;
-            while(temp !== null){
-                if(String(temp.receiver) === String(transmitter)){
-                    if(String(temp.transmitter) === String(receiver)){
+            while (temp !== null) {
+                if (String(temp.receiver) === String(transmitter)) {
+                    if (String(temp.transmitter) === String(receiver)) {
                         msgs += `
                         <div class="chatContainer ps-2 pe-4">
                             <img src="/images/avatar.png" alt="Avatar">
                             <p class="mb-2" id="conversationLeft">${temp.message}</p>
-                            <span class="time-right">${temp.getHour()}</span>
+                            <span class="time-right">${temp.hour}</span>
                         </div>
                         `
                     }
-                }else if(String(temp.transmitter) === String(transmitter)){
-                    if(String(temp.receiver) === String(receiver)){
+                } else if (String(temp.transmitter) === String(transmitter)) {
+                    if (String(temp.receiver) === String(receiver)) {
                         msgs += `
                         <div class="chatContainer darker text-white ps-4 pe-2">
                             <img src="/images/avatar.png" alt="Avatar" class="right">
                             <p class="mb-2" id="conversationRight">${temp.message}</p>
-                            <span class="time-left">${temp.getHour()}</span>
+                            <span class="time-left">${temp.hour}</span>
                         </div>
                         `;
                     }
                 }
                 temp = temp.next;
             }
-            if(msgs){
+            if (msgs) {
                 return msgs;
             }
         }
@@ -106,11 +106,25 @@ class BlockChain{
         `;
     }
 
-    blockReport(index = 0){
-        if(this.head){
+    graph(index = 0) {
+        if (this.head) {
             let temp = this.head;
-            while(temp !== null){
-                if(temp.index === index){
+            while (temp !== null) {
+                if (temp.index === index) {
+                    return `n_${index}[label="TimeStamp: ${temp.timestamp}\\nEmisor: ${temp.transmitter}\\nReceptor: ${temp.receiver}\\nPreviousHash: ${temp.previusHash}"];\n`;
+                } else {
+                    temp = temp.next;
+                }
+            }
+        }
+        return "";
+    }
+
+    blockReport(index = 0) {
+        if (this.head) {
+            let temp = this.head;
+            while (temp !== null) {
+                if (temp.index === index) {
                     return `
                         <table class="table table-bordered" id="block-table" name="${temp.index}">
                             <tbody>
@@ -120,7 +134,7 @@ class BlockChain{
                                 </tr>
                                 <tr>
                                     <th scope="row">Timestamp</th>
-                                    <td>${temp.getFormatDate()}</td>
+                                    <td>${temp.timestamp}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Transmitter</th>
@@ -145,10 +159,9 @@ class BlockChain{
                             </tbody>
                         </table>
                     `;
-                }else{
+                } else {
                     temp = temp.next;
                 }
-
             }
         }
         return "";

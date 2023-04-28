@@ -155,6 +155,32 @@ class AvlTree {
         return row;
     }
 
+    //loop through in order
+    inOrder() {
+        if (this.root) {
+            let html = this.#inOrderRecursive(this.root);
+            return html;
+        }
+        return "";
+    }
+    #inOrderRecursive(current) {
+        let row = "";
+        if (current.left != null) {
+            row += this.#inOrderRecursive(current.left);
+        }
+        row += `
+                <tr>
+                    <td class="col-3">${current.value.carnet}</td>
+                    <td class="col-4">${current.value.nombre}</td>
+                    <td class="col-5">${current.value.password}</td>
+                </tr>
+            `;
+        if (current.right != null) {
+            row += this.#inOrderRecursive(current.right);
+        }
+        return row;
+    }
+
     //show Students
     showStudents(carnet) {
         if (this.root) {
