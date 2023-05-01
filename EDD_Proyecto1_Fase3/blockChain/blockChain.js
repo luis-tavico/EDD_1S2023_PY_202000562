@@ -1,12 +1,10 @@
 class Block {
     constructor(index, transmitter, receiver, message, previusHash, hash) {
         this.index = index;
-        //this.timestamp = new Date();
         this.timestamp = this.getFormatDate();
         this.transmitter = transmitter;
         this.receiver = receiver;
         this.message = message;
-        //this.hour = this.timestamp.toLocaleTimeString('en-US');
         this.hour = new Date().toLocaleTimeString('en-US');
         this.previusHash = previusHash;
         this.hash = hash;

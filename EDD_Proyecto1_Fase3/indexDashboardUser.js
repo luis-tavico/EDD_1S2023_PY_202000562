@@ -2,8 +2,9 @@ let avlTree = new AvlTree();
 let tree = new Tree();
 let cicularList = new CircularLinkedList();
 let newCircularList = new CircularLinkedList();
+let linkedList = new LinkedList();
 var userName = JSON.parse(localStorage.getItem('currentUser')).carnet;
-document.querySelector(".userName").textContent = userName;
+document.querySelector(".userName").textContent = JSON.parse(localStorage.getItem('currentUser')).nombre;
 var name_folder = "/";
 
 function createFolder(e) {
@@ -59,7 +60,7 @@ const uploadFile = async (e) => {
         let fr = new FileReader();
         fr.readAsText(form.file);
         fr.onload = () => {
-            tree.getFolder(path).files.push({
+            tree.getFolder(path).node.files.push({
                 name: fileName,
                 content: fr.result,
                 type: form.file.type
@@ -68,7 +69,7 @@ const uploadFile = async (e) => {
         };
     } else {
         let parseBase64 = await toBase64(form.file);
-        tree.getFolder(path).files.push({
+        tree.getFolder(path).node.files.push({
             name: fileName,
             content: parseBase64,
             type: form.file.type
@@ -93,13 +94,22 @@ function createPermission(e) {
     let permissionSelected = $('#permissions').val();
     let path = $('#path').val();
     let selectedUser = avlTree.searchNode(parseInt(userSelected));
-    file = tree.getFolder(path).files.find(file => file.name == fileSelected);
+    file = tree.getFolder(path).node.files.find(file => file.name == fileSelected);
     selectedUser.value.compartidoConmigo.push({
         name: file.name,
         content: file.content,
         type: file.type
     })
-    console.log(userName + " " + userSelected + " \"" + path + "\" " + fileSelected + " " + permissionSelected)
+    var permission = new Object();
+    permission.owner = userName;
+    permission.receiver = userSelected;
+    permission.location = path;
+    permission.file = fileSelected;
+    permission.type = permissionSelected;
+    //console.log(userName + " " + userSelected + " \"" + path + "\" " + fileSelected + " " + permissionSelected)
+    //console.log(permission);
+    linkedList.insert(permission);
+    console.log(linkedList);
     Swal.fire({
         position: 'bottom-end',
         icon: 'success',
@@ -196,6 +206,11 @@ function getData() {
         let path = $('#path').val();
         $('#folders').html(tree.getHTML(path))
     }
+    if (localStorage.getItem("linkedList") != null) {
+        let templl = JSON.retrocycle(JSON.parse(localStorage.getItem("linkedList")));
+        linkedList.head = templl.head;
+        linkedList.length = templl.length;
+    }
 }
 
 function saveData() {
@@ -203,6 +218,7 @@ function saveData() {
     currentUser.value.acciones = newCircularList;
     currentUser.value.carpetas = tree;
     localStorage.setItem("avlTree", JSON.stringify(JSON.decycle(avlTree)));
+    localStorage.setItem("linkedList", JSON.stringify(JSON.decycle(linkedList)));
 }
 
 function logout() {

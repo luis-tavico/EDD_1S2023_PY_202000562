@@ -220,12 +220,12 @@ class AvlTree {
         }
         if (current.value.carnet != carnet) {
             row += `
-            <button type="button"
+            <button onclick="receiverSelected(this.id)" type="button" id="${current.value.nombre}" value="${current.value.carnet}"
             class="rounded-0 border-0 border-bottom border-secondary-subtle list-group-item list-group-item-action d-flex justify-content-between align-items-center">
             <div class="ms-2 me-auto">
                 <div class="fw-bold">${current.value.nombre}</div>
                 ${current.value.carnet}
-            </div><span class="badge bg-danger rounded-pill">2</span>
+            </div>
             </button>
         `;
         }

@@ -25,9 +25,18 @@
             <div class="col-12 mb-2 mt-3">
                 <h1 class="text-center">Mensajeria</h1>
             </div>
-            <div class="col-5">
+            <div class="col-4">
                 <div class="col-12 border border-secondary border-bottom-0 pt-2 pb-1 text-center" id="bgTop">
-                    <h5 id="transmitter"></h5>
+                    <h5>Chats</h5>
+                </div>
+                <div class="overflow-x-hidden col-12 border border-secondary" id="areaUsers">
+                    <div class="list-group" id="areaStudents">
+                    </div>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="col-12 border border-secondary border-bottom-0 pt-2 pb-1 text-center" id="bgTop">
+                    <h5 id="receiver"></h5>
                 </div>
                 <div class="overflow-x-hidden col-12 border border-secondary border-top-0 border-bottom-0 areaChatTransmitter"
                     id="areaChat">
@@ -35,46 +44,12 @@
                 <div class="col-12 border border-secondary border-top-0" id="bgBottom">
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-10 ps-4 pe-0 mt-2 mb-2">
-                                <textarea class="form-control msg-transmitter" name="" id="areaMessage" rows="1"
-                                    placeholder="Type Here"></textarea>
+                            <div class="col-11 ps-4 pe-0 mt-2 mb-2">
+                                <textarea class="form-control msg-transmitter" id="areaMessage" rows="1"
+                                    placeholder="Mensaje"></textarea>
                             </div>
-                            <div class="col-2 ps-2 mt-2 mb-2">
+                            <div class="col-1 ps-1 mt-2 mb-2">
                                 <button onclick="sendMessage('transmitter')" class="btn btn-light rounded-circle"><img
-                                        src="/images/send.png" height="15" width="15" /></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <br>
-                <br>
-                <br>
-                <br>
-                <button onclick="updateChats()" type="button" class="btn btn-danger w-100 mb-3">
-                    Actualizar Chat
-                </button>
-            </div>
-            <div class="col-5">
-                <div class="col-12 border border-secondary border-bottom-0 pt-2 pb-1 text-center" id="bgTop">
-                    <div class="selectEdited">
-                        <select name="select" id="receiver" onchange="updateChats()">
-                        </select>
-                    </div>
-                </div>
-                <div class="overflow-x-hidden col-12 border border-secondary border-top-0 border-bottom-0 areaChatReceiver"
-                    id="areaChat">
-                </div>
-                <div class="col-12 border border-secondary border-top-0" id="bgBottom">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-10 ps-4 pe-0 mt-2 mb-2">
-                                <textarea class="form-control msg-receiver" name="" id="areaMessage" rows="1"
-                                    placeholder="Type Here"></textarea>
-                            </div>
-                            <div class="col-2 ps-2 mt-2 mb-2">
-                                <button onclick="sendMessage('receiver')" class="btn btn-light rounded-circle"><img
                                         src="/images/send.png" height="15" width="15" /></button>
                             </div>
                         </div>

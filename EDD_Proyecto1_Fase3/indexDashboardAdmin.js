@@ -1,6 +1,7 @@
 let avlTree = new AvlTree();
 let tableHash = new HashTable();
 let blockChain = new BlockChain();
+let linkedList = new LinkedList();
 
 function loadStudentsForm(e) {
     e.preventDefault();
@@ -63,16 +64,24 @@ function getData() {
         $('#studentsTable tbody').html(
             tableHash.print()
         )*/
-        $('#studentsTable tbody').html(
-            avlTree.inOrder()
-        )
     }
+    $('#studentsTable tbody').html(
+        avlTree.inOrder()
+    )
     if (localStorage.getItem("blockChain") != null) {
         let tempBC = JSON.retrocycle(JSON.parse(localStorage.getItem("blockChain")));
         blockChain.head = tempBC.head;
         blockChain.end = tempBC.end;
         blockChain.size = tempBC.size;
     }
+    if (localStorage.getItem("linkedList") != null) {
+        let templl = JSON.retrocycle(JSON.parse(localStorage.getItem("linkedList")));
+        linkedList.head = templl.head;
+        linkedList.length = templl.length;
+    }
+    $('#permissionsTable tbody').html(
+        linkedList.values()
+    )
 }
 
 function encrypt_data(string) {
@@ -147,6 +156,7 @@ function showMessagesGraph() {
 function logout() {
     location.href = "login.html";
     localStorage.setItem("blockChain", JSON.stringify(JSON.decycle(blockChain)));
+    localStorage.setItem("linkedList", JSON.stringify(JSON.decycle(linkedList)));
 }
 
 $(document).ready(getData);

@@ -4,9 +4,11 @@ let cicularList = new CircularLinkedList();
 let newCircularList = new CircularLinkedList();
 let blockChain = new BlockChain();
 var userName = JSON.parse(localStorage.getItem('currentUser')).carnet;
-document.querySelector(".userName").textContent = userName;
+document.querySelector(".userName").textContent = JSON.parse(localStorage.getItem('currentUser')).nombre;
 var nameUser = JSON.parse(localStorage.getItem('currentUser')).nombre;
-document.querySelector("#transmitter").textContent = nameUser;
+document.querySelector("#receiver").textContent = "---";
+let transmitter = parseInt(userName);
+let receiver = "";
 
 function back() {
     location.href = "dashboardUser.html";
@@ -41,22 +43,23 @@ function getData() {
 }
 
 function loadStudentInList() {
-    $('#receiver').html(
-        "<option value=\"\" selected disabled>---</option>" + avlTree.showStudents(parseInt(userName))
+    $('#areaStudents').html(
+        avlTree.showStudentsChat(parseInt(userName))
     )
 }
 
+function receiverSelected(name) {
+    document.querySelector("#receiver").textContent = name;
+    receiver = document.getElementById(name).value;    
+    updateChats();
+}
+
 function updateChats() {
-    let transmitter = parseInt(userName);
-    let receiver = $('#receiver').val();
     $('.areaChatTransmitter').html(blockChain.getMessages(transmitter, receiver));
     $('.areaChatReceiver').html(blockChain.getMessages(receiver, transmitter));
 }
 
 async function sendMessage(whoSend) {
-    let transmitter = parseInt(userName);
-    let receiver = $('#receiver').val();
-
     if (transmitter && receiver) {
         switch (whoSend) {
             case 'transmitter':
