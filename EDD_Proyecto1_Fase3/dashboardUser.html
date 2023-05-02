@@ -52,12 +52,12 @@
             height: 360px;
         }
 
-        #textarea {
+        #areaText {
             border: none;
             resize: none;
         }
 
-        #textarea:focus {
+        #areaText:focus {
             outline: none;
         }
     </style>
@@ -228,13 +228,13 @@
         </div>
     </div>
 
-    <!-- Modal Content FIle-->
+    <!-- Modal Content FIle PDF AND IMG-->
     <div class="modal fade" id="modalContentFile" tabindex="-1" aria-labelledby="modalContentFileLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalContentFileLabel">Contenido</h1>
+                    <h1 class="modal-title fs-5" id="modalContentFileLabel"></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -243,6 +243,27 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Content FIle TXT-->
+    <div class="modal fade" id="modalContentFileTXT" tabindex="-1" aria-labelledby="modalContentFileTXTLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalContentFileTXTLabel"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="contentTXT text-center">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="edit()" type="button" class="btn btn-primary" id="btnEdit">Editar</button>
+                    <button onclick="edited()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Aceptar</button>
                 </div>
             </div>
         </div>

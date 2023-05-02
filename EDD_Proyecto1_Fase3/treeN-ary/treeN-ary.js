@@ -28,7 +28,6 @@ class Tree {
     }
 
     verifyFolder(folderName, fatherPath) {
-        //let fatherNode = this.getFolder(fatherPath);
         let { node } = this.getFolder(fatherPath);
         let childrenInFolder = node.children;
         if (childrenInFolder.find(fol => fol.folderName === folderName)) {
@@ -42,7 +41,6 @@ class Tree {
     }
 
     verifyFile(fileName, fatherPath) {
-        //let fatherNode = this.getFolder(fatherPath);
         let { node } = this.getFolder(fatherPath);
         let filesInFolder = node.files;
         if (filesInFolder.find(fil => fil.name === fileName)) {
@@ -56,8 +54,6 @@ class Tree {
     }
 
     delete(folderName, fatherPath) {
-        //Pendiente arreglar "size"
-        //let fatherNode = this.getFolder(fatherPath);
         let { node } = this.getFolder(fatherPath);
         let childrenInFolder = node.children;
         for (var i = 0; i < childrenInFolder.length; i++) {
@@ -91,7 +87,6 @@ class Tree {
     }
 
     showFolders(path) {
-        //let node = this.getFolder(path);
         let { node } = this.getFolder(path);
         let flds = node.children;
         let code = "";
@@ -104,7 +99,6 @@ class Tree {
     }
 
     showFiles(path) {
-        //let node = this.getFolder(path);
         let { node } = this.getFolder(path);
         let fls = node.files;
         let code = "";
@@ -117,7 +111,6 @@ class Tree {
     }
 
     files(path) {
-        //let node = this.getFolder(path);
         let { node } = this.getFolder(path);
         return node.files.length;
     }
@@ -214,8 +207,6 @@ class Tree {
                 });
             }
         }
-        //return '\nsplines=ortho;\nnode[shape="folder" fontname=\"calibri\"];\nedge[arrowsize=0.7];\n' + nodes + connections;
-        //return '\nlayout=neato;\nedge[dir=none len=1.6];\nnode[fontname="calibri"];\n' + nodes + '\n' + connections;
         return '\nlayout=neato;\nedge[dir=none];\nnode[fontname="calibri"];\n' + nodes + '\n' + connections;
     }
 }

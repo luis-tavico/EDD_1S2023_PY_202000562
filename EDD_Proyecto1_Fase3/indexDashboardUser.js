@@ -95,10 +95,19 @@ function createPermission(e) {
     let path = $('#path').val();
     let selectedUser = avlTree.searchNode(parseInt(userSelected));
     file = tree.getFolder(path).node.files.find(file => file.name == fileSelected);
+    let fileName = file.name;
+    if (selectedUser.value.compartidoConmigo.find(fil => fil.name === fileName)) {
+        let i = 1;
+        while (selectedUser.value.compartidoConmigo.find(fil => fil.name === fileName.split(".")[0] + "(" + i + ")." + fileName.split(".")[1])) {
+            i += 1;
+        }
+        fileName = fileName.split(".")[0] + "(" + i + ")." + fileName.split(".")[1]
+    }
     selectedUser.value.compartidoConmigo.push({
-        name: file.name,
+        name: fileName,
         content: file.content,
-        type: file.type
+        type: file.type,
+        permission: permissionSelected
     })
     var permission = new Object();
     permission.owner = userName;
@@ -106,10 +115,7 @@ function createPermission(e) {
     permission.location = path;
     permission.file = fileSelected;
     permission.type = permissionSelected;
-    //console.log(userName + " " + userSelected + " \"" + path + "\" " + fileSelected + " " + permissionSelected)
-    //console.log(permission);
     linkedList.insert(permission);
-    console.log(linkedList);
     Swal.fire({
         position: 'bottom-end',
         icon: 'success',
@@ -130,23 +136,51 @@ function getInFolder(folderName) {
     name_folder = folderName;
 }
 
-function showContentPdf(content) {
+function showContentPdf(content, name) {
     htmlPDF = `<iframe src=${content} title="description"></iframe>`;
+    let nameFile = name.split('.');
+    document.querySelector("#modalContentFileLabel").textContent = nameFile[0];
     $('.content').html(htmlPDF);
     $('#modalContentFile').modal('show');
 }
 
-function showContentIMG(content) {
+function showContentIMG(content, name) {
     htmlIMG = `<img src=${content} alt="img"></img>`
+    let nameFile = name.split('.');
+    document.querySelector("#modalContentFileLabel").textContent = nameFile[0];
     $('.content').html(htmlIMG);
     $('#modalContentFile').modal('show');
 }
 
-function showContentTXT(content) {
-    htmlTXT = `<textarea id="textarea" rows="10" cols="100" readonly >${content}</textarea>`
-    //htmlTXT = `<span><textarea cols=100 rows=10 readonly style="background-color:#FFE8D2"><?echo $descripcion;?></textarea></span>`
-    $('.content').html(htmlTXT);
-    $('#modalContentFile').modal('show');
+function edit() {
+    document.getElementById("areaText").readOnly = false;
+}
+
+function edited() {
+    let fileName = document.getElementById("modalContentFileTXTLabel").textContent;
+    fileName += ".txt";
+    let content = document.getElementById("areaText").value;
+    let usr = avlTree.searchNode(parseInt(userName));
+    for (let i = 0; i < usr.value.compartidoConmigo.length; i++) {
+        if (usr.value.compartidoConmigo[i].name == fileName) {
+            usr.value.compartidoConmigo[i].content = content;
+            break;
+        }
+    }
+    sharedWithMe();
+}
+
+function showContentTXT(content, name, permission) {
+    htmlTXT = `<textarea id="areaText" rows="10" cols="100" readonly>${content}</textarea>`
+    let nameFile = name.split('.');
+    document.querySelector("#modalContentFileTXTLabel").textContent = nameFile[0];
+    $('.contentTXT').html(htmlTXT);
+    if (permission == "r_w" || permission == "w") {
+        document.getElementById('btnEdit').style.visibility = 'visible';
+    } else {
+        document.getElementById('btnEdit').style.visibility = 'hidden';
+    }
+    $('#modalContentFileTXT').modal('show');
 }
 
 function backToStart() {
@@ -266,7 +300,7 @@ function sharedWithMe() {
         if (file.type === 'text/plain') {
             let archivo = new Blob([file.content], { type: file.type });
             const url = URL.createObjectURL(archivo);
-            code += `<div class="col-3 pt-2 text-center folder" ondblclick="showContentTXT('${file.content}')">
+            code += `<div class="col-3 pt-2 text-center folder" ondblclick="showContentTXT('${file.content}', '${file.name}', '${file.permission}')">
                 <div class="row">
                     <div class="col-12">
                         <img src="images/txt.png" class="" style="width:30%" alt="img_archivo">
@@ -280,7 +314,7 @@ function sharedWithMe() {
                 </div>
             </div>`
         } else if (file.type === 'application/pdf') {
-            code += `<div class="col-3 pt-2 text-center folder" ondblclick="showContentPdf('${file.content}')">
+            code += `<div class="col-3 pt-2 text-center folder" ondblclick="showContentPdf('${file.content}', '${file.name}')">
                 <div class="row">
                     <div class="col-12">
                         <img src="images/pdf.png" class="" style="width:30%" alt="img_archivo">
@@ -294,7 +328,7 @@ function sharedWithMe() {
                 </div>
             </div>`
         } else {
-            code += `<div class="col-3 pt-2 text-center folder" ondblclick="showContentIMG('${file.content}')">
+            code += `<div class="col-3 pt-2 text-center folder" ondblclick="showContentIMG('${file.content}', '${file.name}')">
                 <div class="row">
                     <div class="col-12">
                         <img src="images/image.png" class="" style="width:30%" alt="img_foto">
