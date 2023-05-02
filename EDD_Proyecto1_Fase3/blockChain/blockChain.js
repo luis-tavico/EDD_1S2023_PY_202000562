@@ -76,7 +76,7 @@ class BlockChain {
                     if (String(temp.transmitter) === String(receiver)) {
                         msgs += `
                         <div class="chatContainer ps-2 pe-4">
-                            <img src="/images/avatar.png" alt="Avatar">
+                            <img src="images/avatar.png" alt="Avatar">
                             <p class="mb-2" id="conversationLeft">${temp.message}</p>
                             <span class="time-right">${temp.hour}</span>
                         </div>
@@ -86,7 +86,7 @@ class BlockChain {
                     if (String(temp.receiver) === String(receiver)) {
                         msgs += `
                         <div class="chatContainer darker text-white ps-4 pe-2">
-                            <img src="/images/avatar.png" alt="Avatar" class="right">
+                            <img src="images/avatar.png" alt="Avatar" class="right">
                             <p class="mb-2" id="conversationRight">${temp.message}</p>
                             <span class="time-left">${temp.hour}</span>
                         </div>
