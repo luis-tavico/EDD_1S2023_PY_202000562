@@ -113,7 +113,7 @@ function createPermission(e) {
     permission.owner = userName;
     permission.receiver = userSelected;
     permission.location = path;
-    permission.file = fileSelected;
+    permission.file = { name: fileName, content: file.content, type: file.type }
     permission.type = permissionSelected;
     linkedList.insert(permission);
     Swal.fire({
